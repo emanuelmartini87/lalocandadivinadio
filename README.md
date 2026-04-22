@@ -1,2 +1,2 @@
 # lalocandadivinadio
-lalocandadivinadio-sito
+La Locanda di Vinadio Sito
