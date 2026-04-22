@@ -1,1 +1,377 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>La Locanda di Vinadio | Ristorante, Bar e Pizzeria a Vinadio</title>
+  <meta name="description" content="La Locanda di Vinadio è un ristorante, bar e pizzeria a Vinadio. Consulta il menù online, scopri dove siamo e contattaci per informazioni e prenotazioni.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="La Locanda di Vinadio">
+  <link rel="canonical" href="https://www.lalocandadivinadio.it/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="La Locanda di Vinadio | Ristorante, Bar e Pizzeria a Vinadio">
+  <meta property="og:description" content="Consulta il menù online de La Locanda di Vinadio e scopri il locale.">
+  <meta property="og:url" content="https://www.lalocandadivinadio.it/">
+  <meta property="og:image" content="https://www.lalocandadivinadio.it/immagini/copertina.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="La Locanda di Vinadio | Ristorante, Bar e Pizzeria a Vinadio">
+  <meta name="twitter:description" content="Consulta il menù online de La Locanda di Vinadio e scopri il locale.">
+  <meta name="twitter:image" content="https://www.lalocandadivinadio.it/immagini/copertina.jpg">
+
+  <style>
+    :root{
+      --bg1:#f7f2ec;
+      --bg2:#fffaf5;
+      --text:#2b2b2b;
+      --muted:#6b7280;
+      --accent:#b5532d;
+      --accent-dark:#8d3f20;
+      --card:rgba(255,255,255,0.96);
+      --soft:#fff3eb;
+      --shadow:0 16px 40px rgba(0,0,0,.12);
+      --radius:24px;
+      --max:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      line-height:1.6;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .hero{
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.45)),
+        url("immagini/copertina.jpg") center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .hero-card{
+      width:100%;
+      max-width:820px;
+      background:rgba(255,255,255,.92);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:36px 28px;
+      text-align:center;
+      backdrop-filter:blur(6px);
+    }
+
+    .eyebrow{
+      display:inline-block;
+      background:var(--soft);
+      color:var(--accent-dark);
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:.95rem;
+      font-weight:700;
+      margin-bottom:16px;
+    }
+
+    h1{
+      margin:0 0 12px;
+      font-size:clamp(2.2rem,5vw,4rem);
+      line-height:1.05;
+      color:var(--accent-dark);
+    }
+
+    .subtitle{
+      max-width:680px;
+      margin:0 auto 24px;
+      font-size:1.08rem;
+      color:#4b5563;
+    }
+
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 22px;
+      border-radius:16px;
+      font-weight:700;
+      transition:.2s ease;
+      box-shadow:0 8px 18px rgba(0,0,0,.08);
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-dark);
+      transform:translateY(-1px);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--accent-dark);
+      border:1px solid #ead8ce;
+    }
+
+    .btn-secondary:hover{
+      background:#fff7f2;
+      transform:translateY(-1px);
+    }
+
+    .section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:70px 22px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:36px;
+    }
+
+    .section-title h2{
+      margin:0 0 10px;
+      font-size:2rem;
+      color:var(--accent-dark);
+    }
+
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:22px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+
+    .card h3{
+      margin-top:0;
+      color:var(--accent-dark);
+    }
+
+    .info-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+
+    .info-list li{
+      padding:10px 0;
+      border-bottom:1px solid #eee;
+    }
+
+    .info-list li:last-child{
+      border-bottom:none;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+    }
+
+    .gallery img{
+      width:100%;
+      height:230px;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      display:block;
+    }
+
+    .cta{
+      text-align:center;
+      background:linear-gradient(135deg,#fff3eb,#fffaf5);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:34px 24px;
+    }
+
+    footer{
+      text-align:center;
+      padding:30px 20px 50px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    @media (max-width:700px){
+      .hero-card{padding:26px 20px}
+      .gallery img{height:200px}
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Restaurant",
+    "name":"La Locanda di Vinadio",
+    "url":"https://www.lalocandadivinadio.it/",
+    "telephone":"+39 0171 959506",
+    "servesCuisine":"Italiana, Piemontese, Pizza",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Via Roma, 16",
+      "postalCode":"12010",
+      "addressLocality":"Vinadio",
+      "addressRegion":"CN",
+      "addressCountry":"IT"
+    },
+    "menu":"https://mycontactlessmenu.mycia.it/r/q/nStxU8SvO"
+  }
+  </script>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">Ristorante · Bar · Pizzeria a Vinadio</div>
+      <h1>La Locanda di Vinadio</h1>
+      <p class="subtitle">
+        Un locale accogliente nel cuore di Vinadio, ideale per una pausa, un pranzo, una cena
+        o una pizza in compagnia. Consulta il nostro menù online e vieni a trovarci.
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-primary" href="https://mycontactlessmenu.mycia.it/r/q/nStxU8SvO" target="_blank" rel="noopener noreferrer">
+          Il nostro menù
+        </a>
+        <a class="btn btn-secondary" href="#contatti">Contatti</a>
+        <a class="btn btn-secondary" href="#dove-siamo">Dove siamo</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-title">
+        <h2>Benvenuti</h2>
+        <p>Una presenza online semplice, veloce e chiara, perfetta da vedere anche da smartphone.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Il locale</h3>
+          <p>
+            La Locanda di Vinadio è un punto di riferimento a Vinadio per chi cerca un ambiente
+            conviviale e una proposta adatta a diversi momenti della giornata, tra cucina,
+            pizza e servizio bar.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Menù online</h3>
+          <p>
+            Il nostro menù è consultabile online in modo semplice e immediato.
+            Aprilo direttamente dal telefono con un solo clic.
+          </p>
+          <p>
+            <a class="btn btn-primary" href="https://mycontactlessmenu.mycia.it/r/q/nStxU8SvO" target="_blank" rel="noopener noreferrer">
+              Apri il menù
+            </a>
+          </p>
+        </div>
+
+        <div class="card" id="contatti">
+          <h3>Contatti</h3>
+          <ul class="info-list">
+            <li><strong>Nome:</strong> La Locanda di Vinadio</li>
+            <li><strong>Indirizzo:</strong> Via Roma, 16 - 12010 Vinadio CN</li>
+            <li><strong>Telefono:</strong> <a href="tel:+390171959506">0171 959506</a></li>
+            <li><strong>Menù:</strong> online sempre disponibile</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Galleria</h2>
+        <p>Qui metteremo le foto vere del locale, della sala e dei piatti.</p>
+      </div>
+
+      <div class="gallery">
+        <img src="immagini/foto1.jpg" alt="Interni de La Locanda di Vinadio">
+        <img src="immagini/foto2.jpg" alt="Piatti de La Locanda di Vinadio">
+        <img src="immagini/foto3.jpg" alt="Ambiente del locale La Locanda di Vinadio">
+      </div>
+    </section>
+
+    <section class="section" id="dove-siamo">
+      <div class="section-title">
+        <h2>Dove siamo</h2>
+        <p>Ci trovi a Vinadio, in Via Roma 16.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Indirizzo</h3>
+          <p>
+            <strong>La Locanda di Vinadio</strong><br>
+            Via Roma, 16<br>
+            12010 Vinadio CN
+          </p>
+          <p>
+            <a class="btn btn-secondary" href="https://www.google.com/maps/search/?api=1&query=Via+Roma+16+12010+Vinadio+CN" target="_blank" rel="noopener noreferrer">
+              Apri su Google Maps
+            </a>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Contatto rapido</h3>
+          <p>
+            Per informazioni o prenotazioni puoi contattare direttamente il locale al numero:
+          </p>
+          <p>
+            <a class="btn btn-primary" href="tel:+390171959506">0171 959506</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta">
+        <h2>Scopri il menù online</h2>
+        <p>Consulta le proposte del locale direttamente online.</p>
+        <div class="buttons">
+          <a class="btn btn-primary" href="https://mycontactlessmenu.mycia.it/r/q/nStxU8SvO" target="_blank" rel="noopener noreferrer">
+            Apri il menù
+          </a>
+          <a class="btn btn-secondary" href="tel:+390171959506">
+            Chiama ora
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 La Locanda di Vinadio · Tutti i diritti riservati
+  </footer>
+
+</body>
+</html>
