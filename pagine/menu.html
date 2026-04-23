@@ -1313,7 +1313,20 @@ riga.appendChild(span);
         modal.style.display = 'none';
       }
     });
+function mostraTooltipAllergene(testo) {
+  const tooltip = document.getElementById('allergeneTooltip');
 
+  if (!tooltip) return;
+
+  tooltip.textContent = testo;
+  tooltip.style.display = 'block';
+
+  clearTimeout(window.allergeneTooltipTimer);
+
+  window.allergeneTooltipTimer = setTimeout(() => {
+    tooltip.style.display = 'none';
+  }, 2200);
+}
     document.addEventListener('DOMContentLoaded', aggiungiIconeAllergeni);
   </script> 
 
