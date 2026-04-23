@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menù Online | La Locanda di Vinadio</title>
+
   <style>
     :root {
       --bg: #f8f9fa;
@@ -138,6 +139,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -151,80 +153,25 @@
 
   <div id="piatti" class="menu-section active">
 
+    <!-- STUZZICHERIE -->
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Stuzzicherie e Contorni <span>▼</span></button>
       <div class="accordion-content">
+
         <div class="item-container">
           <div class="item-row"><span>Olive ascolane*</span><span>5,00 €</span></div>
           <div class="allergeni-text">Grano, Latte, Uova, Sedano</div>
         </div>
+
         <div class="item-container">
           <div class="item-row"><span>Patate fritte*</span><span>4,00 €</span></div>
           <div class="allergeni-text">Frutta a guscio, Arachidi</div>
         </div>
-        <div class="item-container">
-          <div class="item-row"><span>Verdure grigliate</span><span>6,00 €</span></div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Verdure in pastella*</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Grano, Latte, Uova</div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Insalata mista</span><span>4,00 €</span></div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Insalata verde</span><span>3,00 €</span></div>
-        </div>
+
       </div>
     </div>
 
-    <div class="accordion" style="background:#f2f2f2;">
-      <button class="accordion-header" onclick="toggleAcc(this)">Specialità della Casa <span>▼</span></button>
-      <div class="accordion-content">
-        <div class="item-container">
-          <div class="item-row"><span>Grigliata mista di carne con contorno</span><span>30,00 €</span></div>
-          <div class="allergeni-text">Carne di maiale, Carne di manzo, Carne di pollo</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Antipasti <span>▼</span></button>
-      <div class="accordion-content">
-        <div class="item-container">
-          <div class="item-row"><span>Antipasto della locanda</span><span>15,00 €</span></div>
-          <div class="allergeni-text">Pesce, Latte vaccino</div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Vitello tonnato</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Grano, Sedano, Latte, Uova, Pesce</div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Carpaccio di salmone con pomodorini</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Pesce, Pomodoro</div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Bresaola rucola e grana</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Latte, Uova</div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Cocktail di gamberi*</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Crostacei, Uova, Molluschi</div>
-        </div>
-        <div class="item-container">
-          <div class="item-row"><span>Tomino con speck al forno</span><span>6,00 €</span></div>
-          <div class="allergeni-text">Latte</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion" style="background:#f2f2f2;">
-      <button class="accordion-header" onclick="toggleAcc(this)">Le nostre pizze speciali <span>▼</span></button>
-      <div class="accordion-content">
-        Contenuto in arrivo...
-      </div>
-    </div>
-
+    <!-- PRIMI -->
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Primi Piatti <span>▼</span></button>
       <div class="accordion-content">
@@ -234,80 +181,32 @@
           <div class="allergeni-text">Porro, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div>
         </div>
 
-        <div class="item-container">
-          <div class="item-row"><span>Crouset* salsiccia e porcini*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Salsiccia di maiale, Funghi porcini, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset* al ragù di salsiccia*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Ragù di carne (Sedano), Salsiccia di maiale, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne all'arrabbiata</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Sugo all'arrabbiata, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne al ragù</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Ragù di carne (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne zucchine e gamberetti</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Zucchine, Gamberetti (Crostacei), Panna (Latte), Pesce (Pesce)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne al pesto</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Pesto (Latte, Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne al salmone</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Salmone (Pesce), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini a cinghiale*</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Carne di cinghiale, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* al pomodoro</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, Pasta fresca all'uovo (Grano, Uova), Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* all'arrabbiata</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Sugo all'arrabbiata, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* salsiccia e porcini*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Salsiccia di maiale, Funghi porcini, Panna (Latte), Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* al ragù</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Ragù di carne (Sedano), Sedano (Sedano)</div>
-        </div>
-
       </div>
     </div>
 
+    <!-- SECONDI -->
     <div class="accordion" style="background:#f2f2f2;">
       <button class="accordion-header" onclick="toggleAcc(this)">Secondi Piatti <span>▼</span></button>
       <div class="accordion-content">
-        Contenuto in arrivo...
+
+        <div class="item-container">
+          <div class="item-row"><span>Sottofiletto ai ferri</span><span>10,00 €</span></div>
+          <div class="allergeni-text">Carne di manzo</div>
+        </div>
+
       </div>
     </div>
 
+    <!-- INSALATONE -->
     <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Dolci <span>▼</span></button>
+      <button class="accordion-header" onclick="toggleAcc(this)">Insalatone <span>▼</span></button>
       <div class="accordion-content">
-        Contenuto in arrivo...
+
+        <div class="item-container">
+          <div class="item-row"><span>La Locanda</span><span>8,50 €</span></div>
+          <div class="allergeni-text">Insalata, Pomodoro, mozzarella, Scaglie di grana, Prosciutto crudo</div>
+        </div>
+
       </div>
     </div>
 
@@ -320,15 +219,6 @@
         <div class="item-row"><span>Acqua 0.5L</span><span>1,50 €</span></div>
       </div>
     </div>
-
-    <div class="accordion" style="background:#f2f2f2;">
-      <button class="accordion-header" onclick="toggleAcc(this)">Bibite <span>▼</span></button>
-      <div class="accordion-content">
-        <div class="item-row"><span>Coca Cola</span><span>3,00 €</span></div>
-      </div>
-    </div>
-
-    <a href="#" class="btn-allergeni">LISTA ALLERGENI COMPLETA</a>
   </div>
 
   <script>
@@ -348,6 +238,7 @@
     function toggleAcc(btn) {
       const content = btn.nextElementSibling;
       const isVisible = content.style.display === "block";
+
       content.style.display = isVisible ? "none" : "block";
       btn.querySelector('span').textContent = isVisible ? "▼" : "▲";
     }
