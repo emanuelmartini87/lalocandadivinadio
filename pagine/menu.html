@@ -1227,13 +1227,72 @@
       document.getElementById('allergeniModal').style.display = 'none';
     }
 
+    function aggiungiIconeAllergeni() {
+      const allergeni = [
+        { parole: ['Grano', 'Farina', 'glutine', 'Pasta', 'Bignè', 'Pan di spagna', 'Focaccia'], icona: '🌾', nome: 'Cereali contenenti glutine' },
+        { parole: ['Latte', 'Panna', 'Burro', 'mozzarella', 'gorgonzola', 'raschera', 'stracchino', 'fontina', 'brie', 'bufala', 'burrata', 'grana', 'parmigiano', 'pecorino', 'formaggio', 'Gelato'], icona: '🥛', nome: 'Latte e derivati' },
+        { parole: ['Uova', 'uovo', 'Maionese', 'Albume'], icona: '🥚', nome: 'Uova' },
+        { parole: ['Pesce', 'Tonno', 'Salmone', 'Acciughe', 'pesce spada', 'surimi'], icona: '🐟', nome: 'Pesce' },
+        { parole: ['Crostacei', 'Gamberi', 'Gamberetti', 'gamberetti'], icona: '🦐', nome: 'Crostacei' },
+        { parole: ['Frutta a guscio', 'Frutta secca', 'Nocciole', 'Torrone'], icona: '🌰', nome: 'Frutta a guscio' },
+        { parole: ['Arachidi'], icona: '🥜', nome: 'Arachidi' },
+        { parole: ['Sedano'], icona: '🥬', nome: 'Sedano' },
+        { parole: ['Molluschi'], icona: '🦪', nome: 'Molluschi' },
+        { parole: ['Soia'], icona: '🫛', nome: 'Soia' },
+        { parole: ['Lupini'], icona: '🫘', nome: 'Lupini' },
+        { parole: ['Senape'], icona: '🟡', nome: 'Senape' },
+        { parole: ['Sesamo'], icona: '🌱', nome: 'Semi di sesamo' },
+        { parole: ['Solfiti', 'Anidride solforosa'], icona: '🧪', nome: 'Solfiti' }
+      ];
+
+      document.querySelectorAll('.allergeni-text').forEach(riga => {
+        if (riga.dataset.iconsAdded === 'true') return;
+
+        const testo = riga.textContent;
+        const item = riga.closest('.item-container');
+        const accordion = riga.closest('.accordion');
+        const header = accordion ? accordion.querySelector('.accordion-header') : null;
+        const nomeSezione = header ? header.textContent.toLowerCase() : '';
+        const trovati = [];
+
+        allergeni.forEach(allergene => {
+          const presente = allergene.parole.some(parola =>
+            testo.toLowerCase().includes(parola.toLowerCase())
+          );
+
+          if (presente && !trovati.includes(allergene.nome)) {
+            trovati.push(allergene.nome);
+          }
+        });
+
+        if (nomeSezione.includes('pizze') && !trovati.includes('Cereali contenenti glutine')) {
+          trovati.push('Cereali contenenti glutine');
+        }
+
+        trovati.forEach(nome => {
+          const allergene = allergeni.find(a => a.nome === nome);
+          if (!allergene) return;
+
+          const span = document.createElement('span');
+          span.className = 'allergene-mini-icon';
+          span.textContent = allergene.icona;
+          span.title = allergene.nome;
+          riga.appendChild(span);
+        });
+
+        riga.dataset.iconsAdded = 'true';
+      });
+    }
+
     window.addEventListener('click', function (event) {
       const modal = document.getElementById('allergeniModal');
       if (event.target === modal) {
         modal.style.display = 'none';
       }
     });
-  </script>
+
+    document.addEventListener('DOMContentLoaded', aggiungiIconeAllergeni);
+  </script> 
 
 </body>
 </html>
