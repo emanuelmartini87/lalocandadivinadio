@@ -70,6 +70,66 @@
       backdrop-filter:blur(6px);
     }
 
+    .social-box{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap:12px;
+      margin-bottom:20px;
+    }
+
+    .social-icon{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 14px rgba(0,0,0,.14);
+      transition:.25s ease;
+    }
+
+    .social-icon:hover,
+    .review-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .social-icon img{
+      width:20px;
+      height:20px;
+      filter:invert(1);
+    }
+
+    .facebook{
+      background:#1877f2;
+    }
+
+    .instagram{
+      background:radial-gradient(circle at 30% 30%, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    }
+
+    .review-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 15px;
+      border-radius:999px;
+      background:#fff;
+      color:var(--accent-dark);
+      font-weight:700;
+      font-size:.92rem;
+      border:1px solid #ead8ce;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      transition:.25s ease;
+    }
+
+    .review-stars{
+      color:#f59e0b;
+      letter-spacing:1px;
+      font-size:.95rem;
+    }
+
     .eyebrow{
       display:inline-block;
       background:var(--soft);
@@ -221,6 +281,10 @@
     @media (max-width:700px){
       .hero-card{padding:26px 20px}
       .gallery img{height:200px}
+      .review-btn{
+        width:100%;
+        justify-content:center;
+      }
     }
   </style>
 
@@ -248,6 +312,22 @@
 
   <header class="hero">
     <div class="hero-card">
+
+      <div class="social-box">
+        <a class="social-icon facebook" href="https://www.facebook.com/p/La-locanda-di-Vinadio-100036786831516/" target="_blank" rel="noopener noreferrer" title="Seguici su Facebook">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook La Locanda di Vinadio">
+        </a>
+
+        <a class="social-icon instagram" href="https://www.instagram.com/la.locanda.di.vinadio/" target="_blank" rel="noopener noreferrer" title="Seguici su Instagram">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram La Locanda di Vinadio">
+        </a>
+
+        <a class="review-btn" href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E" target="_blank" rel="noopener noreferrer" title="Lascia una recensione su Google">
+          <span class="review-stars">★★★★★</span>
+          Ti sei trovato bene? Lascia una recensione
+        </a>
+      </div>
+
       <div class="eyebrow">Ristorante · Bar · Pizzeria a Vinadio</div>
       <h1>La Locanda di Vinadio</h1>
       <p class="subtitle">
