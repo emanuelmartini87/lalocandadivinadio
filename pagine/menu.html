@@ -290,7 +290,7 @@
 </head>
 
 <body>
-
+  <div id="allergeneTooltip" class="allergene-tooltip"></div>
   <header>
     <h2 style="margin:0; color:var(--accent);">La Locanda di Vinadio</h2>
   </header>
@@ -1288,11 +1288,19 @@
           const allergene = allergeni.find(a => a.nome === nome);
           if (!allergene) return;
 
-          const span = document.createElement('span');
-          span.className = 'allergene-mini-icon';
-          span.textContent = allergene.icona;
-          span.title = allergene.nome;
-          riga.appendChild(span);
+const span = document.createElement('span');
+span.className = 'allergene-mini-icon';
+span.textContent = allergene.icona;
+
+span.title = allergene.nome;
+span.setAttribute('data-allergene', allergene.nome);
+
+span.addEventListener('click', function (event) {
+  event.stopPropagation();
+  mostraTooltipAllergene(allergene.nome);
+});
+
+riga.appendChild(span);
         });
 
         riga.dataset.iconsAdded = 'true';
