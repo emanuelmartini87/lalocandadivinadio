@@ -14,29 +14,28 @@
     body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: var(--bg); color: var(--text); }
     header { background: var(--white); padding: 15px; text-align: center; border-bottom: 1px solid #ddd; position: sticky; top: 0; z-index: 100; }
     
-    /* Navigazione per Tabs */
     .menu-nav { display: flex; justify-content: center; gap: 10px; padding: 15px; background: var(--white); }
     .nav-btn { 
       padding: 10px 20px; border-radius: 20px; border: 1px solid #ccc; background: white; 
-      cursor: pointer; font-weight: bold; color: var(--muted); text-transform: uppercase; font-size: 14px;
+      cursor: pointer; font-weight: bold; color: #666; text-transform: uppercase; font-size: 14px;
     }
     .nav-btn.active { background: #4a90e2; color: white; border-color: #4a90e2; }
 
-    /* Contenitore Sezioni */
     .menu-section { display: none; max-width: 600px; margin: 0 auto; padding: 10px; }
     .menu-section.active { display: block; }
 
-    /* Accordion (Sottomenù) */
     .accordion { background: var(--white); border-bottom: 1px solid #eee; margin-bottom: 5px; border-radius: 8px; overflow: hidden; }
     .accordion-header { 
       width: 100%; padding: 18px; text-align: left; background: none; border: none;
       font-weight: bold; font-size: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;
       text-transform: uppercase;
     }
-    .accordion-header:nth-child(even) { background-color: #f2f2f2; } /* Effetto zebrato come in foto */
     
     .accordion-content { display: none; padding: 15px; background: #fff; border-top: 1px solid #eee; }
-    .item { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .item-container { margin-bottom: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 10px; }
+    .item-container:last-child { border-bottom: none; }
+    .item-row { display: flex; justify-content: space-between; font-weight: bold; }
+    .allergeni-text { font-size: 0.85em; color: #666; font-style: italic; margin-top: 4px; }
 
     .btn-allergeni {
       display: block; width: 90%; max-width: 400px; margin: 20px auto; padding: 12px;
@@ -56,129 +55,81 @@
 </div>
 
 <div id="piatti" class="menu-section active">
+  
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Stuzzicherie e Contorni <span>▼</span></button>
-       
-    <div class="item-container" style="margin-bottom: 20px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Olive ascolane*</span>
-        <span>5,00 €</span>
-      </div>
-      <div style="font-size: 0.85em; color: #666; font-style: italic;">
-        Allergeni: Grano, Latte, Uova, Sedano
-      </div>
-    </div>
-
-    <div class="item-container" style="margin-bottom: 20px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Patate fritte*</span>
-        <span>4,00 €</span>
-      </div>
-      <div style="font-size: 0.85em; color: #666; font-style: italic;">
-        Allergeni: Frutta a guscio, Arachidi
-      </div>
-    </div>
-
-    <div class="item-container" style="margin-bottom: 20px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Verdure grigliate</span>
-        <span>6,00 €</span>
-      </div>
-      <div style="font-size: 0.85em; color: #666; font-style: italic;">
-        Nessun allergene dichiarato
-      </div>
-    </div>
-
-    <div class="item-container" style="margin-bottom: 20px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Verdure in pastella*</span>
-        <span>5,00 €</span>
-      </div>
-      <div style="font-size: 0.85em; color: #666; font-style: italic;">
-        Allergeni: Grano, Latte, Uova
-      </div>
-    </div>
-
-    <div class="item-container" style="margin-bottom: 20px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Insalata mista</span>
-        <span>4,00 €</span>
-      </div>
-    </div>
-
-    <div class="item-container" style="margin-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Insalata verde</span>
-        <span>3,00 €</span>
-      </div>
-    </div>
-
-  </div>
-</div>
-<div class="accordion" style="background:#f2f2f2;">
-  <button class="accordion-header" onclick="toggleAcc(this)">Specialità della Casa <span>▼</span></button>
-  <div class="accordion-content">
-    
-    <div class="item-container" style="margin-bottom: 10px;">
-      <div style="display: flex; justify-content: space-between; font-weight: bold;">
-        <span>Grigliata mista di carne con contorno</span>
-        <span>30,00 €</span>
-      </div>
-      <div style="font-size: 0.85em; color: #666; font-style: italic; margin-top: 5px;">
-        Carne di maiale, Carne di manzo, Carne di pollo
-      </div>
-    </div>
-
-  </div>
-</div>
-
-  <div class="accordion">
-    <button class="accordion-header" onclick="toggleAcc(this)">Le nostre pizze speciali <span>▼</span></button>
     <div class="accordion-content">
-      <div class="item"><span>Pizza Gourmet</span> <span>€ 10,00</span></div>
+      <div class="item-container">
+        <div class="item-row"><span>Olive ascolane*</span><span>5,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Grano, Latte, Uova, Sedano</div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Patate fritte*</span><span>4,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Frutta a guscio, Arachidi</div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Verdure grigliate</span><span>6,00 €</span></div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Verdure in pastella*</span><span>5,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Grano, Latte, Uova</div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Insalata mista</span><span>4,00 €</span></div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Insalata verde</span><span>3,00 €</span></div>
+      </div>
     </div>
   </div>
 
   <div class="accordion" style="background:#f2f2f2;">
+    <button class="accordion-header" onclick="toggleAcc(this)">Specialità della Casa <span>▼</span></button>
+    <div class="accordion-content">
+      <div class="item-container">
+        <div class="item-row"><span>Grigliata mista di carne con contorno</span><span>30,00 €</span></div>
+        <div class="allergeni-text">Maiale, Manzo, Pollo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Antipasti <span>▼</span></button>
     <div class="accordion-content">
-      <div class="item"><span>Tagliere Misto</span> <span>€ 9,00</span></div>
+      <div class="item-container">
+        <div class="item-row"><span>Tagliere della Locanda (X 2 persone)</span><span>25,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Grano, Latte, Frutta a guscio</div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Vitello tonnato</span><span>12,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Pesce, Uova</div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Battuta di fassona</span><span>14,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Uova, Senape</div>
+      </div>
+      <div class="item-container">
+        <div class="item-row"><span>Crostini burro e acciughe</span><span>10,00 €</span></div>
+        <div class="allergeni-text">Allergeni: Grano, Latte, Pesce</div>
+      </div>
     </div>
   </div>
 
+  <div class="accordion" style="background:#f2f2f2;">
+    <button class="accordion-header" onclick="toggleAcc(this)">Le nostre pizze speciali <span>▼</span></button>
+    <div class="accordion-content">Contenuto in arrivo...</div>
+  </div>
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Primi Piatti <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Ravioli del Plin</span> <span>€ 11,00</span></div>
-    </div>
+    <div class="accordion-content">Contenuto in arrivo...</div>
   </div>
-
   <div class="accordion" style="background:#f2f2f2;">
     <button class="accordion-header" onclick="toggleAcc(this)">Secondi Piatti <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Arrosto della casa</span> <span>€ 13,00</span></div>
-    </div>
+    <div class="accordion-content">Contenuto in arrivo...</div>
   </div>
-
-  <div class="accordion">
-    <button class="accordion-header" onclick="toggleAcc(this)">Insalatone <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Insalata Nizzarda</span> <span>€ 8,50</span></div>
-    </div>
-  </div>
-
-  <div class="accordion" style="background:#f2f2f2;">
-    <button class="accordion-header" onclick="toggleAcc(this)">Formaggi <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Selezione Formaggi locali</span> <span>€ 7,00</span></div>
-    </div>
-  </div>
-
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Dolci <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Tiramisù</span> <span>€ 5,00</span></div>
-    </div>
+    <div class="accordion-content">Contenuto in arrivo...</div>
   </div>
 </div>
 
@@ -186,32 +137,16 @@
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Acqua <span>▼</span></button>
     <div class="accordion-content">
-      <div class="item"><span>Acqua 0.5L</span> <span>€ 1,50</span></div>
+      <div class="item-row"><span>Acqua 0.5L</span><span>1,50 €</span></div>
     </div>
   </div>
-
   <div class="accordion" style="background:#f2f2f2;">
-    <button class="accordion-header" onclick="toggleAcc(this)">Aperitivi e Cocktail <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Spritz</span> <span>€ 5,00</span></div>
-    </div>
-  </div>
-
-  <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Bibite <span>▼</span></button>
     <div class="accordion-content">
-      <div class="item"><span>Coca Cola</span> <span>€ 3,00</span></div>
+      <div class="item-row"><span>Coca Cola</span><span>3,00 €</span></div>
     </div>
   </div>
-
-  <div class="accordion" style="background:#f2f2f2;">
-    <button class="accordion-header" onclick="toggleAcc(this)">Birre in Bottiglia <span>▼</span></button>
-    <div class="accordion-content">
-      <div class="item"><span>Birra locale 33cl</span> <span>€ 4,50</span></div>
-    </div>
-  </div>
-
-  <a href="#" class="btn-allergeni">LISTA ALLERGENI</a>
+  <a href="#" class="btn-allergeni">LISTA ALLERGENI COMPLETA</a>
 </div>
 
 <script>
@@ -225,10 +160,6 @@
   function toggleAcc(btn) {
     const content = btn.nextElementSibling;
     const isVisible = content.style.display === "block";
-    
-    // Chiudi tutti gli altri se vuoi (opzionale)
-    // document.querySelectorAll('.accordion-content').forEach(c => c.style.display = "none");
-
     content.style.display = isVisible ? "none" : "block";
     btn.querySelector('span').innerText = isVisible ? "▼" : "▲";
   }
