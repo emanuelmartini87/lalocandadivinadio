@@ -68,6 +68,55 @@
       padding:36px 28px;
       text-align:center;
       backdrop-filter:blur(6px);
+      position:relative;
+    }
+
+    .lang-switch{
+      position:absolute;
+      top:14px;
+      right:18px;
+      font-size:13px;
+      font-weight:700;
+      z-index:20;
+      text-align:left;
+    }
+
+    .lang-current{
+      background:#fff;
+      color:var(--accent-dark);
+      padding:6px 10px;
+      border-radius:999px;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      border:1px solid #ead8ce;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .lang-menu{
+      display:none;
+      position:absolute;
+      top:36px;
+      right:0;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+      overflow:hidden;
+      min-width:130px;
+      border:1px solid #ead8ce;
+    }
+
+    .lang-menu a{
+      display:block;
+      padding:9px 14px;
+      color:#333;
+      white-space:nowrap;
+      font-size:13px;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active{
+      background:#fff3eb;
+      color:var(--accent-dark);
     }
 
     .social-box{
@@ -77,6 +126,7 @@
       align-items:center;
       gap:12px;
       margin-bottom:20px;
+      padding-top:18px;
     }
 
     .social-icon{
@@ -313,6 +363,16 @@
   <header class="hero">
     <div class="hero-card">
 
+      <div class="lang-switch">
+        <div class="lang-current">EN ▾</div>
+        <div class="lang-menu">
+          <a href="/index.html">IT Italiano</a>
+          <a class="active" href="/index-en.html">EN English</a>
+          <a href="/index-fr.html">FR Français</a>
+          <a href="/index-de.html">DE Deutsch</a>
+        </div>
+      </div>
+
       <div class="social-box">
         <a class="social-icon facebook" href="https://www.facebook.com/p/La-locanda-di-Vinadio-100036786831516/" target="_blank" rel="noopener noreferrer" title="Follow us on Facebook">
           <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook La Locanda di Vinadio">
@@ -451,6 +511,20 @@
   <footer>
     © 2026 La Locanda di Vinadio · All rights reserved
   </footer>
+
+  <script>
+    const langSwitch = document.querySelector('.lang-switch');
+    const langMenu = document.querySelector('.lang-menu');
+
+    langSwitch.addEventListener('click', function(e){
+      e.stopPropagation();
+      langMenu.style.display = langMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function(){
+      langMenu.style.display = 'none';
+    });
+  </script>
 
 </body>
 </html>
