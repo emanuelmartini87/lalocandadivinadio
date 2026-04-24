@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>La Locanda di Vinadio | Restaurant, Bar und Pizzeria in Vinadio</title>
+  <meta name="description" content="La Locanda di Vinadio ist ein Restaurant, eine Bar und Pizzeria in Vinadio. Sehen Sie sich die Online-Speisekarte an, finden Sie uns und kontaktieren Sie uns für Informationen und Reservierungen.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="La Locanda di Vinadio">
+  <link rel="canonical" href="https://www.lalocandadivinadio.it/index-de.html">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="La Locanda di Vinadio | Restaurant, Bar und Pizzeria in Vinadio">
+  <meta property="og:description" content="Sehen Sie sich die Online-Speisekarte von La Locanda di Vinadio an und entdecken Sie das Restaurant.">
+  <meta property="og:url" content="https://www.lalocandadivinadio.it/index-de.html">
+  <meta property="og:image" content="https://www.lalocandadivinadio.it/immagini/copertina.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="La Locanda di Vinadio | Restaurant, Bar und Pizzeria in Vinadio">
+  <meta name="twitter:description" content="Sehen Sie sich die Online-Speisekarte von La Locanda di Vinadio an und entdecken Sie das Restaurant.">
+  <meta name="twitter:image" content="https://www.lalocandadivinadio.it/immagini/copertina.jpg">
+
+  <style>
+    :root{
+      --bg1:#f7f2ec;
+      --bg2:#fffaf5;
+      --text:#2b2b2b;
+      --muted:#6b7280;
+      --accent:#b5532d;
+      --accent-dark:#8d3f20;
+      --card:rgba(255,255,255,0.96);
+      --soft:#fff3eb;
+      --shadow:0 16px 40px rgba(0,0,0,.12);
+      --radius:24px;
+      --max:1100px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--text);
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      line-height:1.6;
+    }
+
+    a{text-decoration:none;color:inherit}
+
+    .hero{
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(0,0,0,.40), rgba(0,0,0,.45)),
+        url("immagini/copertina.jpg") center/cover no-repeat;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .hero-card{
+      width:100%;
+      max-width:820px;
+      background:rgba(255,255,255,.92);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:36px 28px;
+      text-align:center;
+      backdrop-filter:blur(6px);
+      position:relative;
+    }
+
+    .lang-switch{
+      position:absolute;
+      top:14px;
+      right:18px;
+      font-size:13px;
+      font-weight:700;
+      z-index:20;
+      text-align:left;
+    }
+
+    .lang-current{
+      background:#fff;
+      color:var(--accent-dark);
+      padding:6px 10px;
+      border-radius:999px;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      border:1px solid #ead8ce;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .lang-menu{
+      display:none;
+      position:absolute;
+      top:36px;
+      right:0;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+      overflow:hidden;
+      min-width:130px;
+      border:1px solid #ead8ce;
+    }
+
+    .lang-menu a{
+      display:block;
+      padding:9px 14px;
+      color:#333;
+      white-space:nowrap;
+      font-size:13px;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active{
+      background:#fff3eb;
+      color:var(--accent-dark);
+    }
+
+    .social-box{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      align-items:center;
+      gap:12px;
+      margin-bottom:20px;
+      padding-top:18px;
+    }
+
+    .social-icon{
+      width:42px;
+      height:42px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 14px rgba(0,0,0,.14);
+      transition:.25s ease;
+    }
+
+    .social-icon:hover,
+    .review-btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .social-icon img{
+      width:20px;
+      height:20px;
+      filter:invert(1);
+    }
+
+    .facebook{
+      background:#1877f2;
+    }
+
+    .instagram{
+      background:radial-gradient(circle at 30% 30%, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
+    }
+
+    .review-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 15px;
+      border-radius:999px;
+      background:#fff;
+      color:var(--accent-dark);
+      font-weight:700;
+      font-size:.92rem;
+      border:1px solid #ead8ce;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      transition:.25s ease;
+    }
+
+    .review-stars{
+      color:#f59e0b;
+      letter-spacing:1px;
+      font-size:.95rem;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      background:var(--soft);
+      color:var(--accent-dark);
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:.95rem;
+      font-weight:700;
+      margin-bottom:16px;
+    }
+
+    h1{
+      margin:0 0 12px;
+      font-size:clamp(2.2rem,5vw,4rem);
+      line-height:1.05;
+      color:var(--accent-dark);
+    }
+
+    .subtitle{
+      max-width:680px;
+      margin:0 auto 24px;
+      font-size:1.08rem;
+      color:#4b5563;
+    }
+
+    .buttons{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:14px 22px;
+      border-radius:16px;
+      font-weight:700;
+      transition:.2s ease;
+      box-shadow:0 8px 18px rgba(0,0,0,.08);
+    }
+
+    .btn-primary{
+      background:var(--accent);
+      color:#fff;
+    }
+
+    .btn-primary:hover{
+      background:var(--accent-dark);
+      transform:translateY(-1px);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--accent-dark);
+      border:1px solid #ead8ce;
+    }
+
+    .btn-secondary:hover{
+      background:#fff7f2;
+      transform:translateY(-1px);
+    }
+
+    .section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:70px 22px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:36px;
+    }
+
+    .section-title h2{
+      margin:0 0 10px;
+      font-size:2rem;
+      color:var(--accent-dark);
+    }
+
+    .section-title p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:22px;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px;
+    }
+
+    .card h3{
+      margin-top:0;
+      color:var(--accent-dark);
+    }
+
+    .info-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+
+    .info-list li{
+      padding:10px 0;
+      border-bottom:1px solid #eee;
+    }
+
+    .info-list li:last-child{
+      border-bottom:none;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:18px;
+    }
+
+    .gallery img{
+      width:100%;
+      height:230px;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      display:block;
+    }
+
+    .cta{
+      text-align:center;
+      background:linear-gradient(135deg,#fff3eb,#fffaf5);
+      border-radius:32px;
+      box-shadow:var(--shadow);
+      padding:34px 24px;
+    }
+
+    footer{
+      text-align:center;
+      padding:30px 20px 50px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    @media (max-width:700px){
+      .hero-card{padding:26px 20px}
+      .gallery img{height:200px}
+      .review-btn{
+        width:100%;
+        justify-content:center;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Restaurant",
+    "name":"La Locanda di Vinadio",
+    "url":"https://www.lalocandadivinadio.it/index-de.html",
+    "telephone":"+39 0171 959506",
+    "servesCuisine":"Italienisch, Piemontesisch, Pizza",
+    "address":{
+      "@type":"PostalAddress",
+      "streetAddress":"Via Roma, 16",
+      "postalCode":"12010",
+      "addressLocality":"Vinadio",
+      "addressRegion":"CN",
+      "addressCountry":"IT"
+    },
+    "menu":"https://www.lalocandadivinadio.it/pagine/menu-de.html"
+  }
+  </script>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="hero-card">
+
+      <div class="lang-switch">
+        <div class="lang-current">DE ▾</div>
+        <div class="lang-menu">
+          <a href="/index.html">IT Italiano</a>
+          <a href="/index-en.html">EN English</a>
+          <a href="/index-fr.html">FR Français</a>
+          <a class="active" href="/index-de.html">DE Deutsch</a>
+        </div>
+      </div>
+
+      <div class="social-box">
+        <a class="social-icon facebook" href="https://www.facebook.com/p/La-locanda-di-Vinadio-100036786831516/" target="_blank" rel="noopener noreferrer" title="Folgen Sie uns auf Facebook">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook La Locanda di Vinadio">
+        </a>
+
+        <a class="social-icon instagram" href="https://www.instagram.com/la.locanda.di.vinadio/" target="_blank" rel="noopener noreferrer" title="Folgen Sie uns auf Instagram">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram La Locanda di Vinadio">
+        </a>
+
+        <a class="review-btn" href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E" target="_blank" rel="noopener noreferrer" title="Eine Bewertung auf Google schreiben">
+          <span class="review-stars">★★★★★</span>
+          Hat Ihnen Ihr Besuch gefallen? Schreiben Sie eine Bewertung
+        </a>
+      </div>
+
+      <div class="eyebrow">Restaurant · Bar · Pizzeria in Vinadio</div>
+      <h1>La Locanda di Vinadio</h1>
+      <p class="subtitle">
+        Ein einladender Ort im Herzen von Vinadio, ideal für eine Pause, ein Mittagessen,
+        ein Abendessen oder eine Pizza mit Freunden. Sehen Sie sich unsere Online-Speisekarte an
+        und besuchen Sie uns.
+      </p>
+
+      <div class="buttons">
+        <a class="btn btn-primary" href="pagine/menu-de.html">
+          Unsere Speisekarte
+        </a>
+        <a class="btn btn-secondary" href="#contatti">Kontakt</a>
+        <a class="btn btn-secondary" href="#dove-siamo">Wo wir sind</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-title">
+        <h2>Willkommen</h2>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Das Restaurant</h3>
+          <p>
+            La Locanda di Vinadio ist ein Bezugspunkt in Vinadio für alle, die eine
+            gesellige Atmosphäre und ein Angebot für verschiedene Tagesmomente suchen,
+            mit Küche, Pizza und Barservice.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Online-Speisekarte</h3>
+          <p>
+            Unsere Speisekarte ist einfach und direkt online verfügbar.
+            Öffnen Sie sie mit nur einem Klick direkt auf Ihrem Smartphone.
+          </p>
+          <p>
+            <a class="btn btn-primary" href="pagine/menu-de.html">
+              Speisekarte öffnen
+            </a>
+          </p>
+        </div>
+
+        <div class="card" id="contatti">
+          <h3>Kontakt</h3>
+          <ul class="info-list">
+            <li><strong>Name:</strong> La Locanda di Vinadio</li>
+            <li><strong>Adresse:</strong> Via Roma, 16 - 12010 Vinadio CN</li>
+            <li><strong>Telefon:</strong> <a href="tel:+390171959506">0171 959506</a></li>
+            <li><strong>Speisekarte:</strong> immer online verfügbar</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Galerie</h2>
+        <p>Hier werden wir echte Fotos des Restaurants, des Speisesaals und der Gerichte einfügen.</p>
+      </div>
+
+      <div class="gallery">
+        <img src="immagini/foto1.jpg" alt="Innenbereich von La Locanda di Vinadio">
+        <img src="immagini/foto2.jpg" alt="Gerichte von La Locanda di Vinadio">
+        <img src="immagini/foto3.jpg" alt="Ambiente des Restaurants La Locanda di Vinadio">
+      </div>
+    </section>
+
+    <section class="section" id="dove-siamo">
+      <div class="section-title">
+        <h2>Wo wir sind</h2>
+        <p>Sie finden uns in Vinadio, Via Roma 16.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Adresse</h3>
+          <p>
+            <strong>La Locanda di Vinadio</strong><br>
+            Via Roma, 16<br>
+            12010 Vinadio CN
+          </p>
+          <p>
+            <a class="btn btn-secondary" href="https://www.google.com/maps/search/?api=1&query=La+Locanda+di+Vinadio+Via+Roma+16+Vinadio" target="_blank" rel="noopener noreferrer">
+              In Google Maps öffnen
+            </a>
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Schneller Kontakt</h3>
+          <p>
+            Für Informationen oder Reservierungen können Sie das Restaurant direkt unter folgender Nummer kontaktieren:
+          </p>
+          <p>
+            <a class="btn btn-primary" href="tel:+390171959506">0171 959506</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="cta">
+        <h2>Entdecken Sie die Online-Speisekarte</h2>
+        <p>Sehen Sie sich die Angebote des Restaurants direkt online an.</p>
+        <div class="buttons">
+          <a class="btn btn-primary" href="pagine/menu-de.html">
+            Speisekarte öffnen
+          </a>
+          <a class="btn btn-secondary" href="tel:+390171959506">
+            Jetzt anrufen
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 La Locanda di Vinadio · Alle Rechte vorbehalten
+  </footer>
+
+  <script>
+    const langSwitch = document.querySelector('.lang-switch');
+    const langMenu = document.querySelector('.lang-menu');
+
+    langSwitch.addEventListener('click', function(e){
+      e.stopPropagation();
+      langMenu.style.display = langMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function(){
+      langMenu.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
