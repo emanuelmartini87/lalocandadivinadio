@@ -38,6 +38,62 @@
       z-index: 100;
     }
 
+    .header-inner{
+      position:relative;
+      max-width:700px;
+      margin:0 auto;
+      min-height:32px;
+    }
+
+    .lang-switch{
+      position:absolute;
+      top:0;
+      right:0;
+      font-size:13px;
+      font-weight:700;
+      z-index:120;
+      text-align:left;
+    }
+
+    .lang-current{
+      background:#fff;
+      color:var(--accent);
+      padding:6px 10px;
+      border-radius:999px;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      border:1px solid #ead8ce;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .lang-menu{
+      display:none;
+      position:absolute;
+      top:36px;
+      right:0;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+      overflow:hidden;
+      min-width:130px;
+      border:1px solid #ead8ce;
+    }
+
+    .lang-menu a{
+      display:block;
+      padding:9px 14px;
+      color:#333;
+      white-space:nowrap;
+      font-size:13px;
+      text-decoration:none;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active{
+      background:#fff3eb;
+      color:var(--accent);
+    }
+
     .menu-nav {
       display: flex;
       justify-content: center;
@@ -331,7 +387,19 @@
 <body>
   <div id="allergeneTooltip" class="allergene-tooltip"></div>
   <header>
-    <h2 style="margin:0; color:var(--accent);">La Locanda di Vinadio</h2>
+    <div class="header-inner">
+      <h2 style="margin:0; color:var(--accent);">La Locanda di Vinadio</h2>
+
+      <div class="lang-switch">
+        <div class="lang-current">IT ▾</div>
+        <div class="lang-menu">
+          <a class="active" href="/pagine/menu.html">IT Italiano</a>
+          <a href="/pagine/menu-en.html">EN English</a>
+          <a href="/pagine/menu-fr.html">FR Français</a>
+          <a href="/pagine/menu-de.html">DE Deutsch</a>
+        </div>
+      </div>
+    </div>
   </header>
 
   <div class="menu-nav">
@@ -394,320 +462,69 @@
       <button class="accordion-header" onclick="toggleAcc(this)">Le Nostre Pizze Speciali <span>▼</span></button>
       <div class="accordion-content">
 
-        <div class="item-container">
-          <div class="item-row"><span>4 formaggi</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, gorgonzola, raschera e fontina</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>4 stagioni</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, prosciutto, carciofi, funghi e olive</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Ada</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Focaccia al formaggio e prosciutto cotto</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Anna</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, porri, radicchio e zucchine</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Antonino</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, salsiccia, salame piccante e wurstel</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Arrabbiata</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Pomodoro e peperoncino</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Attila</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Mozzarella, salsiccia, friarielli e olive</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Balma</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, raschera e salsiccia</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bessa</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, gorgonzola, peperoni e tonno</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bismarc</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, pancetta e uovo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bufala</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella di bufala</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Calzone</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e prosciutto</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Calzone del finanziere</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, prosciutto, funghi, salame piccante e stracchino</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Calzone farcito</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, prosciutto e funghi</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Capomelinda</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro fresco, mozzarella, panna e speck</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Cuddiruni</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, pecorino, acciughe e cipolla</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Diavolina</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e salame piccante</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Diego Maus</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, prosciutto cotto, fontina e aglio</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Focaccia al formaggio</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Focaccia chiusa con stracchino, formaggio</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Focaccia Lardo e Pomodorini</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Lardo, focaccia, pomodorini</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Friarielli</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e friarielli</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Funghi</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e funghi</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Giovannone</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Mozzarella, porcini, pancetta, brie, salsiccia e salame piccante</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Gioele</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pomodoro fresco, mozzarella, panna, tonno, salmone</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Golosa</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, cipolla, uova, salsiccia e patate fritte</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Gorgonzola</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e gorgonzola</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Italia</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, surimi e gamberetti</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Javier</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, scamorza, salsiccia, porri</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Margherita</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Maria</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pomodoro fresco, speck, olive, mais</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Marinara</span><span>4,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, aglio</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Napoli</span><span>6,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, acciughe</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nico</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Mozzarella di bufala, spinaci e salmone</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Parmigiana</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, melanzane e parmigiano</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Patatosa</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, patate fritte</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Peperoni</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e peperoni</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Piccantina</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Mozzarella, friarielli, acciughe e salame piccante</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pizza del maresciallo</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro fresco, mozzarella, prosciutto crudo, rucola e scaglie di grana</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pizza del maresciallo bis</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, funghi, piselli, uovo, prosciutto cotto, olive</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pizza della Locanda</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Focaccia al formaggio con pomodoro e acciughe</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Prosciutto cotto</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e prosciutto cotto</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Prosciutto crudo</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e prosciutto crudo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Prosciutto e funghi</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, prosciutto cotto e funghi</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pugliese</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e cipolla</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Raffa</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, salsiccia e peperoni</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Raoul</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, cipolla, salsiccia e gorgonzola - Tomate, mozzarella, oignon, saucisse et gorgonzola</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Romana</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, olive, capperi e acciughe</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salame dolce</span><span>6,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e salame dolce</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salamina</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Mozzarella, friarielli e salame piccante</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salvatore</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, gorgonzola, cipolla, acciughe, pancetta, olive</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Speck e Brie</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, speck e brie</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Stalle</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, raschera e speck</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Stracchino</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro e stracchino</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Teresa</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, wurstel e patate fritte</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tonno</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e tonno</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tonno e Cipolle</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, tonno e cipolle</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Trinacria</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Pomodorini, mozzarella e in uscita burrata e mortadella</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vegetariana</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e verdure grigliate</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vito</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, bresaola, rucola e grana</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vito piccolo</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella, funghi porcini, salame piccante e rucola</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Wurstel</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pomodoro, mozzarella e wurstel</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nicola</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Mozzarella di Bufala, pesto e pomodorini gialli</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Giada</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Mozzarella, fontina, gorgonzola, mais e salsiccia</div>
-        </div>
+        <div class="item-container"><div class="item-row"><span>4 formaggi</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, gorgonzola, raschera e fontina</div></div>
+        <div class="item-container"><div class="item-row"><span>4 stagioni</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, prosciutto, carciofi, funghi e olive</div></div>
+        <div class="item-container"><div class="item-row"><span>Ada</span><span>11,00 €</span></div><div class="allergeni-text">Focaccia al formaggio e prosciutto cotto</div></div>
+        <div class="item-container"><div class="item-row"><span>Anna</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, porri, radicchio e zucchine</div></div>
+        <div class="item-container"><div class="item-row"><span>Antonino</span><span>10,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, salsiccia, salame piccante e wurstel</div></div>
+        <div class="item-container"><div class="item-row"><span>Arrabbiata</span><span>5,00 €</span></div><div class="allergeni-text">Pomodoro e peperoncino</div></div>
+        <div class="item-container"><div class="item-row"><span>Attila</span><span>9,50 €</span></div><div class="allergeni-text">Mozzarella, salsiccia, friarielli e olive</div></div>
+        <div class="item-container"><div class="item-row"><span>Balma</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, raschera e salsiccia</div></div>
+        <div class="item-container"><div class="item-row"><span>Bessa</span><span>9,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, gorgonzola, peperoni e tonno</div></div>
+        <div class="item-container"><div class="item-row"><span>Bismarc</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, pancetta e uovo</div></div>
+        <div class="item-container"><div class="item-row"><span>Bufala</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella di bufala</div></div>
+        <div class="item-container"><div class="item-row"><span>Calzone</span><span>7,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e prosciutto</div></div>
+        <div class="item-container"><div class="item-row"><span>Calzone del finanziere</span><span>9,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, prosciutto, funghi, salame piccante e stracchino</div></div>
+        <div class="item-container"><div class="item-row"><span>Calzone farcito</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, prosciutto e funghi</div></div>
+        <div class="item-container"><div class="item-row"><span>Capomelinda</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro fresco, mozzarella, panna e speck</div></div>
+        <div class="item-container"><div class="item-row"><span>Cuddiruni</span><span>7,50 €</span></div><div class="allergeni-text">Pomodoro, pecorino, acciughe e cipolla</div></div>
+        <div class="item-container"><div class="item-row"><span>Diavolina</span><span>7,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e salame piccante</div></div>
+        <div class="item-container"><div class="item-row"><span>Diego Maus</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, prosciutto cotto, fontina e aglio</div></div>
+        <div class="item-container"><div class="item-row"><span>Focaccia al formaggio</span><span>9,50 €</span></div><div class="allergeni-text">Focaccia chiusa con stracchino, formaggio</div></div>
+        <div class="item-container"><div class="item-row"><span>Focaccia Lardo e Pomodorini</span><span>8,50 €</span></div><div class="allergeni-text">Lardo, focaccia, pomodorini</div></div>
+        <div class="item-container"><div class="item-row"><span>Friarielli</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e friarielli</div></div>
+        <div class="item-container"><div class="item-row"><span>Funghi</span><span>7,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e funghi</div></div>
+        <div class="item-container"><div class="item-row"><span>Giovannone</span><span>11,00 €</span></div><div class="allergeni-text">Mozzarella, porcini, pancetta, brie, salsiccia e salame piccante</div></div>
+        <div class="item-container"><div class="item-row"><span>Gioele</span><span>10,00 €</span></div><div class="allergeni-text">Pomodoro fresco, mozzarella, panna, tonno, salmone</div></div>
+        <div class="item-container"><div class="item-row"><span>Golosa</span><span>9,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, cipolla, uova, salsiccia e patate fritte</div></div>
+        <div class="item-container"><div class="item-row"><span>Gorgonzola</span><span>7,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e gorgonzola</div></div>
+        <div class="item-container"><div class="item-row"><span>Italia</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, surimi e gamberetti</div></div>
+        <div class="item-container"><div class="item-row"><span>Javier</span><span>9,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, scamorza, salsiccia, porri</div></div>
+        <div class="item-container"><div class="item-row"><span>Margherita</span><span>5,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella</div></div>
+        <div class="item-container"><div class="item-row"><span>Maria</span><span>9,00 €</span></div><div class="allergeni-text">Pomodoro fresco, speck, olive, mais</div></div>
+        <div class="item-container"><div class="item-row"><span>Marinara</span><span>4,50 €</span></div><div class="allergeni-text">Pomodoro, aglio</div></div>
+        <div class="item-container"><div class="item-row"><span>Napoli</span><span>6,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, acciughe</div></div>
+        <div class="item-container"><div class="item-row"><span>Nico</span><span>12,00 €</span></div><div class="allergeni-text">Mozzarella di bufala, spinaci e salmone</div></div>
+        <div class="item-container"><div class="item-row"><span>Parmigiana</span><span>9,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, melanzane e parmigiano</div></div>
+        <div class="item-container"><div class="item-row"><span>Patatosa</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, patate fritte</div></div>
+        <div class="item-container"><div class="item-row"><span>Peperoni</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e peperoni</div></div>
+        <div class="item-container"><div class="item-row"><span>Piccantina</span><span>8,50 €</span></div><div class="allergeni-text">Mozzarella, friarielli, acciughe e salame piccante</div></div>
+        <div class="item-container"><div class="item-row"><span>Pizza del maresciallo</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro fresco, mozzarella, prosciutto crudo, rucola e scaglie di grana</div></div>
+        <div class="item-container"><div class="item-row"><span>Pizza del maresciallo bis</span><span>9,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, funghi, piselli, uovo, prosciutto cotto, olive</div></div>
+        <div class="item-container"><div class="item-row"><span>Pizza della Locanda</span><span>10,00 €</span></div><div class="allergeni-text">Focaccia al formaggio con pomodoro e acciughe</div></div>
+        <div class="item-container"><div class="item-row"><span>Prosciutto cotto</span><span>7,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e prosciutto cotto</div></div>
+        <div class="item-container"><div class="item-row"><span>Prosciutto crudo</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e prosciutto crudo</div></div>
+        <div class="item-container"><div class="item-row"><span>Prosciutto e funghi</span><span>7,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, prosciutto cotto e funghi</div></div>
+        <div class="item-container"><div class="item-row"><span>Pugliese</span><span>7,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e cipolla</div></div>
+        <div class="item-container"><div class="item-row"><span>Raffa</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, salsiccia e peperoni</div></div>
+        <div class="item-container"><div class="item-row"><span>Raoul</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, cipolla, salsiccia e gorgonzola - Tomate, mozzarella, oignon, saucisse et gorgonzola</div></div>
+        <div class="item-container"><div class="item-row"><span>Romana</span><span>7,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, olive, capperi e acciughe</div></div>
+        <div class="item-container"><div class="item-row"><span>Salame dolce</span><span>6,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e salame dolce</div></div>
+        <div class="item-container"><div class="item-row"><span>Salamina</span><span>8,00 €</span></div><div class="allergeni-text">Mozzarella, friarielli e salame piccante</div></div>
+        <div class="item-container"><div class="item-row"><span>Salvatore</span><span>10,00 €</span></div><div class="allergeni-text">Pomodoro, gorgonzola, cipolla, acciughe, pancetta, olive</div></div>
+        <div class="item-container"><div class="item-row"><span>Speck e Brie</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, speck e brie</div></div>
+        <div class="item-container"><div class="item-row"><span>Stalle</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, raschera e speck</div></div>
+        <div class="item-container"><div class="item-row"><span>Stracchino</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro e stracchino</div></div>
+        <div class="item-container"><div class="item-row"><span>Teresa</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, wurstel e patate fritte</div></div>
+        <div class="item-container"><div class="item-row"><span>Tonno</span><span>7,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e tonno</div></div>
+        <div class="item-container"><div class="item-row"><span>Tonno e Cipolle</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, tonno e cipolle</div></div>
+        <div class="item-container"><div class="item-row"><span>Trinacria</span><span>11,00 €</span></div><div class="allergeni-text">Pomodorini, mozzarella e in uscita burrata e mortadella</div></div>
+        <div class="item-container"><div class="item-row"><span>Vegetariana</span><span>8,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e verdure grigliate</div></div>
+        <div class="item-container"><div class="item-row"><span>Vito</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, bresaola, rucola e grana</div></div>
+        <div class="item-container"><div class="item-row"><span>Vito piccolo</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, mozzarella, funghi porcini, salame piccante e rucola</div></div>
+        <div class="item-container"><div class="item-row"><span>Wurstel</span><span>7,00 €</span></div><div class="allergeni-text">Pomodoro, mozzarella e wurstel</div></div>
+        <div class="item-container"><div class="item-row"><span>Nicola</span><span>11,00 €</span></div><div class="allergeni-text">Mozzarella di Bufala, pesto e pomodorini gialli</div></div>
+        <div class="item-container"><div class="item-row"><span>Giada</span><span>10,00 €</span></div><div class="allergeni-text">Mozzarella, fontina, gorgonzola, mais e salsiccia</div></div>
 
       </div>
     </div>
@@ -715,326 +532,93 @@
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Antipasti <span>▼</span></button>
       <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Antipasto della locanda</span><span>15,00 €</span></div>
-          <div class="allergeni-text">Pesce (Pesce), Latte vaccino (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vitello tonnato</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Carne di vitello, Farina di grano tenero (Grano), Sedano (Sedano), capperi, Burro (Latte), Maionese (Uova), Carote, Cipolla, Aglio, Tonno (Pesce), Acciughe (Pesce)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Carpaccio di salmone con pomodorini</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Salmone (Pesce), Pomodorini, Salmone crudo (Pesce)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bresaola rucola e grana</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Rucola, Bresaola di manzo, Grana padano dop (Latte, Uova)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Cocktail di gamberi</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pepe nero, Gamberetti (Crostacei), Salsa tabasco, Aceto di vino, Lattuga, Salsa rosa (Uova), Gamberi (Crostacei), Molluschi (Molluschi)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tomino con speck al forno</span><span>6,00 €</span></div>
-          <div class="allergeni-text">Speck, Tomino fresco (Latte)</div>
-        </div>
-
+        <div class="item-container"><div class="item-row"><span>Antipasto della locanda</span><span>15,00 €</span></div><div class="allergeni-text">Pesce (Pesce), Latte vaccino (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Vitello tonnato</span><span>10,00 €</span></div><div class="allergeni-text">Carne di vitello, Farina di grano tenero (Grano), Sedano (Sedano), capperi, Burro (Latte), Maionese (Uova), Carote, Cipolla, Aglio, Tonno (Pesce), Acciughe (Pesce)</div></div>
+        <div class="item-container"><div class="item-row"><span>Carpaccio di salmone con pomodorini</span><span>12,00 €</span></div><div class="allergeni-text">Salmone (Pesce), Pomodorini, Salmone crudo (Pesce)</div></div>
+        <div class="item-container"><div class="item-row"><span>Bresaola rucola e grana</span><span>10,00 €</span></div><div class="allergeni-text">Rucola, Bresaola di manzo, Grana padano dop (Latte, Uova)</div></div>
+        <div class="item-container"><div class="item-row"><span>Cocktail di gamberi</span><span>10,00 €</span></div><div class="allergeni-text">Pepe nero, Gamberetti (Crostacei), Salsa tabasco, Aceto di vino, Lattuga, Salsa rosa (Uova), Gamberi (Crostacei), Molluschi (Molluschi)</div></div>
+        <div class="item-container"><div class="item-row"><span>Tomino con speck al forno</span><span>6,00 €</span></div><div class="allergeni-text">Speck, Tomino fresco (Latte)</div></div>
       </div>
     </div>
 
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Primi Piatti <span>▼</span></button>
       <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset crema di porri</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Porro, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset* salsiccia e porcini*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Salsiccia di maiale, Funghi porcini, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset* al ragù di salsiccia*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Ragù di carne (Sedano), Salsiccia di maiale, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne all'arrabbiata</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Sugo all'arrabbiata, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne al ragù</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Ragù di carne (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne zucchine e gamberetti</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Zucchine, Gamberetti (Crostacei), Panna (Latte), Pesce (Pesce)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne al pesto</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Pesto (Latte, Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne al salmone</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta (Grano), Salmone (Pesce), Panna (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini a cinghiale*</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Carne di cinghiale, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* al pomodoro</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pomodoro, Pasta fresca all'uovo (Grano, Uova), Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* all'arrabbiata</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Sugo all'arrabbiata, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* salsiccia e porcini*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Salsiccia di maiale, Funghi porcini, Panna (Latte), Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* al ragù</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Ragù di carne (Sedano), Sedano (Sedano)</div>
-        </div>
-
+        <div class="item-container"><div class="item-row"><span>Crouset crema di porri</span><span>12,00 €</span></div><div class="allergeni-text">Porro, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Crouset* salsiccia e porcini*</span><span>12,00 €</span></div><div class="allergeni-text">Salsiccia di maiale, Funghi porcini, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Crouset* al ragù di salsiccia*</span><span>12,00 €</span></div><div class="allergeni-text">Ragù di carne (Sedano), Salsiccia di maiale, Pasta fresca all'uovo (Grano, Uova), Panna (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Penne all'arrabbiata</span><span>7,00 €</span></div><div class="allergeni-text">Pasta (Grano), Sugo all'arrabbiata, Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Penne al ragù</span><span>8,00 €</span></div><div class="allergeni-text">Pasta (Grano), Ragù di carne (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Penne zucchine e gamberetti</span><span>10,00 €</span></div><div class="allergeni-text">Pasta (Grano), Zucchine, Gamberetti (Crostacei), Panna (Latte), Pesce (Pesce)</div></div>
+        <div class="item-container"><div class="item-row"><span>Penne al pesto</span><span>7,00 €</span></div><div class="allergeni-text">Pasta (Grano), Pesto (Latte, Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Penne al salmone</span><span>10,00 €</span></div><div class="allergeni-text">Pasta (Grano), Salmone (Pesce), Panna (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Taglierini a cinghiale*</span><span>10,00 €</span></div><div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Carne di cinghiale, Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Taglierini* al pomodoro</span><span>8,50 €</span></div><div class="allergeni-text">Pomodoro, Pasta fresca all'uovo (Grano, Uova), Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Taglierini* all'arrabbiata</span><span>8,50 €</span></div><div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Sugo all'arrabbiata, Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Taglierini* salsiccia e porcini*</span><span>11,00 €</span></div><div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Salsiccia di maiale, Funghi porcini, Panna (Latte), Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Taglierini* al ragù</span><span>9,00 €</span></div><div class="allergeni-text">Pasta fresca all'uovo (Grano, Uova), Ragù di carne (Sedano), Sedano (Sedano)</div></div>
       </div>
     </div>
 
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Secondi Piatti <span>▼</span></button>
       <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Sottofiletto ai ferri</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Carne di manzo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Sottofiletto ai funghi porcini*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Funghi, Funghi porcini, Carne di manzo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salsiccia e patate</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Salsiccia di maiale, Patate</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bistecca e patate</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Patate, Pepe nero, Sale, Olio extravergine di oliva, Carne di maiale</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tagliata rucola e grana</span><span>16,00 €</span></div>
-          <div class="allergeni-text">Rucola, Grana padano dop (Latte, Uova), Pepe nero, Sale, Olio extravergine di oliva, Carne di manzo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pesce spada* ai ferri</span><span>16,00 €</span></div>
-          <div class="allergeni-text">Pesce spada (Pesce), Pesce (Pesce)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta al ragù di salsiccia</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Ragù di carne (Sedano), Salsiccia di maiale, Polenta</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta al gorgonzola e raschera</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Gorgonzola dop (Latte), Polenta, Raschera dop (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta al cinghiale*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Carne di cinghiale, Polenta, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta ai funghi porcini*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Funghi, Funghi porcini, Polenta, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta ai funghi porcini*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Funghi, Funghi porcini, Polenta, Sedano (Sedano)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Grigliata mista di carne con contorno</span><span>30,00 €</span></div>
-          <div class="allergeni-text">Carne di manzo, Carne di pollo, Carne di maiale</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Braciola e patate fritte</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Patate fritte (Frutta a guscio, Arachidi), Patate, Frittura (Grano, Frutta a guscio, Arachidi), Carne di maiale, Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Capocollo e patate fritte</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Patate fritte (Frutta a guscio, Arachidi), Patate, Coppa, Frittura (Grano, Frutta a guscio, Arachidi), Frutta secca (Frutta a guscio)</div>
-        </div>
-
+        <div class="item-container"><div class="item-row"><span>Sottofiletto ai ferri</span><span>10,00 €</span></div><div class="allergeni-text">Carne di manzo</div></div>
+        <div class="item-container"><div class="item-row"><span>Sottofiletto ai funghi porcini*</span><span>12,00 €</span></div><div class="allergeni-text">Funghi, Funghi porcini, Carne di manzo</div></div>
+        <div class="item-container"><div class="item-row"><span>Salsiccia e patate</span><span>9,00 €</span></div><div class="allergeni-text">Salsiccia di maiale, Patate</div></div>
+        <div class="item-container"><div class="item-row"><span>Bistecca e patate</span><span>10,00 €</span></div><div class="allergeni-text">Patate, Pepe nero, Sale, Olio extravergine di oliva, Carne di maiale</div></div>
+        <div class="item-container"><div class="item-row"><span>Tagliata rucola e grana</span><span>16,00 €</span></div><div class="allergeni-text">Rucola, Grana padano dop (Latte, Uova), Pepe nero, Sale, Olio extravergine di oliva, Carne di manzo</div></div>
+        <div class="item-container"><div class="item-row"><span>Pesce spada* ai ferri</span><span>16,00 €</span></div><div class="allergeni-text">Pesce spada (Pesce), Pesce (Pesce)</div></div>
+        <div class="item-container"><div class="item-row"><span>Polenta al ragù di salsiccia</span><span>10,00 €</span></div><div class="allergeni-text">Ragù di carne (Sedano), Salsiccia di maiale, Polenta</div></div>
+        <div class="item-container"><div class="item-row"><span>Polenta al gorgonzola e raschera</span><span>10,00 €</span></div><div class="allergeni-text">Gorgonzola dop (Latte), Polenta, Raschera dop (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Polenta al cinghiale*</span><span>11,00 €</span></div><div class="allergeni-text">Carne di cinghiale, Polenta, Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Polenta ai funghi porcini*</span><span>11,00 €</span></div><div class="allergeni-text">Funghi, Funghi porcini, Polenta, Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Polenta ai funghi porcini*</span><span>11,00 €</span></div><div class="allergeni-text">Funghi, Funghi porcini, Polenta, Sedano (Sedano)</div></div>
+        <div class="item-container"><div class="item-row"><span>Grigliata mista di carne con contorno</span><span>30,00 €</span></div><div class="allergeni-text">Carne di manzo, Carne di pollo, Carne di maiale</div></div>
+        <div class="item-container"><div class="item-row"><span>Braciola e patate fritte</span><span>10,00 €</span></div><div class="allergeni-text">Patate fritte (Frutta a guscio, Arachidi), Patate, Frittura (Grano, Frutta a guscio, Arachidi), Carne di maiale, Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Capocollo e patate fritte</span><span>10,00 €</span></div><div class="allergeni-text">Patate fritte (Frutta a guscio, Arachidi), Patate, Coppa, Frittura (Grano, Frutta a guscio, Arachidi), Frutta secca (Frutta a guscio)</div></div>
       </div>
     </div>
 
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Insalatone <span>▼</span></button>
       <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>La Locanda</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Insalata, Pomodoro, mozzarella, Scaglie di grana, Prosciutto crudo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Marinara</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Insalata, Pomodoro, gamberetti, tonno, surimi</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nico</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Insalata, cipolla, Pomodoro, acciughe, uovo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Provenzale</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Insalata, Pomodoro, scamorza, speck, carciofini</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Insalatona classica</span><span>8,00 €</span></div>
-          <div class="allergeni-text">insalata, Pomodoro, mozzarella, mais, tonno</div>
-        </div>
-
+        <div class="item-container"><div class="item-row"><span>La Locanda</span><span>8,50 €</span></div><div class="allergeni-text">Insalata, Pomodoro, mozzarella, Scaglie di grana, Prosciutto crudo</div></div>
+        <div class="item-container"><div class="item-row"><span>Marinara</span><span>9,50 €</span></div><div class="allergeni-text">Insalata, Pomodoro, gamberetti, tonno, surimi</div></div>
+        <div class="item-container"><div class="item-row"><span>Nico</span><span>10,00 €</span></div><div class="allergeni-text">Insalata, cipolla, Pomodoro, acciughe, uovo</div></div>
+        <div class="item-container"><div class="item-row"><span>Provenzale</span><span>8,50 €</span></div><div class="allergeni-text">Insalata, Pomodoro, scamorza, speck, carciofini</div></div>
+        <div class="item-container"><div class="item-row"><span>Insalatona classica</span><span>8,00 €</span></div><div class="allergeni-text">insalata, Pomodoro, mozzarella, mais, tonno</div></div>
       </div>
     </div>
 
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Formaggi <span>▼</span></button>
       <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Gorgonzola</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Gorgonzola dop (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Raschera</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Raschera dop (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Stracchino</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Stracchino (Latte)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Grana</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Grana padano dop (Latte, Uova)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Piatto misto di formaggi</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Formaggi (Latte)</div>
-        </div>
-
+        <div class="item-container"><div class="item-row"><span>Gorgonzola</span><span>5,00 €</span></div><div class="allergeni-text">Gorgonzola dop (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Raschera</span><span>4,00 €</span></div><div class="allergeni-text">Raschera dop (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Stracchino</span><span>4,00 €</span></div><div class="allergeni-text">Stracchino (Latte)</div></div>
+        <div class="item-container"><div class="item-row"><span>Grana</span><span>4,00 €</span></div><div class="allergeni-text">Grana padano dop (Latte, Uova)</div></div>
+        <div class="item-container"><div class="item-row"><span>Piatto misto di formaggi</span><span>10,00 €</span></div><div class="allergeni-text">Formaggi (Latte)</div></div>
       </div>
     </div>
 
     <div class="accordion">
       <button class="accordion-header" onclick="toggleAcc(this)">Dolci <span>▼</span></button>
       <div class="accordion-content">
-        
-        <div class="item-container">
-          <div class="item-row"><span>Crema catalana</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Crema catalana (Latte, Uova), Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Panna cotta al cioccolato</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Cioccolato, Cioccolato al latte (Latte), Panna (Latte), Panna cotta (Latte), Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Panna cotta alla fragola</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Fragole, Panna cotta (Latte), Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Panna cotta ai frutti di bosco</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Panna (Latte), Panna cotta (Latte), Lamponi, Mirtilli, Ribes, Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Torta della casa</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Variabile (possibili allergeni)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Profitterol Nero</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Bignè (Grano, Latte, Uova), Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Meringata</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Zucchero, Panna montata (Latte), Pan di spagna (Grano, Uova), Crema pasticciera (Latte, Uova), Succo di limone, Albume d'uovo di gallina (Uova), Estratto di vaniglia, Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Gelato al cocco</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Cocco, Gelato (Latte), Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Gelato al limone</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Gelato (Latte), Limone, Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Sorbetto al limone</span><span>3,50 €</span></div>
-          <div class="allergeni-text">Limone, Sorbetto, Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tartufo bianco o nero</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Cacao in polvere, Nocciole (Frutta a guscio), Zucchero, Latte vaccino (Latte), Panna (Latte), Cioccolato fondente</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Semifreddo al torroncino</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Torrone (Uova, Frutta a guscio), Farina di grano tenero (Grano), Zucchero, Panna montata (Latte), Uova di gallina (Uova), Zucchero a velo</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Coppa variegato / amarena / cioccolato</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Amarene, Cioccolato, Gelato (Latte), Frutta secca (Frutta a guscio)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Crostata del giorno</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Farina di grano tenero (Grano), Zucchero, Burro (Latte), Uova di gallina (Uova), Variabile (possibili allergeni)</div>
-        </div>        
+        <div class="item-container"><div class="item-row"><span>Crema catalana</span><span>5,00 €</span></div><div class="allergeni-text">Crema catalana (Latte, Uova), Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Panna cotta al cioccolato</span><span>5,00 €</span></div><div class="allergeni-text">Cioccolato, Cioccolato al latte (Latte), Panna (Latte), Panna cotta (Latte), Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Panna cotta alla fragola</span><span>5,00 €</span></div><div class="allergeni-text">Fragole, Panna cotta (Latte), Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Panna cotta ai frutti di bosco</span><span>5,00 €</span></div><div class="allergeni-text">Panna (Latte), Panna cotta (Latte), Lamponi, Mirtilli, Ribes, Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Torta della casa</span><span>5,00 €</span></div><div class="allergeni-text">Variabile (possibili allergeni)</div></div>
+        <div class="item-container"><div class="item-row"><span>Profitterol Nero</span><span>5,00 €</span></div><div class="allergeni-text">Bignè (Grano, Latte, Uova), Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Meringata</span><span>5,00 €</span></div><div class="allergeni-text">Zucchero, Panna montata (Latte), Pan di spagna (Grano, Uova), Crema pasticciera (Latte, Uova), Succo di limone, Albume d'uovo di gallina (Uova), Estratto di vaniglia, Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Gelato al cocco</span><span>5,00 €</span></div><div class="allergeni-text">Cocco, Gelato (Latte), Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Gelato al limone</span><span>5,00 €</span></div><div class="allergeni-text">Gelato (Latte), Limone, Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Sorbetto al limone</span><span>3,50 €</span></div><div class="allergeni-text">Limone, Sorbetto, Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Tartufo bianco o nero</span><span>5,00 €</span></div><div class="allergeni-text">Cacao in polvere, Nocciole (Frutta a guscio), Zucchero, Latte vaccino (Latte), Panna (Latte), Cioccolato fondente</div></div>
+        <div class="item-container"><div class="item-row"><span>Semifreddo al torroncino</span><span>5,00 €</span></div><div class="allergeni-text">Torrone (Uova, Frutta a guscio), Farina di grano tenero (Grano), Zucchero, Panna montata (Latte), Uova di gallina (Uova), Zucchero a velo</div></div>
+        <div class="item-container"><div class="item-row"><span>Coppa variegato / amarena / cioccolato</span><span>5,00 €</span></div><div class="allergeni-text">Amarene, Cioccolato, Gelato (Latte), Frutta secca (Frutta a guscio)</div></div>
+        <div class="item-container"><div class="item-row"><span>Crostata del giorno</span><span>5,00 €</span></div><div class="allergeni-text">Farina di grano tenero (Grano), Zucchero, Burro (Latte), Uova di gallina (Uova), Variabile (possibili allergeni)</div></div>        
       </div>
     </div>
     <button class="btn-allergeni" onclick="openAllergeniModal()">LISTA ALLERGENI COMPLETA</button>
@@ -1044,121 +628,46 @@
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Acqua <span>▼</span></button>
     <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Bottiglia 1 litro</span><span>1,50 €</span></div>
-        <div class="allergeni-text">acqua potabile trattata e gassata</div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Bottiglia 1/2 litro</span><span>1,00 €</span></div>
-        <div class="allergeni-text">acqua potabile trattata e gassata</div>
-      </div>
-
+      <div class="item-container"><div class="item-row"><span>Bottiglia 1 litro</span><span>1,50 €</span></div><div class="allergeni-text">acqua potabile trattata e gassata</div></div>
+      <div class="item-container"><div class="item-row"><span>Bottiglia 1/2 litro</span><span>1,00 €</span></div><div class="allergeni-text">acqua potabile trattata e gassata</div></div>
     </div>
   </div>
 
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Bibite <span>▼</span></button>
     <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Bibite in lattina</span><span>2,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Coca cola piccola alla spina</span><span>3,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Coca cola grande alla spina</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Sciroppi</span><span>2,00 €</span></div>
-      </div>
-
+      <div class="item-container"><div class="item-row"><span>Bibite in lattina</span><span>2,50 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Coca cola piccola alla spina</span><span>3,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Coca cola grande alla spina</span><span>4,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Sciroppi</span><span>2,00 €</span></div></div>
     </div>
   </div>
 
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Aperitivi e Cocktail <span>▼</span></button>
     <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Crodino</span><span>2,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>San bitter</span><span>2,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Campari soda</span><span>2,80 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Aperol soda</span><span>2,80 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Pastis</span><span>3,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Martini</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Cuba libre</span><span>5,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Grappa</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Spritz</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Altenmunster bionda (4,9%)</span><span></span></div>
-        <div class="allergeni-text">piccola cl.20 3,00 € media cl. 40 5,00 €</div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Kardinal rossa (7,5%)</span><span></span></div>
-        <div class="allergeni-text">piccola cl.20 3,00 € media cl. 40 5,00 €</div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Steenbrugge wit blanche (4,8%)</span><span></span></div>
-        <div class="allergeni-text">piccola cl.20 3,00 € media cl. 40 5,00 €</div>
-      </div>
-
+      <div class="item-container"><div class="item-row"><span>Crodino</span><span>2,50 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>San bitter</span><span>2,50 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Campari soda</span><span>2,80 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Aperol soda</span><span>2,80 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Pastis</span><span>3,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Martini</span><span>4,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Cuba libre</span><span>5,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Grappa</span><span>4,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Spritz</span><span>4,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Altenmunster bionda (4,9%)</span><span></span></div><div class="allergeni-text">piccola cl.20 3,00 € media cl. 40 5,00 €</div></div>
+      <div class="item-container"><div class="item-row"><span>Kardinal rossa (7,5%)</span><span></span></div><div class="allergeni-text">piccola cl.20 3,00 € media cl. 40 5,00 €</div></div>
+      <div class="item-container"><div class="item-row"><span>Steenbrugge wit blanche (4,8%)</span><span></span></div><div class="allergeni-text">piccola cl.20 3,00 € media cl. 40 5,00 €</div></div>
     </div>
   </div>
 
   <div class="accordion">
     <button class="accordion-header" onclick="toggleAcc(this)">Birre in bottiglia <span>▼</span></button>
     <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Ceres</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Beck's</span><span>3,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Corona</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Birra da 66 cl</span><span>4,00 €</span></div>
-      </div>
-
+      <div class="item-container"><div class="item-row"><span>Ceres</span><span>4,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Beck's</span><span>3,50 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Corona</span><span>4,00 €</span></div></div>
+      <div class="item-container"><div class="item-row"><span>Birra da 66 cl</span><span>4,00 €</span></div></div>
     </div>
   </div>
 
@@ -1175,75 +684,20 @@
       </p>
 
       <div class="allergeni-grid">
-        <div class="allergene-card">
-          <div class="allergene-icon">🧪</div>
-          <p><strong>Anidride solforosa e Solfiti</strong><br>in concentrazioni superiori a 10 mg/Kg o 10 mg/Litro in termini di anidride solforosa totale.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥜</div>
-          <p><strong>Arachidi</strong><br>e prodotti a base di arachidi.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🌾</div>
-          <p><strong>Cereali contenenti glutine</strong><br>grano (farro e grano khorasan), segale, orzo, avena, o i loro ceppi ibridati e prodotti derivati.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🦐</div>
-          <p><strong>Crostacei</strong><br>e prodotti a base di crostacei.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🌰</div>
-          <p><strong>Frutta a guscio</strong><br>mandorle, nocciole, noci, noci di acagiù, noci di pecan, noci del Brasile, pistacchi, noci macadamia e i loro prodotti.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥛</div>
-          <p><strong>Latte</strong><br>e prodotti a base di latte (incluso lattosio).</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🫘</div>
-          <p><strong>Lupini</strong><br>e prodotti a base di lupini.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🦪</div>
-          <p><strong>Molluschi</strong><br>e prodotti a base di molluschi.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🐟</div>
-          <p><strong>Pesce</strong><br>e prodotti a base di pesce.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥬</div>
-          <p><strong>Sedano</strong><br>e prodotti a base di sedano.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🌱</div>
-          <p><strong>Semi di sesamo</strong><br>e prodotti a base di semi di sesamo.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🟡</div>
-          <p><strong>Senape</strong><br>e prodotti a base di senape.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🫛</div>
-          <p><strong>Soia</strong><br>e prodotti a base di soia.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥚</div>
-          <p><strong>Uova</strong><br>e prodotti a base di uova.</p>
-        </div>
+        <div class="allergene-card"><div class="allergene-icon">🧪</div><p><strong>Anidride solforosa e Solfiti</strong><br>in concentrazioni superiori a 10 mg/Kg o 10 mg/Litro in termini di anidride solforosa totale.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🥜</div><p><strong>Arachidi</strong><br>e prodotti a base di arachidi.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🌾</div><p><strong>Cereali contenenti glutine</strong><br>grano (farro e grano khorasan), segale, orzo, avena, o i loro ceppi ibridati e prodotti derivati.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🦐</div><p><strong>Crostacei</strong><br>e prodotti a base di crostacei.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🌰</div><p><strong>Frutta a guscio</strong><br>mandorle, nocciole, noci, noci di acagiù, noci di pecan, noci del Brasile, pistacchi, noci macadamia e i loro prodotti.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🥛</div><p><strong>Latte</strong><br>e prodotti a base di latte (incluso lattosio).</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🫘</div><p><strong>Lupini</strong><br>e prodotti a base di lupini.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🦪</div><p><strong>Molluschi</strong><br>e prodotti a base di molluschi.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🐟</div><p><strong>Pesce</strong><br>e prodotti a base di pesce.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🥬</div><p><strong>Sedano</strong><br>e prodotti a base di sedano.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🌱</div><p><strong>Semi di sesamo</strong><br>e prodotti a base di semi di sesamo.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🟡</div><p><strong>Senape</strong><br>e prodotti a base di senape.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🫛</div><p><strong>Soia</strong><br>e prodotti a base di soia.</p></div>
+        <div class="allergene-card"><div class="allergene-icon">🥚</div><p><strong>Uova</strong><br>e prodotti a base di uova.</p></div>
       </div>
 
       <div class="allergeni-note">
@@ -1377,6 +831,19 @@ function mostraTooltipAllergene(testo) {
     tooltip.style.display = 'none';
   }, 2200);
 }
+
+    const langSwitch = document.querySelector('.lang-switch');
+    const langMenu = document.querySelector('.lang-menu');
+
+    langSwitch.addEventListener('click', function(e){
+      e.stopPropagation();
+      langMenu.style.display = langMenu.style.display === 'block' ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', function(){
+      langMenu.style.display = 'none';
+    });
+
     document.addEventListener('DOMContentLoaded', aggiungiIconeAllergeni);
   </script> 
 
