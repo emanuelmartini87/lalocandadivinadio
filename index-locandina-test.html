@@ -462,6 +462,12 @@
       .hero-stage>.hero-card{flex:0 1 auto;width:100%;}
       .event-preview,.event-preview.side-left{order:2;flex:0 0 auto;width:min(220px,80vw);}
     }
+    /* TEST con locandina reale: nessuno spazio occupato in assenza di evento */
+    .event-preview[hidden], .event-attachment[hidden]{display:none!important;}
+    .event-poster-real{display:block;width:100%;padding:0;border:4px solid white;border-radius:18px;background:#fff;box-shadow:0 16px 42px rgba(0,0,0,.32);overflow:hidden;cursor:zoom-in;}
+    .event-poster-real img{display:block;width:100%;height:auto;max-height:380px;object-fit:contain;}
+    .event-image-large{display:block;max-width:100%;max-height:calc(90dvh - 105px);width:auto;height:auto;margin:auto;object-fit:contain;border-radius:7px;}
+    .event-attachment{display:block;margin:14px auto 0;padding:12px;background:#fff;color:#8d3f20;border-radius:14px;text-align:center;font-weight:bold;width:max-content;max-width:100%;}
   </style>
 
   <script type="application/ld+json">
@@ -531,35 +537,21 @@
       </div>
     </div>
 
-    <!-- ANTEPRIMA: dimostrazione grafica, non ancora collegata al gestionale -->
-    <aside class="event-preview side-right" id="eventPreview" aria-label="Anteprima locandina">
-      <button class="event-poster-demo" type="button" id="eventDemoOpen" aria-label="Ingrandisci locandina dimostrativa">
-        <small>LA LOCANDA DI VINADIO</small>
-        <span class="poster-ornament" aria-hidden="true">✦</span>
-        <strong>LOCANDINA<br>DI PROVA</strong>
-        <span>Qui apparirà l'immagine che caricherai dal gestionale.</span>
-        <small>TOCCA PER INGRANDIRE</small>
+    <!-- Solo TEST: resta invisibile quando non ci sono locandine attive. -->
+    <aside class="event-preview side-right" id="eventPreview" aria-label="Locandina evento" hidden>
+      <button class="event-poster-real" type="button" id="eventPosterOpen" aria-label="Ingrandisci locandina">
+        <img id="eventPosterImage" alt="Locandina evento" loading="lazy">
       </button>
-      <div class="event-demo-caption">SOLO ANTEPRIMA · Sposta la locandina</div>
-      <div class="event-demo-controls">
-        <button type="button" id="demoLeft">◀ Sinistra</button>
-        <button type="button" id="demoRight">Destra ▶</button>
-      </div>
+      <div class="event-demo-caption" id="eventPosterCaption"></div>
     </aside>
     </div><!-- fine hero-stage -->
   </header>
 
-  <!-- TEST: clic sulla locandina per aprirla grande; X, ESC o clic fuori per chiudere. -->
+  <!-- TEST: clic apre grande; X, ESC o clic fuori chiudono. -->
   <dialog class="event-demo-modal" id="eventDemoDialog" aria-label="Locandina ingrandita">
     <button class="event-demo-close" type="button" id="eventDemoClose" aria-label="Chiudi la locandina" title="Chiudi">&times;</button>
-    <div class="event-poster-demo event-poster-large" id="eventDemoLarge" role="img" aria-label="Locandina dimostrativa ingrandita">
-      <small>LA LOCANDA DI VINADIO</small>
-      <span class="poster-ornament" aria-hidden="true">✦</span>
-      <strong>LOCANDINA<br>DI PROVA</strong>
-      <span>Qui apparirà l'immagine che caricherai dal gestionale.</span>
-      <small>ANTEPRIMA TEST</small>
-    </div>
-    <p class="event-demo-hint">Premi la X, ESC o tocca fuori dalla locandina per chiudere.</p>
+    <img class="event-image-large" id="eventPosterLarge" alt="Locandina evento ingrandita">
+    <a class="event-attachment" id="eventPosterPdf" target="_blank" rel="noopener noreferrer" hidden>📄 Apri il menù speciale (PDF)</a>
   </dialog>
 
   <main>
@@ -695,23 +687,57 @@
     document.addEventListener('click', function(){
       langMenu.style.display = 'none';
     });
-    // Controlli dimostrativi, attivi solo nella pagina TEST.
+    // Solo TEST. L'API pubblica controlla attivazione e scadenze in D1.
+    // Nessun evento attivo o errore API: la homepage rimane come l'originale.
+    const EVENT_API = 'https://locanda-menu-public-test.emanuel-martini87.workers.dev/api/public/locandine-test';
     const previewPoster = document.getElementById('eventPreview');
-    document.getElementById('demoLeft').addEventListener('click', () => previewPoster.classList.add('side-left'));
-    document.getElementById('demoRight').addEventListener('click', () => previewPoster.classList.remove('side-left'));
-    const demoDialog = document.getElementById('eventDemoDialog');
-    const demoOpen = document.getElementById('eventDemoOpen');
-    const demoClose = document.getElementById('eventDemoClose');
-    demoOpen.addEventListener('click', () => {
-      demoDialog.showModal();
-      demoClose.focus();
+    const posterButton = document.getElementById('eventPosterOpen');
+    const posterImage = document.getElementById('eventPosterImage');
+    const posterLarge = document.getElementById('eventPosterLarge');
+    const posterCaption = document.getElementById('eventPosterCaption');
+    const posterPdf = document.getElementById('eventPosterPdf');
+    const posterDialog = document.getElementById('eventDemoDialog');
+    const posterClose = document.getElementById('eventDemoClose');
+    posterButton.addEventListener('click',()=>{
+      if (!previewPoster.hidden) {
+        posterDialog.showModal();
+        posterClose.focus();
+      }
     });
-    demoClose.addEventListener('click', () => demoDialog.close());
-    demoDialog.addEventListener('click', (event) => {
-      // Il clic sullo sfondo scuro esterno alla finestra chiude la locandina.
-      if (event.target === demoDialog) demoDialog.close();
+    posterClose.addEventListener('click',()=>posterDialog.close());
+    posterDialog.addEventListener('click',event=>{
+      if(event.target===posterDialog) posterDialog.close();
     });
-    // Il tasto ESC chiude automaticamente un dialog modale nativo.
+    posterImage.addEventListener('error',()=>{previewPoster.hidden=true;});
+    (async()=>{
+      try {
+        const response=await fetch(EVENT_API,{cache:'no-store',credentials:'omit'});
+        if(!response.ok) throw Error('HTTP '+response.status);
+        const data=await response.json();
+        if (!data.ok || !Array.isArray(data.locandine)) throw Error('Risposta API non valida');
+        const evento=data.locandine.find(x=>x.mostra_home === true);
+        if(!evento) return;
+        if(typeof evento.immagine_url!=='string' || !evento.immagine_url.startsWith('https://locanda-menu-public-test.emanuel-martini87.workers.dev/')) throw Error('URL immagine non valido');
+        const title=evento.titolo||'Evento alla Locanda';
+        posterCaption.textContent=title;
+        posterImage.alt=title;
+        posterLarge.alt=title;
+        posterImage.src=evento.immagine_url;
+        posterLarge.src=evento.immagine_url;
+        previewPoster.classList.toggle('side-left',evento.posizione==='left');
+        posterPdf.hidden=!evento.pdf_url;
+        if(evento.pdf_url) posterPdf.href=evento.pdf_url;
+        // Mostra solo dopo aver confermato che il file immagine e' accessibile.
+        if(posterImage.complete && posterImage.naturalWidth>0) {
+          previewPoster.hidden=false;
+        } else {
+          posterImage.addEventListener('load',()=>{previewPoster.hidden=false;},{once:true});
+        }
+      }catch(error){
+        previewPoster.hidden=true;
+        console.warn('Locandine TEST non disponibili:',error.message);
+      }
+    })();
   </script>
 
 </body>
