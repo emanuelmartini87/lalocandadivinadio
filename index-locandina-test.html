@@ -404,9 +404,59 @@
     .event-demo-controls{display:flex;gap:6px;justify-content:center;}
     .event-demo-controls button{padding:7px 10px;border:1px solid #ead8ce;border-radius:30px;background:#fff;color:#8d3f20;font-weight:700;cursor:pointer;}
     .event-demo-controls button:focus-visible,.event-poster-demo:focus-visible{outline:3px solid #4a90e2;outline-offset:3px;}
-    .event-demo-modal{border:0;border-radius:20px;padding:22px;max-width:min(460px,calc(100vw - 30px));text-align:center;box-shadow:0 20px 70px #1118;}
-    .event-demo-modal::backdrop{background:rgba(0,0,0,.7);}
-    .event-demo-modal button{background:#b5532d;color:#fff;border:0;border-radius:20px;padding:10px 20px;font-weight:700;cursor:pointer;}
+    /* Ingrandimento TEST: locandina grande e X sempre visibile */
+    .event-demo-modal{
+      position:fixed;
+      width:min(650px,calc(100vw - 24px));
+      max-width:calc(100vw - 24px);
+      max-height:calc(100dvh - 24px);
+      margin:auto;
+      padding:58px 14px 18px;
+      border:0;
+      border-radius:22px;
+      overflow:auto;
+      background:#201813;
+      color:#fff;
+      box-shadow:0 24px 80px rgba(0,0,0,.6);
+    }
+    .event-demo-modal::backdrop{background:rgba(0,0,0,.88);}
+    .event-demo-close{
+      position:sticky;
+      top:0;
+      float:right;
+      margin-top:-48px;
+      width:46px;
+      height:46px;
+      display:grid;
+      place-items:center;
+      border:2px solid #fff;
+      border-radius:50%;
+      background:#bd4f2e;
+      color:#fff;
+      font:700 29px/1 Arial,sans-serif;
+      cursor:pointer;
+      z-index:5;
+      box-shadow:0 5px 20px rgba(0,0,0,.35);
+    }
+    .event-demo-close:hover{background:#8d3f20;}
+    .event-demo-close:focus-visible{outline:3px solid #fff;outline-offset:3px;}
+    .event-poster-large{
+      width:min(500px,100%);
+      min-height:0;
+      margin:0 auto;
+      padding:38px 25px;
+      gap:22px;
+      aspect-ratio:3/4;
+      cursor:default;
+    }
+    .event-poster-large .poster-ornament{font-size:66px;}
+    .event-poster-large strong{font-size:clamp(27px,6vw,46px);}
+    .event-poster-large span{font-size:clamp(16px,3vw,21px);}
+    .event-demo-hint{text-align:center;margin:12px 0 0;font-size:12px;opacity:.85;}
+    @media(max-width:500px){
+      .event-demo-modal{padding:55px 10px 12px;}
+      .event-poster-large{padding:22px 14px;gap:14px;}
+    }
     @media(max-width:1040px){
       .hero-stage{flex-direction:column;gap:18px;}
       .hero-stage>.hero-card{flex:0 1 auto;width:100%;}
@@ -499,11 +549,17 @@
     </div><!-- fine hero-stage -->
   </header>
 
-  <dialog class="event-demo-modal" id="eventDemoDialog" aria-label="Locandina dimostrativa">
-    <h2>Locandina di prova</h2>
-    <p>Quando inseriremo il sistema di caricamento, qui si aprirà la locandina originale a grandezza leggibile.</p>
-    <p>La pubblicazione, la scadenza e l'eventuale menu PDF saranno gestiti dal pannello TEST.</p>
-    <button type="button" id="eventDemoClose">Chiudi</button>
+  <!-- TEST: clic sulla locandina per aprirla grande; X, ESC o clic fuori per chiudere. -->
+  <dialog class="event-demo-modal" id="eventDemoDialog" aria-label="Locandina ingrandita">
+    <button class="event-demo-close" type="button" id="eventDemoClose" aria-label="Chiudi la locandina" title="Chiudi">&times;</button>
+    <div class="event-poster-demo event-poster-large" id="eventDemoLarge" role="img" aria-label="Locandina dimostrativa ingrandita">
+      <small>LA LOCANDA DI VINADIO</small>
+      <span class="poster-ornament" aria-hidden="true">✦</span>
+      <strong>LOCANDINA<br>DI PROVA</strong>
+      <span>Qui apparirà l'immagine che caricherai dal gestionale.</span>
+      <small>ANTEPRIMA TEST</small>
+    </div>
+    <p class="event-demo-hint">Premi la X, ESC o tocca fuori dalla locandina per chiudere.</p>
   </dialog>
 
   <main>
@@ -644,8 +700,18 @@
     document.getElementById('demoLeft').addEventListener('click', () => previewPoster.classList.add('side-left'));
     document.getElementById('demoRight').addEventListener('click', () => previewPoster.classList.remove('side-left'));
     const demoDialog = document.getElementById('eventDemoDialog');
-    document.getElementById('eventDemoOpen').addEventListener('click', () => demoDialog.showModal());
-    document.getElementById('eventDemoClose').addEventListener('click', () => demoDialog.close());
+    const demoOpen = document.getElementById('eventDemoOpen');
+    const demoClose = document.getElementById('eventDemoClose');
+    demoOpen.addEventListener('click', () => {
+      demoDialog.showModal();
+      demoClose.focus();
+    });
+    demoClose.addEventListener('click', () => demoDialog.close());
+    demoDialog.addEventListener('click', (event) => {
+      // Il clic sullo sfondo scuro esterno alla finestra chiude la locandina.
+      if (event.target === demoDialog) demoDialog.close();
+    });
+    // Il tasto ESC chiude automaticamente un dialog modale nativo.
   </script>
 
 </body>
