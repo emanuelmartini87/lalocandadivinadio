@@ -374,6 +374,51 @@
     text-align:center;
   }
 }
+  
+    /* Locandine ed eventi PRODUZIONE: nulla cambia quando non ci sono eventi. */
+    .locanda-hero-stage{
+      width:min(1130px,100%);display:flex;justify-content:center;align-items:center;gap:24px;
+    }
+    .locanda-hero-stage > .hero-card{flex:1 1 820px;min-width:0;order:1}
+    .locanda-home-poster{flex:0 0 222px;order:2;min-width:0;text-align:center}
+    .locanda-home-poster.side-left{order:0}
+    .locanda-home-poster[hidden],.locanda-poster-pdf[hidden]{display:none!important}
+    .locanda-poster-open{
+      display:block;width:100%;padding:0;border:4px solid #fff;border-radius:18px;
+      background:#fff;box-shadow:0 16px 42px rgba(0,0,0,.32);overflow:hidden;cursor:zoom-in
+    }
+    .locanda-poster-open img{display:block;width:100%;height:auto;max-height:380px;object-fit:contain}
+    .locanda-poster-caption{text-align:center;color:#fff;font-size:12px;font-weight:700;
+      margin:10px 0 7px;text-shadow:0 1px 4px #333}
+    .locanda-poster-dialog{
+      position:fixed;width:min(650px,calc(100vw - 24px));max-width:calc(100vw - 24px);
+      max-height:calc(100dvh - 24px);margin:auto;padding:58px 14px 18px;border:0;
+      border-radius:22px;overflow:auto;background:#201813;color:#fff;
+      box-shadow:0 24px 80px rgba(0,0,0,.6)
+    }
+    .locanda-poster-dialog::backdrop{background:rgba(0,0,0,.88)}
+    .locanda-poster-close{
+      position:sticky;top:0;float:right;margin-top:-48px;width:46px;height:46px;
+      display:grid;place-items:center;border:2px solid #fff;border-radius:50%;
+      background:#bd4f2e;color:#fff;font:700 29px/1 Arial,sans-serif;
+      cursor:pointer;z-index:5;box-shadow:0 5px 20px rgba(0,0,0,.35)
+    }
+    .locanda-poster-close:focus-visible,.locanda-poster-open:focus-visible{outline:3px solid #4a90e2;outline-offset:3px}
+    .locanda-poster-large{
+      display:block;max-width:100%;max-height:calc(90dvh - 105px);
+      width:auto;height:auto;margin:auto;object-fit:contain;border-radius:7px
+    }
+    .locanda-poster-pdf{
+      display:block;margin:14px auto 0;padding:12px;background:#fff;color:#8d3f20;
+      border-radius:14px;text-align:center;font-weight:bold;width:max-content;max-width:100%
+    }
+    @media(max-width:1040px){
+      .locanda-hero-stage{flex-direction:column;gap:18px}
+      .locanda-hero-stage > .hero-card{flex:0 1 auto;width:100%}
+      .locanda-home-poster,.locanda-home-poster.side-left{order:2;flex:0 0 auto;width:min(220px,80vw)}
+    }
+    @media(max-width:500px){.locanda-poster-dialog{padding:55px 10px 12px}}
+
   </style>
 
   <script type="application/ld+json">
@@ -399,6 +444,7 @@
 <body>
 
   <header class="hero">
+    <div class="locanda-hero-stage">
     <div class="hero-card">
 
       <div class="lang-switch">
@@ -441,7 +487,22 @@
         <a class="btn btn-secondary" href="#dove-siamo">Dove siamo</a>
       </div>
     </div>
+  
+    <aside class="locanda-home-poster" id="locandaHomePoster" aria-label="Ingrandisci locandina" hidden>
+      <button class="locanda-poster-open" type="button" id="locandaHomeOpen" aria-label="Ingrandisci locandina">
+        <img id="locandaHomeImage" alt="Ingrandisci locandina" loading="eager" decoding="async">
+      </button>
+      <div class="locanda-poster-caption" id="locandaHomeTitle"></div>
+    </aside>
+    </div><!-- locanda-hero-stage -->
   </header>
+
+  
+  <dialog class="locanda-poster-dialog" id="locandaHomeDialog" aria-label="Locandina ingrandita">
+    <button class="locanda-poster-close" type="button" id="locandaHomeClose" aria-label="Chiudi" title="Chiudi">&times;</button>
+    <img class="locanda-poster-large" id="locandaHomeLarge" alt="Locandina ingrandita">
+    <a class="locanda-poster-pdf" id="locandaHomePdf" target="_blank" rel="noopener noreferrer" hidden>📄 Apri il menù speciale (PDF)</a>
+  </dialog>
 
   <main>
     <section class="section">
@@ -576,6 +637,52 @@
     document.addEventListener('click', function(){
       langMenu.style.display = 'none';
     });
+  </script>
+
+
+  <script>
+  /* Locandine homepage - PROD. Date, visibilità e stato sono filtrati dall'API. */
+  (()=>{
+    const base="https://locanda-menu-public.emanuel-martini87.workers.dev";
+    const preview=document.getElementById('locandaHomePoster');
+    const small=document.getElementById('locandaHomeImage');
+    const large=document.getElementById('locandaHomeLarge');
+    const dialog=document.getElementById('locandaHomeDialog');
+    const close=document.getElementById('locandaHomeClose');
+    const button=document.getElementById('locandaHomeOpen');
+    const title=document.getElementById('locandaHomeTitle');
+    const pdf=document.getElementById('locandaHomePdf');
+    const allowedUrl=value=>{
+      if(typeof value!=='string')return false;
+      try{const u=new URL(value);return u.origin===base && /^\/api\/public\/locandine\/\d+\/(immagine|pdf)$/.test(u.pathname);}
+      catch(_){return false;}
+    };
+    button.addEventListener('click',()=>{if(!preview.hidden){dialog.showModal();close.focus();}});
+    close.addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+    small.addEventListener('error',()=>{preview.hidden=true;});
+    (async()=>{
+      try{
+        const response=await fetch(base+'/api/public/locandine',{cache:'no-store',credentials:'omit'});
+        if(!response.ok)throw Error('HTTP '+response.status);
+        const body=await response.json();
+        if(!body.ok||!Array.isArray(body.locandine))throw Error('Dati eventi non validi');
+        const event=body.locandine.find(item=>item.mostra_home===true);
+        if(!event)return;
+        if(!allowedUrl(event.immagine_url))throw Error('URL immagine non valido');
+        const caption=String(event.titolo||"Evento alla Locanda");
+        title.textContent=caption;
+        small.alt=caption;large.alt=caption;
+        preview.classList.toggle('side-left',event.posizione==='left');
+        pdf.hidden=true;pdf.removeAttribute('href');
+        if(allowedUrl(event.pdf_url)){pdf.href=event.pdf_url;pdf.hidden=false;}
+        small.addEventListener('load',()=>{preview.hidden=false;},{once:true});
+        small.src=event.immagine_url;
+        large.src=event.immagine_url;
+        if(small.complete&&small.naturalWidth>0)preview.hidden=false;
+      }catch(error){preview.hidden=true;console.warn('Locandine homepage non disponibili:',error.message);}
+    })();
+  })();
   </script>
 
 </body>
