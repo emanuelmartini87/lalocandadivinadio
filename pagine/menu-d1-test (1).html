@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<link href="/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="/favicon.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/favicon.ico" rel="icon"/>
+<link href="/favicon.png" rel="apple-touch-icon"/>
+<meta charset="utf-8"/>
+<meta name="description" content="Consulta il menù della Locanda di Vinadio: piatti, pizze, bevande, prezzi e allergeni in italiano, inglese, francese e tedesco."/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Menù D1 TEST | La Locanda di Vinadio</title>
+<style>
+    :root {
+      --bg: #f8f9fa;
+      --accent: #b5532d;
+      --text: #333;
+      --white: #ffffff;
+      --border: #e4e4e4;
+      --muted: #666;
+      --blue: #4a90e2;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--white);
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner{
+      position:relative;
+      max-width:700px;
+      margin:0 auto;
+      min-height:32px;
+    }
+
+    .lang-switch{
+      position:absolute;
+      top:0;
+      right:0;
+      font-size:13px;
+      font-weight:700;
+      z-index:120;
+      text-align:left;
+    }
+
+    .lang-current{
+      background:#fff;
+      color:var(--accent);
+      padding:6px 10px;
+      border-radius:999px;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      border:1px solid #ead8ce;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .lang-menu{
+      display:none;
+      position:absolute;
+      top:36px;
+      right:0;
+      background:#fff;
+      border-radius:14px;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+      overflow:hidden;
+      min-width:130px;
+      border:1px solid #ead8ce;
+    }
+
+    .lang-menu a{
+      display:block;
+      padding:9px 14px;
+      color:#333;
+      white-space:nowrap;
+      font-size:13px;
+      text-decoration:none;
+    }
+
+    .lang-menu a:hover,
+    .lang-menu a.active{
+      background:#fff3eb;
+      color:var(--accent);
+    }
+
+    .menu-nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 15px;
+      background: var(--white);
+      border-bottom: 1px solid #ececec;
+      position: sticky;
+      top: 63px;
+      z-index: 90;
+    }
+
+    .nav-btn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+      font-weight: bold;
+      color: #666;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .nav-btn.active {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    .menu-section {
+      display: none;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 10px;
+    }
+
+    .menu-section.active {
+      display: block;
+    }
+
+    .accordion {
+      background: var(--white);
+      border: 1px solid var(--border);
+      margin-bottom: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      width: 100%;
+      padding: 18px;
+      text-align: left;
+      background: none;
+      border: none;
+      font-weight: bold;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 15px;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+
+    .item-container {
+      margin-bottom: 15px;
+      border-bottom: 1px dotted #ccc;
+      padding-bottom: 10px;
+    }
+
+    .item-container:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      font-weight: bold;
+      align-items: flex-start;
+    }
+
+    .item-row span:last-child {
+      white-space: nowrap;
+    }
+
+    .allergeni-text {
+      font-size: 0.85em;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    
+    .allergene-mini-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 5px;
+      font-style: normal;
+      font-size: 15px;
+      cursor: help;
+      vertical-align: middle;
+    }
+
+    .allergene-tooltip {
+      display: none;
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14px;
+      z-index: 10000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+   
+    .btn-allergeni {
+      display: block;
+      width: 90%;
+      max-width: 420px;
+      margin: 20px auto;
+      padding: 12px;
+      background: var(--blue);
+      color: white;
+      text-align: center;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .allergeni-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.55);
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .allergeni-modal-content {
+      background: #fff;
+      max-width: 760px;
+      margin: 30px auto;
+      border-radius: 18px;
+      padding: 24px 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    @media (max-width: 600px) {
+      .footer-btn {
+        display: block;
+        width: 90%;
+        max-width: 320px;
+        margin: 10px auto;
+      }
+    }
+    
+    .allergeni-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      background: #f26d42;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .allergeni-title {
+      margin: 0 50px 16px 0;
+      color: var(--accent);
+      font-size: 24px;
+    }
+
+    .allergeni-subtitle {
+      margin: 0 0 18px 0;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .allergeni-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .allergene-card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 12px;
+      background: #f1f3f5;
+    }
+
+    .allergene-icon {
+      min-width: 38px;
+      text-align: center;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .allergene-card strong {
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .allergene-card p {
+      margin: 0;
+      line-height: 1.5;
+      color: #333;
+    }
+    
+    .menu-footer-links {
+      text-align: center;
+      padding: 30px 15px 40px;
+    }
+
+    .footer-btn {
+      display: inline-block;
+      margin: 8px;
+      padding: 12px 18px;
+      border-radius: 25px;
+      background: white;
+      color: var(--accent);
+      font-weight: bold;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .footer-btn:hover {
+      transform: translateY(-2px);
+      background: #f5f5f5;
+    }
+
+    .footer-btn.review {
+      background: var(--accent);
+      color: white;
+      border: none;
+    }  
+
+    .allergeni-note {
+      margin-top: 18px;
+      font-size: 0.92em;
+      color: #666;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .footer-small {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+    @media (max-width: 640px) {
+      .menu-nav {
+        top: 61px;
+      }
+
+      .accordion-header {
+        font-size: 15px;
+        padding: 16px;
+      }
+
+      .item-row {
+        font-size: 15px;
+      }
+    }
+  
+/* Locandine TEST: il menu mantiene gli spazi originali se non ci sono eventi attivi. */
+.test-event-banner{background:#fff3df;color:#81482b;text-align:center;padding:8px;font-weight:700;font-size:12px}
+.event-menu-promo[hidden],.event-menu-pdf[hidden],.event-modal-pdf[hidden]{display:none!important}
+.event-menu-promo{display:flex;align-items:center;gap:18px;max-width:700px;margin:14px auto 18px;padding:14px 18px;background:#fff;border:1px solid #e3d2c7;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.event-menu-thumb{width:92px;flex:0 0 92px;background:white;border:0;padding:0;border-radius:12px;overflow:hidden;box-shadow:0 3px 13px #0002;cursor:zoom-in}
+.event-menu-thumb img{display:block;width:100%;height:auto;max-height:148px;object-fit:contain}
+.event-menu-info{flex:1;min-width:0}
+.event-menu-info strong{font-size:17px;color:#8d3f20;display:block;margin-bottom:7px}
+.event-menu-info p{font-size:13px;color:#5b5755;line-height:1.5;margin:0 0 10px}
+.event-menu-pdf,.event-modal-pdf{display:inline-block;color:#fff;background:#b5532d;padding:10px 14px;text-decoration:none;border-radius:10px;font-weight:700;font-size:13px}
+.event-menu-modal{border:0;border-radius:18px;background:#1b1715;padding:58px 12px 16px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);width:min(650px,calc(100vw - 24px));color:white;box-shadow:0 24px 80px #0009;overflow:auto}
+.event-menu-modal::backdrop{background:#000c}
+.event-menu-modal img{display:block;max-width:100%;max-height:calc(90dvh - 105px);width:auto;height:auto;object-fit:contain;margin:auto}
+.event-menu-close{position:sticky;top:0;float:right;margin-top:-45px;z-index:2;width:46px;height:46px;border-radius:50%;border:2px solid white;background:#bd4f2e;color:#fff;cursor:pointer;font-size:27px;font-weight:700}
+.event-menu-modal .event-modal-pdf{margin:14px auto 0;display:table;text-align:center}
+@media(max-width:440px){.event-menu-promo{margin:10px 12px 14px;gap:12px;padding:10px}.event-menu-thumb{flex-basis:80px;width:80px}.event-menu-info strong{font-size:15px}.event-menu-info p{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="allergene-tooltip" id="allergeneTooltip"></div>
+<header>
+<div class="header-inner">
+<h2 style="margin:0; color:var(--accent);">La Locanda di Vinadio</h2>
+<div class="lang-switch">
+<div class="lang-current">IT ▾</div>
+<div class="lang-menu">
+<a class="active" data-d1-lang="it" href="#">IT Italiano</a>
+<a data-d1-lang="en" href="#">EN English</a>
+<a data-d1-lang="fr" href="#">FR Français</a>
+<a data-d1-lang="de" href="#">DE Deutsch</a>
+</div>
+</div>
+</div>
+</header>
+
+<div class="test-event-banner">ANTEPRIMA TEST — Locandine ed eventi / Menu D1 TEST</div>
+<section id="eventMenuTest" class="event-menu-promo" aria-label="Locandina evento" hidden>
+  <button type="button" class="event-menu-thumb" id="eventMenuOpen" aria-label="Ingrandisci la locandina">
+    <img id="eventMenuImage" alt="Locandina evento" loading="eager" decoding="async">
+  </button>
+  <div class="event-menu-info">
+    <strong id="eventMenuTitle"></strong>
+    <p id="eventMenuHint">Tocca la locandina per ingrandirla.</p>
+    <a id="eventMenuPdf" class="event-menu-pdf" target="_blank" rel="noopener noreferrer" hidden>📄 Apri il menù dell'evento (PDF)</a>
+  </div>
+</section>
+<dialog id="eventMenuDialog" class="event-menu-modal" aria-label="Locandina ingrandita">
+  <button type="button" class="event-menu-close" id="eventMenuClose" title="Chiudi" aria-label="Chiudi">&times;</button>
+  <img id="eventMenuLarge" alt="Locandina evento ingrandita">
+  <a id="eventModalPdf" class="event-modal-pdf" target="_blank" rel="noopener noreferrer" hidden>📄 Apri il menù dell'evento (PDF)</a>
+</dialog>
+<div class="menu-nav">
+<button class="nav-btn active" onclick="showTab('piatti', this)">Piatti</button>
+<button class="nav-btn" onclick="showTab('vini', this)">Lista Vini/Bevande</button>
+</div>
+<div class="menu-section active" id="piatti"><div id="piatti-d1">Caricamento del menu dal database...</div>
+
+
+
+
+
+
+
+
+
+<button class="btn-allergeni" onclick="openAllergeniModal()">LISTA ALLERGENI COMPLETA</button>
+</div>
+<div class="menu-section" id="vini"><div id="vini-d1">Caricamento del menu dal database...</div>
+
+
+
+
+
+<button class="btn-allergeni" onclick="openAllergeniModal()">LISTA ALLERGENI COMPLETA</button>
+</div>
+<div class="allergeni-modal" id="allergeniModal">
+<div class="allergeni-modal-content">
+<button class="allergeni-close" onclick="closeAllergeniModal()">×</button>
+<h3 class="allergeni-title">Lista Allergeni Completa</h3>
+<p class="allergeni-subtitle">
+        Qui trovi la legenda completa degli allergeni con simboli. Puoi usarli come riferimento per i piatti del menù.
+      </p>
+<div class="allergeni-grid" id="d1-allergeni-grid"></div>
+<div class="allergeni-note">
+        Per maggiori informazioni sugli allergeni presenti nei piatti, chiedere sempre al personale.
+      </div>
+</div>
+</div>
+<div class="menu-footer-links">
+<a class="footer-btn" href="../index.html">🏠 Home</a>
+<a class="footer-btn review" href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E" rel="noopener noreferrer" target="_blank">
+      ⭐ Lascia una recensione
+    </a>
+</div>
+
+<footer style="font-size:0.75rem; opacity:0.8; text-align:center; padding:20px 10px;">
+<div>
+    © 2026 La Locanda di Vinadio · Tutti i diritti riservati
+  </div>
+<div style="margin-top:8px;">
+<strong>La Locanda di Vinadio</strong><br/>
+    Via Roma, 16 – 12010 Vinadio (CN)<br/>
+    P.IVA: 03626550044
+  </div>
+<p style="margin-top:8px;">
+<a href="/privacy-policy.html" style="color:#b5532d; font-weight:bold;">
+      Privacy Policy
+    </a>
+</p>
+</footer>
+<script>"use strict";
+const API='https://locanda-menu-public-test.emanuel-martini87.workers.dev/api/public/menu-test';
+const ICONS={1:'🌾',2:'🦐',3:'🥚',4:'🐟',5:'🥜',6:'🫘',7:'🥛',8:'🌰',9:'🥬',10:'🌿',11:'🌱',12:'🧪',13:'🌱',14:'🦪'};
+const UI={
+ it:{food:'Piatti',drinks:'Lista Vini/Bevande',legend:'LISTA ALLERGENI COMPLETA',title:'Lista Allergeni Completa',sub:'Qui trovi la legenda completa degli allergeni con simboli.',note:'Per maggiori informazioni sugli allergeni presenti nei piatti, chiedere sempre al personale.',home:'🏠 Home',review:'⭐ Lascia una recensione',loading:'Caricamento menu...',empty:'Nessuna voce disponibile',error:'Menu non disponibile. Riprova più tardi.',name:'Voce senza nome',allergens:'Allergeni'},
+ en:{food:'Dishes',drinks:'Wine / Drinks',legend:'FULL ALLERGEN LIST',title:'Complete Allergen List',sub:'Complete allergen guide with symbols.',note:'For further information about allergens, please ask our staff.',home:'🏠 Home',review:'⭐ Leave a review',loading:'Loading menu...',empty:'No items available',error:'Menu unavailable. Please try again later.',name:'Unnamed item',allergens:'Allergens'},
+ fr:{food:'Plats',drinks:'Vins / Boissons',legend:'LISTE COMPLÈTE DES ALLERGÈNES',title:'Liste complète des allergènes',sub:'Guide complet des allergènes avec symboles.',note:'Pour plus d’informations sur les allergènes, veuillez vous adresser à notre personnel.',home:'🏠 Accueil',review:'⭐ Laisser un avis',loading:'Chargement du menu...',empty:'Aucun article disponible',error:'Menu indisponible. Réessayez plus tard.',name:'Article sans nom',allergens:'Allergènes'},
+ de:{food:'Gerichte',drinks:'Weine / Getränke',legend:'VOLLSTÄNDIGE ALLERGENLISTE',title:'Vollständige Allergenliste',sub:'Vollständige Allergenübersicht mit Symbolen.',note:'Bei Fragen zu Allergenen wenden Sie sich bitte an unser Personal.',home:'🏠 Startseite',review:'⭐ Bewertung abgeben',loading:'Menü wird geladen...',empty:'Keine Einträge verfügbar',error:'Menü nicht verfügbar. Bitte versuchen Sie es später erneut.',name:'Ohne Namen',allergens:'Allergene'}
+};
+let currentLang='it',data=null;
+const el=(tag,cls,txt)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=txt;return x;};
+function showTab(tabId,btn){
+ document.querySelectorAll('.menu-section').forEach(s=>s.classList.toggle('active',s.id===tabId));
+ document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b===btn));
+}
+function toggleAcc(btn){const c=btn.nextElementSibling;const open=c.style.display==='block';c.style.display=open?'none':'block';const a=btn.querySelector('span');if(a)a.textContent=open?'▼':'▲';}
+function openAllergeniModal(){document.getElementById('allergeniModal').style.display='block';}
+function closeAllergeniModal(){document.getElementById('allergeniModal').style.display='none';}
+function mostraTooltipAllergene(t){const x=document.getElementById('allergeneTooltip');x.textContent=t;x.style.display='block';clearTimeout(window.allergeneTooltipTimer);window.allergeneTooltipTimer=setTimeout(()=>x.style.display='none',2200);}
+function label(x,prefix){return x?.[prefix+'_'+currentLang]||x?.[prefix+'_it']||'';}
+function price(n){return(Number(n)/100).toLocaleString(currentLang==='en'?'en-IE':currentLang==='fr'?'fr-FR':currentLang==='de'?'de-DE':'it-IT',{style:'currency',currency:'EUR'});}
+function renderCategory(categoryId,list){
+ const acc=el('div','accordion'); const b=el('button','accordion-header');b.type='button';
+ b.append(document.createTextNode(label(list[0],'category')||'—'),el('span',null,'▼'));
+ b.onclick=()=>toggleAcc(b);acc.append(b);const contents=el('div','accordion-content');
+ for(const item of list){
+  const box=el('div','item-container'),r=el('div','item-row');
+  r.append(el('span',null,label(item,'name')||UI[currentLang].name),el('span',null,price(item.price_cents)));
+  box.append(r);
+  const desc=label(item,'description');
+  const isPizza=Number(item.category_id)===3;
+  const ingredients=(!isPizza&&!desc)?(item.ingredients||[]).map(x=>label(x,'name')).filter(Boolean).join(', '):'';
+  if(desc||ingredients)box.append(el('div','allergeni-text',desc||ingredients));
+  if(item.allergens?.length){
+   const row=el('div','allergeni-text');row.append(document.createTextNode(UI[currentLang].allergens+': '));
+   for(const a of item.allergens){const icon=el('span','allergene-mini-icon',ICONS[a.id]||'⚠️');icon.title=label(a,'name');icon.setAttribute('aria-label',label(a,'name'));icon.onclick=e=>{e.stopPropagation();mostraTooltipAllergene(label(a,'name'));};row.append(icon);}
+   box.append(row);
+  }
+  contents.append(box);
+ }
+ acc.append(contents);return acc;
+}
+function renderSection(sectionId,ids){
+ const target=document.getElementById(sectionId+'-d1');target.replaceChildren();
+ if(!data){target.textContent=UI[currentLang].loading;return;}
+ const map=new Map();
+ for(const item of data.items){const c=Number(item.category_id);if(!ids(c))continue;if(!map.has(c))map.set(c,[]);map.get(c).push(item);}
+ for(const [id,items] of map)target.append(renderCategory(id,items));
+ if(!map.size)target.textContent=UI[currentLang].empty;
+}
+function renderLegend(){const grid=document.getElementById('d1-allergeni-grid');grid.replaceChildren();if(!data)return;
+ for(const a of data.allergens||[]){const card=el('div','allergene-card'),icon=el('div','allergene-icon',ICONS[a.id]||'⚠️'),p=el('p');p.append(el('strong',null,label(a,'name')));card.append(icon,p);grid.append(card);}
+}
+function render(){document.documentElement.lang=currentLang;const t=UI[currentLang];
+ document.querySelectorAll('.nav-btn')[0].textContent=t.food;document.querySelectorAll('.nav-btn')[1].textContent=t.drinks;
+ document.querySelectorAll('.btn-allergeni').forEach(b=>b.textContent=t.legend);
+ document.querySelector('.allergeni-title').textContent=t.title;
+ document.querySelector('.allergeni-subtitle').textContent=t.sub;
+ document.querySelector('.allergeni-note').textContent=t.note;
+ document.querySelector('.footer-btn:not(.review)').textContent=t.home;
+ document.querySelector('.footer-btn.review').textContent=t.review;
+ document.querySelector('.lang-current').textContent=currentLang.toUpperCase()+' ▾';
+ document.querySelectorAll('[data-d1-lang]').forEach(a=>a.classList.toggle('active',a.dataset.d1Lang===currentLang));
+ renderSection('piatti',x=>x>=1&&x<=9);renderSection('vini',x=>x>=10&&x<=14);renderLegend();
+}
+const ls=document.querySelector('.lang-switch'),lm=document.querySelector('.lang-menu');
+ls.addEventListener('click',e=>{e.stopPropagation();lm.style.display=lm.style.display==='block'?'none':'block';});
+document.addEventListener('click',()=>lm.style.display='none');
+document.querySelectorAll('[data-d1-lang]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();currentLang=a.dataset.d1Lang;lm.style.display='none';render();}));
+window.addEventListener('click',e=>{if(e.target===document.getElementById('allergeniModal'))closeAllergeniModal();});
+render();
+(async()=>{try{const r=await fetch(API,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();if(!j.ok||!Array.isArray(j.items)||!Array.isArray(j.allergens))throw Error('API');data=j;render();}catch(e){console.error('D1 TEST:',e);for(const id of ['piatti-d1','vini-d1'])document.getElementById(id).textContent=UI[currentLang].error;}})();</script><script>
+"use strict";
+(()=>{
+  const base='https://locanda-menu-public-test.emanuel-martini87.workers.dev';
+  const endpoint=base+'/api/public/locandine-test';
+  const box=document.getElementById('eventMenuTest');
+  const thumb=document.getElementById('eventMenuImage');
+  const large=document.getElementById('eventMenuLarge');
+  const title=document.getElementById('eventMenuTitle');
+  const hint=document.getElementById('eventMenuHint');
+  const pdf=document.getElementById('eventMenuPdf');
+  const modalPdf=document.getElementById('eventModalPdf');
+  const dialog=document.getElementById('eventMenuDialog');
+  const close=document.getElementById('eventMenuClose');
+  const words={
+    it:{hint:'Tocca la locandina per ingrandirla.',pdf:'📄 Apri il menù dell’evento (PDF)',open:'Ingrandisci la locandina',close:'Chiudi'},
+    en:{hint:'Tap the poster to enlarge it.',pdf:'📄 Open the event menu (PDF)',open:'Enlarge event poster',close:'Close'},
+    fr:{hint:'Touchez l’affiche pour l’agrandir.',pdf:'📄 Ouvrir le menu de l’événement (PDF)',open:'Agrandir l’affiche',close:'Fermer'},
+    de:{hint:'Tippen Sie auf das Plakat, um es zu vergrößern.',pdf:'📄 Veranstaltungsmenü öffnen (PDF)',open:'Plakat vergrößern',close:'Schließen'}
+  };
+  function setLang(lang){
+    const t=words[lang]||words.it;
+    hint.textContent=t.hint;
+    pdf.textContent=t.pdf;
+    modalPdf.textContent=t.pdf;
+    document.getElementById('eventMenuOpen').setAttribute('aria-label',t.open);
+    close.setAttribute('aria-label',t.close);
+    close.title=t.close;
+  }
+  document.querySelectorAll('[data-d1-lang]').forEach(a=>a.addEventListener('click',()=>setLang(a.dataset.d1Lang)));
+  setLang('it');
+  document.getElementById('eventMenuOpen').addEventListener('click',()=>{
+    if(!box.hidden){dialog.showModal();close.focus();}
+  });
+  close.addEventListener('click',()=>dialog.close());
+  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close();});
+  function allowedUrl(candidate){
+    if(typeof candidate!=='string')return false;
+    try{
+      const u=new URL(candidate);
+      return u.origin===base && u.pathname.startsWith('/api/public/locandine-test/');
+    }catch(_){return false;}
+  }
+  thumb.addEventListener('error',()=>{box.hidden=true;});
+  (async()=>{
+    try{
+      const res=await fetch(endpoint,{cache:'no-store',credentials:'omit'});
+      if(!res.ok)throw Error('HTTP '+res.status);
+      const body=await res.json();
+      if(!body.ok||!Array.isArray(body.locandine))throw Error('Formato API inatteso');
+      const evento=body.locandine.find(x=>x.mostra_menu===true);
+      if(!evento)return;
+      if(!allowedUrl(evento.immagine_url))throw Error('URL immagine non valido');
+      const testo=String(evento.titolo||'Evento alla Locanda');
+      title.textContent=testo;
+      thumb.alt=testo;
+      large.alt=testo;
+      box.hidden=true;
+      thumb.addEventListener('load',()=>{box.hidden=false;},{once:true});
+      thumb.src=evento.immagine_url;
+      large.src=evento.immagine_url;
+      if(thumb.complete&&thumb.naturalWidth>0)box.hidden=false;
+      if(allowedUrl(evento.pdf_url)){
+        pdf.href=evento.pdf_url;
+        modalPdf.href=evento.pdf_url;
+        pdf.hidden=false;
+        modalPdf.hidden=false;
+      }
+    }catch(error){
+      box.hidden=true;
+      console.warn('Locandine MENU TEST non disponibili:',error.message);
+    }
+  })();
+})();
+</script>
+</body>
+</html>
