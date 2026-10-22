@@ -1,16 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
-  <link rel="icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/favicon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Online Menu | La Locanda di Vinadio</title>
-
-  <style>
+<link href="/favicon.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="/favicon.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/favicon.ico" rel="icon"/>
+<link href="/favicon.png" rel="apple-touch-icon"/>
+<meta charset="utf-8"/>
+<meta name="description" content="Explore our restaurant menu in English: dishes, pizzas, drinks, prices and allergens at La Locanda di Vinadio."/>
+<link rel="canonical" href="https://www.lalocandadivinadio.it/pagine/menu-en.html"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Online Menu | La Locanda di Vinadio</title>
+<style>
     :root {
       --bg: #f8f9fa;
       --accent: #b5532d;
@@ -32,8 +34,6 @@
       background-color: var(--bg);
       color: var(--text);
     }
-
-    a{text-decoration:none;color:inherit}
 
     header {
       background: var(--white);
@@ -92,6 +92,7 @@
       color:#333;
       white-space:nowrap;
       font-size:13px;
+      text-decoration:none;
     }
 
     .lang-menu a:hover,
@@ -392,1113 +393,249 @@
         font-size: 15px;
       }
     }
+  
+    /* Locandina menu PRODUZIONE: nascosta senza occupare spazio se non pubblicata. */
+    .locanda-menu-promo[hidden],.locanda-menu-pdf[hidden],.locanda-menu-modal-pdf[hidden]{display:none!important}
+    .locanda-menu-promo{
+      display:flex;align-items:center;gap:18px;max-width:700px;
+      margin:14px auto 18px;padding:14px 18px;background:#fff;
+      border:1px solid #e3d2c7;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.08)
+    }
+    .locanda-menu-thumb{width:92px;flex:0 0 92px;background:#fff;border:0;padding:0;
+      border-radius:12px;overflow:hidden;box-shadow:0 3px 13px #0002;cursor:zoom-in}
+    .locanda-menu-thumb img{display:block;width:100%;height:auto;max-height:148px;object-fit:contain}
+    .locanda-menu-info{flex:1;min-width:0}
+    .locanda-menu-info strong{font-size:17px;color:#8d3f20;display:block;margin-bottom:7px}
+    .locanda-menu-info p{font-size:13px;color:#5b5755;line-height:1.5;margin:0 0 10px}
+    .locanda-menu-pdf,.locanda-menu-modal-pdf{
+      display:inline-block;color:#fff;background:#b5532d;padding:10px 14px;
+      text-decoration:none;border-radius:10px;font-weight:700;font-size:13px
+    }
+    .locanda-menu-modal{border:0;border-radius:18px;background:#1b1715;padding:58px 12px 16px;
+      max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);
+      width:min(650px,calc(100vw - 24px));color:#fff;box-shadow:0 24px 80px #0009;overflow:auto}
+    .locanda-menu-modal::backdrop{background:#000c}
+    .locanda-menu-modal img{display:block;max-width:100%;max-height:calc(90dvh - 105px);width:auto;height:auto;object-fit:contain;margin:auto}
+    .locanda-menu-close{position:sticky;top:0;float:right;margin-top:-45px;z-index:2;width:46px;
+      height:46px;border-radius:50%;border:2px solid #fff;background:#bd4f2e;color:#fff;cursor:pointer;font-size:27px;font-weight:700}
+    .locanda-menu-close:focus-visible,.locanda-menu-thumb:focus-visible{outline:3px solid #4a90e2;outline-offset:3px}
+    .locanda-menu-modal .locanda-menu-modal-pdf{margin:14px auto 0;display:table;text-align:center}
+    @media(max-width:440px){
+      .locanda-menu-promo{margin:10px 12px 14px;gap:12px;padding:10px}
+      .locanda-menu-thumb{flex-basis:80px;width:80px}
+      .locanda-menu-info strong{font-size:15px}
+      .locanda-menu-info p{font-size:12px}
+    }
+
   </style>
 </head>
-
 <body>
-  <div id="allergeneTooltip" class="allergene-tooltip"></div>
-  <header>
-    <div class="header-inner">
-      <h2 style="margin:0; color:var(--accent);">La Locanda di Vinadio</h2>
-      <div class="lang-switch">
-        <div class="lang-current">EN ▾</div>
-        <div class="lang-menu">
-          <a href="/pagine/menu.html">IT Italiano</a>
-          <a class="active" href="/pagine/menu-en.html">EN English</a>
-          <a href="/pagine/menu-fr.html">FR Français</a>
-          <a href="/pagine/menu-de.html">DE Deutsch</a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <div class="menu-nav">
-    <button class="nav-btn active" onclick="showTab('piatti', this)">Dishes</button>
-    <button class="nav-btn" onclick="showTab('vini', this)">Wine/Drinks List</button>
-  </div>
-
-  <div id="piatti" class="menu-section active">
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Snacks and Side Dishes <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Olive ascolane*</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Olive ascolane (Wheat, Milk, Eggs, Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>French fries*</span><span>4,00 €</span></div>
-          <div class="allergeni-text">French fries (Tree nuts, Peanuts), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Grilled vegetables</span><span>6,00 €</span></div>
-          <div class="allergeni-text">Grilled vegetables</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Battered vegetables*</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Batter (Wheat, Milk, Eggs), Vegetables</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Mixed salad</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Mixed salad</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Green salad</span><span>3,00 €</span></div>
-          <div class="allergeni-text">Green salad</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">House Specialties <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Mixed grilled meat with side dish</span><span>30,00 €</span></div>
-          <div class="allergeni-text">Pork, Beef, Chicken</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Our Special Pizzas <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>4 formaggi</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, gorgonzola, raschera and fontina</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>4 stagioni</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, ham, artichokes, mushrooms and olives</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Ada</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Cheese focaccia and cooked ham</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Anna</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, leeks, radicchio and zucchini</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Antonino</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, sausage, spicy salami and wurstel</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Arrabbiata</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Tomato and chili pepper</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Attila</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Mozzarella, sausage, friarielli and olives</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Balma</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, raschera and sausage</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bessa</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, gorgonzola, peppers and tuna</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bismarc</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, pancetta and egg</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bufala</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, buffalo mozzarella</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Calzone</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and ham</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Calzone del finanziere</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, ham, mushrooms, spicy salami and stracchino</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Calzone farcito</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, ham and mushrooms</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Capomelinda</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Fresh tomato, mozzarella, cream and speck</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Cuddiruni</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Tomato, pecorino cheese, anchovies and onion</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Diavolina</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and spicy salami</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Diego Maus</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, cooked ham, fontina and garlic</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Focaccia al formaggio</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Closed focaccia with stracchino and cheese</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Focaccia Lardo e Pomodorini</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Lard, focaccia, cherry tomatoes</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Friarielli</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and friarielli</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Funghi</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and mushrooms</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Giovannone</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Mozzarella, porcini mushrooms, pancetta, brie, sausage and spicy salami</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Gioele</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Fresh tomato, mozzarella, cream, tuna, salmon</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Golosa</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, onion, eggs, sausage and French fries</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Gorgonzola</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and gorgonzola</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Italia</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, surimi and shrimps</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Javier</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, scamorza, sausage, leeks</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Margherita</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Maria</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Fresh tomato, speck, olives, sweetcorn</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Marinara</span><span>4,50 €</span></div>
-          <div class="allergeni-text">Tomato, garlic</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Napoli</span><span>6,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, anchovies</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nico</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Buffalo mozzarella, spinach and salmon</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Parmigiana</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, aubergines and parmesan</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Patatosa</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, French fries</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Peperoni</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and peppers</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Piccantina</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Mozzarella, friarielli, anchovies and spicy salami</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pizza del maresciallo</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Fresh tomato, mozzarella, raw ham, rocket and parmesan flakes</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pizza del maresciallo bis</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, mushrooms, peas, egg, cooked ham, olives</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pizza della Locanda</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Cheese focaccia with tomato and anchovies</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Prosciutto cotto</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and cooked ham</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Prosciutto crudo</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and raw ham</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Prosciutto e funghi</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, cooked ham and mushrooms</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pugliese</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and onion</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Raffa</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, sausage and peppers</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Raoul</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, onion, sausage and gorgonzola</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Romana</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, olives, capers and anchovies</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salame dolce</span><span>6,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and mild salami</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salamina</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Mozzarella, friarielli and spicy salami</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salvatore</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Tomato, gorgonzola, onion, anchovies, pancetta, olives</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Speck e Brie</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, speck and brie</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Stalle</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, raschera and speck</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Stracchino</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato and stracchino</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Teresa</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, wurstel and French fries</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tonno</span><span>7,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and tuna</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tonno e Cipolle</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, tuna and onions</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Trinacria</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Cherry tomatoes, mozzarella, topped with burrata and mortadella</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vegetariana</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and grilled vegetables</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vito</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, bresaola, rocket and grana cheese</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Vito piccolo</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella, porcini mushrooms, spicy salami and rocket</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Wurstel</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Tomato, mozzarella and wurstel</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nicola</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Buffalo mozzarella, pesto and yellow cherry tomatoes</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Giada</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Mozzarella, fontina, gorgonzola, sweetcorn and sausage</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Starters <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>House starter</span><span>15,00 €</span></div>
-          <div class="allergeni-text">Fish (Fish), Cow's milk (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Veal with tuna sauce</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Veal, Soft wheat flour (Wheat), Celery (Celery), capers, Butter (Milk), Mayonnaise (Eggs), Carrots, Onion, Garlic, Tuna (Fish), Anchovies (Fish)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Salmon carpaccio with cherry tomatoes</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Salmon (Fish), Cherry tomatoes, Raw salmon (Fish)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Bresaola, rocket and grana cheese</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Rocket, Beef bresaola, Grana Padano PDO (Milk, Eggs)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Shrimp cocktail</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Black pepper, Shrimps (Crustaceans), Tabasco sauce, Wine vinegar, Lettuce, Cocktail sauce (Eggs), Prawns (Crustaceans), Molluscs (Molluscs)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Baked tomino cheese with speck</span><span>6,00 €</span></div>
-          <div class="allergeni-text">Speck, Fresh tomino cheese (Milk)</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">First Courses <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset with leek cream</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Leek, Fresh egg pasta (Wheat, Eggs), Cream (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset* with sausage and porcini mushrooms*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Pork sausage, Porcini mushrooms, Fresh egg pasta (Wheat, Eggs), Cream (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Crouset* with sausage ragù*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Meat ragù (Celery), Pork sausage, Fresh egg pasta (Wheat, Eggs), Cream (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne all'arrabbiata</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pasta (Wheat), Arrabbiata sauce, Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne with ragù</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Pasta (Wheat), Meat ragù (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne with zucchini and shrimps</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta (Wheat), Zucchini, Shrimps (Crustaceans), Cream (Milk), Fish (Fish)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne with pesto</span><span>7,00 €</span></div>
-          <div class="allergeni-text">Pasta (Wheat), Pesto (Milk, Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Penne with salmon</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Pasta (Wheat), Salmon (Fish), Cream (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini with wild boar*</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Fresh egg pasta (Wheat, Eggs), Wild boar meat, Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* with tomato</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Tomato, Fresh egg pasta (Wheat, Eggs), Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* all'arrabbiata</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Fresh egg pasta (Wheat, Eggs), Arrabbiata sauce, Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* with sausage and porcini mushrooms*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Fresh egg pasta (Wheat, Eggs), Pork sausage, Porcini mushrooms, Cream (Milk), Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Taglierini* with ragù</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Fresh egg pasta (Wheat, Eggs), Meat ragù (Celery), Celery (Celery)</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Main Courses <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Grilled sirloin steak</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Beef</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Sirloin steak with porcini mushrooms*</span><span>12,00 €</span></div>
-          <div class="allergeni-text">Mushrooms, Porcini mushrooms, Beef</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Sausage and potatoes</span><span>9,00 €</span></div>
-          <div class="allergeni-text">Pork sausage, Potatoes</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Steak and potatoes</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Potatoes, Black pepper, Salt, Extra virgin olive oil, Pork</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Sliced beef with rocket and grana cheese</span><span>16,00 €</span></div>
-          <div class="allergeni-text">Rocket, Grana Padano PDO (Milk, Eggs), Black pepper, Salt, Extra virgin olive oil, Beef</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Grilled swordfish*</span><span>16,00 €</span></div>
-          <div class="allergeni-text">Swordfish (Fish), Fish (Fish)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta with sausage ragù</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Meat ragù (Celery), Pork sausage, Polenta</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta with gorgonzola and raschera</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Gorgonzola PDO (Milk), Polenta, Raschera PDO (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta with wild boar*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Wild boar meat, Polenta, Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta with porcini mushrooms*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Mushrooms, Porcini mushrooms, Polenta, Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Polenta with porcini mushrooms*</span><span>11,00 €</span></div>
-          <div class="allergeni-text">Mushrooms, Porcini mushrooms, Polenta, Celery (Celery)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Mixed grilled meat with side dish</span><span>30,00 €</span></div>
-          <div class="allergeni-text">Beef, Chicken, Pork</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Pork chop with French fries</span><span>10,00 €</span></div>
-          <div class="allergeni-text">French fries (Tree nuts, Peanuts), Potatoes, Fried food (Wheat, Tree nuts, Peanuts), Pork, Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Capocollo with French fries</span><span>10,00 €</span></div>
-          <div class="allergeni-text">French fries (Tree nuts, Peanuts), Potatoes, Coppa, Fried food (Wheat, Tree nuts, Peanuts), Dried fruit (Tree nuts)</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Large Salads <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>La Locanda</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Salad, Tomato, mozzarella, Grana flakes, Raw ham</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Marinara</span><span>9,50 €</span></div>
-          <div class="allergeni-text">Salad, Tomato, shrimps, tuna, surimi</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nico</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Salad, onion, Tomato, anchovies, egg</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Provenzale</span><span>8,50 €</span></div>
-          <div class="allergeni-text">Salad, Tomato, scamorza, speck, artichokes in oil</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Classic large salad</span><span>8,00 €</span></div>
-          <div class="allergeni-text">Salad, Tomato, mozzarella, sweetcorn, tuna</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Cheeses <span>▼</span></button>
-      <div class="accordion-content">
-
-        <div class="item-container">
-          <div class="item-row"><span>Gorgonzola</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Gorgonzola PDO (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Raschera</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Raschera PDO (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Stracchino</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Stracchino (Milk)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Grana</span><span>4,00 €</span></div>
-          <div class="allergeni-text">Grana Padano PDO (Milk, Eggs)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Mixed cheese plate</span><span>10,00 €</span></div>
-          <div class="allergeni-text">Cheeses (Milk)</div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="accordion">
-      <button class="accordion-header" onclick="toggleAcc(this)">Desserts <span>▼</span></button>
-      <div class="accordion-content">
-        
-        <div class="item-container">
-          <div class="item-row"><span>Crema catalana</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Crema catalana (Milk, Eggs), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Chocolate panna cotta</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Chocolate, Milk chocolate (Milk), Cream (Milk), Panna cotta (Milk), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Strawberry panna cotta</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Strawberries, Panna cotta (Milk), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Wild berry panna cotta</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Cream (Milk), Panna cotta (Milk), Raspberries, Blueberries, Currants, Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>House cake</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Variable (possible allergens)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Dark profiteroles</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Choux pastry (Wheat, Milk, Eggs), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Meringue cake</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Sugar, Whipped cream (Milk), Sponge cake (Wheat, Eggs), Pastry cream (Milk, Eggs), Lemon juice, Hen egg white (Eggs), Vanilla extract, Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Coconut ice cream</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Coconut, Ice cream (Milk), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Lemon ice cream</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Ice cream (Milk), Lemon, Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Lemon sorbet</span><span>3,50 €</span></div>
-          <div class="allergeni-text">Lemon, Sorbet, Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>White or dark tartufo</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Cocoa powder, Hazelnuts (Tree nuts), Sugar, Cow's milk (Milk), Cream (Milk), Dark chocolate</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Nougat semifreddo</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Nougat (Eggs, Tree nuts), Soft wheat flour (Wheat), Sugar, Whipped cream (Milk), Hen eggs (Eggs), Icing sugar</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Variegated / black cherry / chocolate cup</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Black cherries, Chocolate, Ice cream (Milk), Dried fruit (Tree nuts)</div>
-        </div>
-
-        <div class="item-container">
-          <div class="item-row"><span>Tart of the day</span><span>5,00 €</span></div>
-          <div class="allergeni-text">Soft wheat flour (Wheat), Sugar, Butter (Milk), Hen eggs (Eggs), Variable (possible allergens)</div>
-        </div>        
-      </div>
-    </div>
-    <button class="btn-allergeni" onclick="openAllergeniModal()">FULL ALLERGEN LIST</button>
-  </div>
-
-<div id="vini" class="menu-section">
-  <div class="accordion">
-    <button class="accordion-header" onclick="toggleAcc(this)">Water <span>▼</span></button>
-    <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>1 litre bottle</span><span>1,50 €</span></div>
-        <div class="allergeni-text">treated and sparkling drinking water</div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>1/2 litre bottle</span><span>1,00 €</span></div>
-        <div class="allergeni-text">treated and sparkling drinking water</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-header" onclick="toggleAcc(this)">Soft Drinks <span>▼</span></button>
-    <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Canned soft drinks</span><span>2,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Small draught Coca-Cola</span><span>3,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Large draught Coca-Cola</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Syrups</span><span>2,00 €</span></div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-header" onclick="toggleAcc(this)">Aperitifs and Cocktails <span>▼</span></button>
-    <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Crodino</span><span>2,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>San bitter</span><span>2,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Campari soda</span><span>2,80 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Aperol soda</span><span>2,80 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Pastis</span><span>3,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Martini</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Cuba libre</span><span>5,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Grappa</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Spritz</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Altenmunster blonde (4.9%)</span><span></span></div>
-        <div class="allergeni-text">small cl.20 3,00 € medium cl. 40 5,00 €</div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Kardinal red (7.5%)</span><span></span></div>
-        <div class="allergeni-text">small cl.20 3,00 € medium cl. 40 5,00 €</div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Steenbrugge wit blanche (4.8%)</span><span></span></div>
-        <div class="allergeni-text">small cl.20 3,00 € medium cl. 40 5,00 €</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-header" onclick="toggleAcc(this)">Bottled Beers <span>▼</span></button>
-    <div class="accordion-content">
-
-      <div class="item-container">
-        <div class="item-row"><span>Ceres</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Beck's</span><span>3,50 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>Corona</span><span>4,00 €</span></div>
-      </div>
-
-      <div class="item-container">
-        <div class="item-row"><span>66 cl beer</span><span>4,00 €</span></div>
-      </div>
-
-    </div>
-  </div>
-  <div class="accordion">
-  <button class="accordion-header" onclick="toggleAcc(this)">Services <span>▼</span></button>
-  <div class="accordion-content">
-    <div class="item-container">
-      <div class="item-row">
-        <span>Table service</span>
-        <span>1.50 €</span>
-      </div>
-      <div class="allergeni-text">Includes bread and table service</div>
-    </div>
-  </div>
+<div class="allergene-tooltip" id="allergeneTooltip"></div>
+<header>
+<div class="header-inner">
+<h2 style="margin:0; color:var(--accent);">La Locanda di Vinadio</h2>
+<div class="lang-switch">
+<div class="lang-current">EN ▾</div>
+<div class="lang-menu">
+<a data-d1-lang="it" href="#">IT Italiano</a>
+<a class="active" data-d1-lang="en" href="#">EN English</a>
+<a data-d1-lang="fr" href="#">FR Français</a>
+<a data-d1-lang="de" href="#">DE Deutsch</a>
 </div>
-  <button class="btn-allergeni" onclick="openAllergeniModal()">FULL ALLERGEN LIST</button>
 </div>
+</div>
+</header>
 
-  <div id="allergeniModal" class="allergeni-modal">
-    <div class="allergeni-modal-content">
-      <button class="allergeni-close" onclick="closeAllergeniModal()">&times;</button>
+  <section id="locandaMenuPoster" class="locanda-menu-promo" aria-label="Enlarge event poster" hidden>
+    <button type="button" class="locanda-menu-thumb" id="locandaMenuOpen" aria-label="Enlarge event poster">
+      <img id="locandaMenuImage" alt="Enlarge event poster" loading="eager" decoding="async">
+    </button>
+    <div class="locanda-menu-info">
+      <strong id="locandaMenuTitle"></strong>
+      <p>Tap the poster to enlarge it.</p>
+      <a id="locandaMenuPdf" class="locanda-menu-pdf" target="_blank" rel="noopener noreferrer" hidden>📄 Open the event menu (PDF)</a>
+    </div>
+  </section>
+  <dialog id="locandaMenuDialog" class="locanda-menu-modal" aria-label="Enlarged event poster">
+    <button type="button" class="locanda-menu-close" id="locandaMenuClose" title="Close" aria-label="Close">&times;</button>
+    <img id="locandaMenuLarge" alt="Enlarged event poster">
+    <a id="locandaMenuModalPdf" class="locanda-menu-modal-pdf" target="_blank" rel="noopener noreferrer" hidden>📄 Open the event menu (PDF)</a>
+  </dialog>
 
-      <h3 class="allergeni-title">Full Allergen List</h3>
-      <p class="allergeni-subtitle">
-        Here you can find the full allergen legend with symbols. You can use them as a reference for the dishes on the menu.
+<div class="menu-nav">
+<button class="nav-btn active" onclick="showTab('piatti', this)">Piatti</button>
+<button class="nav-btn" onclick="showTab('vini', this)">Lista Vini/Bevande</button>
+</div>
+<div class="menu-section active" id="piatti"><div id="piatti-d1">Caricamento del menu dal database...</div>
+
+
+
+
+
+
+
+
+
+<button class="btn-allergeni" onclick="openAllergeniModal()">LISTA ALLERGENI COMPLETA</button>
+</div>
+<div class="menu-section" id="vini"><div id="vini-d1">Caricamento del menu dal database...</div>
+
+
+
+
+
+<button class="btn-allergeni" onclick="openAllergeniModal()">LISTA ALLERGENI COMPLETA</button>
+</div>
+<div class="allergeni-modal" id="allergeniModal">
+<div class="allergeni-modal-content">
+<button class="allergeni-close" onclick="closeAllergeniModal()">×</button>
+<h3 class="allergeni-title">Lista Allergeni Completa</h3>
+<p class="allergeni-subtitle">
+        Qui trovi la legenda completa degli allergeni con simboli. Puoi usarli come riferimento per i piatti del menù.
       </p>
-
-      <div class="allergeni-grid">
-        <div class="allergene-card">
-          <div class="allergene-icon">🧪</div>
-          <p><strong>Sulphur dioxide and sulphites</strong><br>in concentrations above 10 mg/kg or 10 mg/litre expressed as total sulphur dioxide.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥜</div>
-          <p><strong>Peanuts</strong><br>and peanut-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🌾</div>
-          <p><strong>Cereals containing gluten</strong><br>wheat (spelt and khorasan wheat), rye, barley, oats, or their hybridised strains and derived products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🦐</div>
-          <p><strong>Crustaceans</strong><br>and crustacean-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🌰</div>
-          <p><strong>Tree nuts</strong><br>almonds, hazelnuts, walnuts, cashews, pecans, Brazil nuts, pistachios, macadamia nuts and their products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥛</div>
-          <p><strong>Milk</strong><br>and milk-based products, including lactose.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🫘</div>
-          <p><strong>Lupins</strong><br>and lupin-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🦪</div>
-          <p><strong>Molluscs</strong><br>and mollusc-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🐟</div>
-          <p><strong>Fish</strong><br>and fish-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥬</div>
-          <p><strong>Celery</strong><br>and celery-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🌱</div>
-          <p><strong>Sesame seeds</strong><br>and sesame seed-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🟡</div>
-          <p><strong>Mustard</strong><br>and mustard-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🫛</div>
-          <p><strong>Soy</strong><br>and soy-based products.</p>
-        </div>
-
-        <div class="allergene-card">
-          <div class="allergene-icon">🥚</div>
-          <p><strong>Eggs</strong><br>and egg-based products.</p>
-        </div>
+<div class="allergeni-grid" id="d1-allergeni-grid"></div>
+<div class="allergeni-note">
+        Per maggiori informazioni sugli allergeni presenti nei piatti, chiedere sempre al personale.
       </div>
-
-      <div class="allergeni-note">
-        For more information about allergens in the dishes, always ask the staff.
-      </div>
-    </div>
-  </div>
-
-  <div class="menu-footer-links">
-    <a href="../index-en.html" class="footer-btn">🏠 Home</a>
-
-    <a href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E"
-       target="_blank"
-       rel="noopener noreferrer"
-       class="footer-btn review">
-      ⭐ Leave a review
+</div>
+</div>
+<div class="menu-footer-links">
+<a class="footer-btn" href="../index.html">🏠 Home</a>
+<a class="footer-btn review" href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E" rel="noopener noreferrer" target="_blank">
+      ⭐ Lascia una recensione
     </a>
-  </div>
-
-  <script>
-    function showTab(tabId, btn) {
-      document.querySelectorAll('.menu-section').forEach(section => {
-        section.classList.remove('active');
-      });
-
-      document.querySelectorAll('.nav-btn').forEach(button => {
-        button.classList.remove('active');
-      });
-
-      document.getElementById(tabId).classList.add('active');
-      btn.classList.add('active');
-    }
-
-    function toggleAcc(btn) {
-      const content = btn.nextElementSibling;
-      const isVisible = content.style.display === "block";
-      content.style.display = isVisible ? "none" : "block";
-      btn.querySelector('span').textContent = isVisible ? "▼" : "▲";
-    }
-
-    function openAllergeniModal() {
-      document.getElementById('allergeniModal').style.display = 'block';
-    }
-
-    function closeAllergeniModal() {
-      document.getElementById('allergeniModal').style.display = 'none';
-    }
-
-    function aggiungiIconeAllergeni() {
-      const allergeni = [
-        { parole: ['Wheat', 'Flour', 'gluten', 'Pasta', 'Choux', 'Sponge cake', 'Focaccia', 'Cereals'], icona: '🌾', nome: 'Cereals containing gluten' },
-        { parole: ['Milk', 'Cream', 'Butter', 'mozzarella', 'gorgonzola', 'raschera', 'stracchino', 'fontina', 'brie', 'buffalo', 'burrata', 'grana', 'parmesan', 'pecorino', 'cheese', 'Ice cream'], icona: '🥛', nome: 'Milk and dairy products' },
-        { parole: ['Eggs', 'egg', 'Mayonnaise', 'white'], icona: '🥚', nome: 'Eggs' },
-        { parole: ['Fish', 'Tuna', 'Salmon', 'Anchovies', 'swordfish', 'surimi'], icona: '🐟', nome: 'Fish' },
-        { parole: ['Crustaceans', 'Prawns', 'Shrimps', 'shrimps'], icona: '🦐', nome: 'Crustaceans' },
-        { parole: ['Tree nuts', 'Dried fruit', 'Hazelnuts', 'Nougat'], icona: '🌰', nome: 'Tree nuts' },
-        { parole: ['Peanuts'], icona: '🥜', nome: 'Peanuts' },
-        { parole: ['Celery'], icona: '🥬', nome: 'Celery' },
-        { parole: ['Molluscs'], icona: '🦪', nome: 'Molluscs' },
-        { parole: ['Soy'], icona: '🫛', nome: 'Soy' },
-        { parole: ['Lupins'], icona: '🫘', nome: 'Lupins' },
-        { parole: ['Mustard'], icona: '🟡', nome: 'Mustard' },
-        { parole: ['Sesame'], icona: '🌱', nome: 'Sesame seeds' },
-        { parole: ['Sulphites', 'Sulphur dioxide'], icona: '🧪', nome: 'Sulphites' }
-      ];
-
-      document.querySelectorAll('.allergeni-text').forEach(riga => {
-        if (riga.dataset.iconsAdded === 'true') return;
-
-        const testo = riga.textContent;
-        const item = riga.closest('.item-container');
-        const accordion = riga.closest('.accordion');
-        const header = accordion ? accordion.querySelector('.accordion-header') : null;
-        const nomeSezione = header ? header.textContent.toLowerCase() : '';
-        const trovati = [];
-
-        allergeni.forEach(allergene => {
-          const presente = allergene.parole.some(parola =>
-            testo.toLowerCase().includes(parola.toLowerCase())
-          );
-
-          if (presente && !trovati.includes(allergene.nome)) {
-            trovati.push(allergene.nome);
-          }
-        });
-
-        if (nomeSezione.includes('pizzas') && !trovati.includes('Cereals containing gluten')) {
-          trovati.push('Cereals containing gluten');
-        }
-
-        trovati.forEach(nome => {
-          const allergene = allergeni.find(a => a.nome === nome);
-          if (!allergene) return;
-
-const span = document.createElement('span');
-span.className = 'allergene-mini-icon';
-span.textContent = allergene.icona;
-
-span.title = allergene.nome;
-span.setAttribute('data-allergene', allergene.nome);
-
-span.addEventListener('click', function (event) {
-  event.stopPropagation();
-  mostraTooltipAllergene(allergene.nome);
-});
-
-riga.appendChild(span);
-        });
-
-        riga.dataset.iconsAdded = 'true';
-      });
-    }
-
-    window.addEventListener('click', function (event) {
-      const modal = document.getElementById('allergeniModal');
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-function mostraTooltipAllergene(testo) {
-  const tooltip = document.getElementById('allergeneTooltip');
-
-  if (!tooltip) return;
-
-  tooltip.textContent = testo;
-  tooltip.style.display = 'block';
-
-  clearTimeout(window.allergeneTooltipTimer);
-
-  window.allergeneTooltipTimer = setTimeout(() => {
-    tooltip.style.display = 'none';
-  }, 2200);
-}
-
-    const langSwitch = document.querySelector('.lang-switch');
-    const langMenu = document.querySelector('.lang-menu');
-
-    langSwitch.addEventListener('click', function(e){
-      e.stopPropagation();
-      langMenu.style.display = langMenu.style.display === 'block' ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', function(){
-      langMenu.style.display = 'none';
-    });
-
-    document.addEventListener('DOMContentLoaded', aggiungiIconeAllergeni);
-  </script>
+</div>
 
 <footer style="font-size:0.75rem; opacity:0.8; text-align:center; padding:20px 10px;">
-  <div>
+<div>
     © 2026 La Locanda di Vinadio · Tutti i diritti riservati
   </div>
-
-  <div style="margin-top:8px;">
-    <strong>La Locanda di Vinadio</strong><br>
-    Via Roma, 16 – 12010 Vinadio (CN)<br>
+<div style="margin-top:8px;">
+<strong>La Locanda di Vinadio</strong><br/>
+    Via Roma, 16 – 12010 Vinadio (CN)<br/>
     P.IVA: 03626550044
   </div>
-
-  <p style="margin-top:8px;">
-    <a href="/privacy-policy.html" style="color:#b5532d; font-weight:bold;">
+<p style="margin-top:8px;">
+<a href="/privacy-policy.html" style="color:#b5532d; font-weight:bold;">
       Privacy Policy
     </a>
-  </p>
+</p>
 </footer>
+<script>"use strict";
+const API='https://locanda-menu-public.emanuel-martini87.workers.dev/api/public/menu';
+const ICONS={1:'🌾',2:'🦐',3:'🥚',4:'🐟',5:'🥜',6:'🫘',7:'🥛',8:'🌰',9:'🥬',10:'🌿',11:'🌱',12:'🧪',13:'🌱',14:'🦪'};
+const UI={
+ it:{food:'Piatti',drinks:'Lista Vini/Bevande',legend:'LISTA ALLERGENI COMPLETA',title:'Lista Allergeni Completa',sub:'Qui trovi la legenda completa degli allergeni con simboli.',note:'Per maggiori informazioni sugli allergeni presenti nei piatti, chiedere sempre al personale.',home:'🏠 Home',review:'⭐ Lascia una recensione',loading:'Caricamento menu...',empty:'Nessuna voce disponibile',error:'Menu non disponibile. Riprova più tardi.',name:'Voce senza nome',allergens:'Allergeni'},
+ en:{food:'Dishes',drinks:'Wine / Drinks',legend:'FULL ALLERGEN LIST',title:'Complete Allergen List',sub:'Complete allergen guide with symbols.',note:'For further information about allergens, please ask our staff.',home:'🏠 Home',review:'⭐ Leave a review',loading:'Loading menu...',empty:'No items available',error:'Menu unavailable. Please try again later.',name:'Unnamed item',allergens:'Allergens'},
+ fr:{food:'Plats',drinks:'Vins / Boissons',legend:'LISTE COMPLÈTE DES ALLERGÈNES',title:'Liste complète des allergènes',sub:'Guide complet des allergènes avec symboles.',note:'Pour plus d’informations sur les allergènes, veuillez vous adresser à notre personnel.',home:'🏠 Accueil',review:'⭐ Laisser un avis',loading:'Chargement du menu...',empty:'Aucun article disponible',error:'Menu indisponible. Réessayez plus tard.',name:'Article sans nom',allergens:'Allergènes'},
+ de:{food:'Gerichte',drinks:'Weine / Getränke',legend:'VOLLSTÄNDIGE ALLERGENLISTE',title:'Vollständige Allergenliste',sub:'Vollständige Allergenübersicht mit Symbolen.',note:'Bei Fragen zu Allergenen wenden Sie sich bitte an unser Personal.',home:'🏠 Startseite',review:'⭐ Bewertung abgeben',loading:'Menü wird geladen...',empty:'Keine Einträge verfügbar',error:'Menü nicht verfügbar. Bitte versuchen Sie es später erneut.',name:'Ohne Namen',allergens:'Allergene'}
+};
+let currentLang='en',data=null;
+const el=(tag,cls,txt)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(txt!==undefined)x.textContent=txt;return x;};
+function showTab(tabId,btn){
+ document.querySelectorAll('.menu-section').forEach(s=>s.classList.toggle('active',s.id===tabId));
+ document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b===btn));
+}
+function toggleAcc(btn){const c=btn.nextElementSibling;const open=c.style.display==='block';c.style.display=open?'none':'block';const a=btn.querySelector('span');if(a)a.textContent=open?'▼':'▲';}
+function openAllergeniModal(){document.getElementById('allergeniModal').style.display='block';}
+function closeAllergeniModal(){document.getElementById('allergeniModal').style.display='none';}
+function mostraTooltipAllergene(t){const x=document.getElementById('allergeneTooltip');x.textContent=t;x.style.display='block';clearTimeout(window.allergeneTooltipTimer);window.allergeneTooltipTimer=setTimeout(()=>x.style.display='none',2200);}
+function label(x,prefix){return x?.[prefix+'_'+currentLang]||x?.[prefix+'_it']||'';}
+function price(n){return(Number(n)/100).toLocaleString(currentLang==='en'?'en-IE':currentLang==='fr'?'fr-FR':currentLang==='de'?'de-DE':'it-IT',{style:'currency',currency:'EUR'});}
+function renderCategory(categoryId,list){
+ const acc=el('div','accordion'); const b=el('button','accordion-header');b.type='button';
+ b.append(document.createTextNode(label(list[0],'category')||'—'),el('span',null,'▼'));
+ b.onclick=()=>toggleAcc(b);acc.append(b);const contents=el('div','accordion-content');
+ for(const item of list){
+  const box=el('div','item-container'),r=el('div','item-row');
+  r.append(el('span',null,label(item,'name')||UI[currentLang].name),el('span',null,price(item.price_cents)));
+  box.append(r);
+  const desc=label(item,'description');
+  const isPizza=Number(item.category_id)===3;
+  const ingredients=(!isPizza&&!desc)?(item.ingredients||[]).map(x=>label(x,'name')).filter(Boolean).join(', '):'';
+  if(desc||ingredients)box.append(el('div','allergeni-text',desc||ingredients));
+  if(item.allergens?.length){
+   const row=el('div','allergeni-text');row.append(document.createTextNode(UI[currentLang].allergens+': '));
+   for(const a of item.allergens){const icon=el('span','allergene-mini-icon',ICONS[a.id]||'⚠️');icon.title=label(a,'name');icon.setAttribute('aria-label',label(a,'name'));icon.onclick=e=>{e.stopPropagation();mostraTooltipAllergene(label(a,'name'));};row.append(icon);}
+   box.append(row);
+  }
+  contents.append(box);
+ }
+ acc.append(contents);return acc;
+}
+function renderSection(sectionId,ids){
+ const target=document.getElementById(sectionId+'-d1');target.replaceChildren();
+ if(!data){target.textContent=UI[currentLang].loading;return;}
+ const map=new Map();
+ for(const item of data.items){const c=Number(item.category_id);if(!ids(c))continue;if(!map.has(c))map.set(c,[]);map.get(c).push(item);}
+ for(const [id,items] of map)target.append(renderCategory(id,items));
+ if(!map.size)target.textContent=UI[currentLang].empty;
+}
+function renderLegend(){const grid=document.getElementById('d1-allergeni-grid');grid.replaceChildren();if(!data)return;
+ for(const a of data.allergens||[]){const card=el('div','allergene-card'),icon=el('div','allergene-icon',ICONS[a.id]||'⚠️'),p=el('p');p.append(el('strong',null,label(a,'name')));card.append(icon,p);grid.append(card);}
+}
+function render(){document.documentElement.lang=currentLang;const t=UI[currentLang];
+ document.querySelectorAll('.nav-btn')[0].textContent=t.food;document.querySelectorAll('.nav-btn')[1].textContent=t.drinks;
+ document.querySelectorAll('.btn-allergeni').forEach(b=>b.textContent=t.legend);
+ document.querySelector('.allergeni-title').textContent=t.title;
+ document.querySelector('.allergeni-subtitle').textContent=t.sub;
+ document.querySelector('.allergeni-note').textContent=t.note;
+ document.querySelector('.footer-btn:not(.review)').textContent=t.home;document.querySelector('.footer-btn:not(.review)').href='../index'+(currentLang==='it'?'':'-'+currentLang)+'.html';
+ document.querySelector('.footer-btn.review').textContent=t.review;
+ document.querySelector('.lang-current').textContent=currentLang.toUpperCase()+' ▾';
+ document.querySelectorAll('[data-d1-lang]').forEach(a=>a.classList.toggle('active',a.dataset.d1Lang===currentLang));
+ renderSection('piatti',x=>x>=1&&x<=9);renderSection('vini',x=>x>=10&&x<=14);renderLegend();
+}
+const ls=document.querySelector('.lang-switch'),lm=document.querySelector('.lang-menu');
+ls.addEventListener('click',e=>{e.stopPropagation();lm.style.display=lm.style.display==='block'?'none':'block';});
+document.addEventListener('click',()=>lm.style.display='none');
+document.querySelectorAll('[data-d1-lang]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();currentLang=a.dataset.d1Lang;lm.style.display='none';render();}));
+window.addEventListener('click',e=>{if(e.target===document.getElementById('allergeniModal'))closeAllergeniModal();});
+render();
+(async()=>{try{const r=await fetch(API,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();if(!j.ok||!Array.isArray(j.items)||!Array.isArray(j.allergens))throw Error('API');data=j;render();}catch(e){console.error('D1 PRODUZIONE:',e);for(const id of ['piatti-d1','vini-d1'])document.getElementById(id).textContent=UI[currentLang].error;}})();</script>
+  <script>
+  /* Locandine menu - PROD. Non modifica il caricamento dei piatti o i prezzi. */
+  (()=>{
+    const base="https://locanda-menu-public.emanuel-martini87.workers.dev";
+    const promo=document.getElementById('locandaMenuPoster');
+    const thumb=document.getElementById('locandaMenuImage');
+    const large=document.getElementById('locandaMenuLarge');
+    const title=document.getElementById('locandaMenuTitle');
+    const pdf=document.getElementById('locandaMenuPdf');
+    const modalPdf=document.getElementById('locandaMenuModalPdf');
+    const dialog=document.getElementById('locandaMenuDialog');
+    const close=document.getElementById('locandaMenuClose');
+    const allowedUrl=value=>{
+      if(typeof value!=='string')return false;
+      try{const u=new URL(value);return u.origin===base && /^\/api\/public\/locandine\/\d+\/(immagine|pdf)$/.test(u.pathname);}
+      catch(_){return false;}
+    };
+    document.getElementById('locandaMenuOpen').addEventListener('click',()=>{if(!promo.hidden){dialog.showModal();close.focus();}});
+    close.addEventListener('click',()=>dialog.close());
+    dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+    thumb.addEventListener('error',()=>{promo.hidden=true;});
+    (async()=>{
+      try{
+        const response=await fetch(base+'/api/public/locandine',{cache:'no-store',credentials:'omit'});
+        if(!response.ok)throw Error('HTTP '+response.status);
+        const body=await response.json();
+        if(!body.ok||!Array.isArray(body.locandine))throw Error('Dati eventi non validi');
+        const event=body.locandine.find(item=>item.mostra_menu===true);
+        if(!event)return;
+        if(!allowedUrl(event.immagine_url))throw Error('URL immagine non valido');
+        const caption=String(event.titolo||"Event at La Locanda");
+        title.textContent=caption;thumb.alt=caption;large.alt=caption;
+        promo.hidden=true;
+        pdf.hidden=true;modalPdf.hidden=true;
+        pdf.removeAttribute('href');modalPdf.removeAttribute('href');
+        if(allowedUrl(event.pdf_url)){pdf.href=event.pdf_url;modalPdf.href=event.pdf_url;pdf.hidden=false;modalPdf.hidden=false;}
+        thumb.addEventListener('load',()=>{promo.hidden=false;},{once:true});
+        thumb.src=event.immagine_url;large.src=event.immagine_url;
+        if(thumb.complete&&thumb.naturalWidth>0)promo.hidden=false;
+      }catch(error){promo.hidden=true;console.warn('Locandine menu non disponibili:',error.message);}
+    })();
+  })();
+  </script>
 
 </body>
 </html>
