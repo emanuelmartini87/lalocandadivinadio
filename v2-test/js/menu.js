@@ -147,6 +147,7 @@
       '</div>';
 
     root.innerHTML = html;
+    renderAllergenGuideButtons();
 
     root.querySelectorAll('[data-lightbox-img]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -176,6 +177,120 @@
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function escapeAttr(s) { return escapeHtml(s); }
+
+  /* LEGENDA COMPLETA ALLERGENI — restituita dal database D1, mai hard-coded. */
+  var ALLERGEN_SYMBOLS = {
+    1: '🌾', 2: '🦐', 3: '🥚', 4: '🐟', 5: '🥜', 6: '🫘', 7: '🥛',
+    8: '🌰', 9: '🥬', 10: '🌿', 11: '🌱', 12: '🧪', 13: '🌱', 14: '🦪'
+  };
+  var ALLERGEN_UI = {
+    it: {
+      button: 'Lista completa degli allergeni',
+      title: 'Guida completa agli allergeni',
+      subtitle: 'Consulta tutti gli allergeni presenti nel nostro catalogo.',
+      note: 'Per informazioni su allergeni, contaminazione crociata o esigenze alimentari chiedi sempre al personale.',
+      close: 'Chiudi',
+      lead: 'Consulta la legenda dei 14 allergeni'
+    },
+    en: {
+      button: 'Complete allergen list',
+      title: 'Complete allergen guide',
+      subtitle: 'View all allergens listed in our catalogue.',
+      note: 'For information on allergens, cross-contact or dietary requirements, please ask our staff.',
+      close: 'Close',
+      lead: 'Explore the 14-allergen guide'
+    },
+    fr: {
+      button: 'Liste complète des allergènes',
+      title: 'Guide complet des allergènes',
+      subtitle: 'Consultez tous les allergènes de notre catalogue.',
+      note: 'Pour toute question sur les allergènes, les contaminations croisées ou vos besoins alimentaires, adressez-vous au personnel.',
+      close: 'Fermer',
+      lead: 'Consultez les 14 allergènes'
+    },
+    de: {
+      button: 'Vollständige Allergenliste',
+      title: 'Vollständiger Allergenleitfaden',
+      subtitle: 'Hier finden Sie alle Allergene aus unserem Katalog.',
+      note: 'Bei Fragen zu Allergenen, Kreuzkontamination oder besonderen Ernährungsbedürfnissen wenden Sie sich bitte an unser Personal.',
+      close: 'Schließen',
+      lead: 'Übersicht der 14 Allergene ansehen'
+    }
+  };
+  function allergenStrings() { return ALLERGEN_UI[lang()] || ALLERGEN_UI.it; }
+  function guideButton() {
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'allergen-guide__button';
+    button.setAttribute('aria-haspopup', 'dialog');
+    button.setAttribute('aria-controls', 'ldvAllergenGuide');
+    button.setAttribute('data-testid', 'complete-allergens-button');
+    button.textContent = '✦  ' + allergenStrings().button;
+    button.addEventListener('click', openAllergenGuide);
+    return button;
+  }
+  function renderAllergenGuideButtons() {
+    if (!Array.isArray(data.allergens) || !data.allergens.length) return;
+    var toolbar = document.createElement('div');
+    toolbar.className = 'allergen-guide__toolbar';
+    var lead = document.createElement('span');
+    lead.className = 'allergen-guide__lead';
+    lead.textContent = allergenStrings().lead;
+    toolbar.append(lead, guideButton());
+    root.insertBefore(toolbar, root.firstChild);
+    var notes = root.querySelector('.menu-notes');
+    if (notes) {
+      var last = document.createElement('div');
+      last.className = 'allergen-guide__after-notes';
+      last.appendChild(guideButton());
+      notes.appendChild(last);
+    }
+  }
+  function openAllergenGuide() {
+    if (!data || !Array.isArray(data.allergens) || !data.allergens.length) return;
+    var copy = allergenStrings();
+    var dialog = document.getElementById('ldvAllergenGuide');
+    if (!dialog) {
+      dialog = document.createElement('dialog');
+      dialog.id = 'ldvAllergenGuide';
+      dialog.className = 'allergen-guide__dialog';
+      dialog.setAttribute('aria-labelledby', 'ldvAllergenGuideTitle');
+      dialog.setAttribute('aria-modal', 'true');
+      dialog.innerHTML = '<div class="allergen-guide__head">' +
+          '<h2 id="ldvAllergenGuideTitle"></h2>' +
+          '<button type="button" class="allergen-guide__close" data-testid="allergen-guide-close">×</button>' +
+        '</div>' +
+        '<p class="allergen-guide__subtitle"></p>' +
+        '<div class="allergen-guide__grid" data-testid="complete-allergens-grid"></div>' +
+        '<p class="allergen-guide__note"></p>';
+      document.body.appendChild(dialog);
+      dialog.querySelector('.allergen-guide__close').addEventListener('click', function () { dialog.close(); });
+      dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
+    }
+    dialog.querySelector('#ldvAllergenGuideTitle').textContent = copy.title;
+    dialog.querySelector('.allergen-guide__subtitle').textContent = copy.subtitle;
+    dialog.querySelector('.allergen-guide__note').textContent = copy.note;
+    dialog.querySelector('.allergen-guide__close').setAttribute('aria-label', copy.close);
+    var grid = dialog.querySelector('.allergen-guide__grid');
+    grid.replaceChildren();
+    var entries = data.allergens.slice().sort(function (a, b) { return Number(a.id) - Number(b.id); });
+    entries.forEach(function (a) {
+      var item = document.createElement('div');
+      item.className = 'allergen-guide__item';
+      var symbol = document.createElement('span');
+      symbol.className = 'allergen-guide__symbol';
+      symbol.textContent = ALLERGEN_SYMBOLS[Number(a.id)] || '⚠️';
+      symbol.setAttribute('aria-hidden', 'true');
+      var name = document.createElement('span');
+      name.className = 'allergen-guide__name';
+      name.textContent = field(a, 'name') || '—';
+      item.append(symbol, name);
+      grid.appendChild(item);
+    });
+    if (dialog.open) dialog.close();
+    dialog.showModal();
+    dialog.querySelector('.allergen-guide__close').focus();
+  }
 
   function load() {
     showState('loading');
