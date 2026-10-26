@@ -743,3 +743,56 @@ h1, h2, h3, h4 {
 .footer__extra a:hover {opacity:1;}
 .menu-cat {scroll-margin-top:155px;}
 @media(max-width:600px){ .menu-posters .posters {grid-template-columns: repeat(auto-fit,minmax(145px,1fr));} }
+
+/* V2 — Guida completa ai 14 allergeni (dati live D1, 4 lingue) */
+.allergen-guide__toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem; padding: 1.25rem 1.5rem;
+  margin-top: 1.7rem; margin-bottom: 0.35rem;
+  border: 1px solid var(--border); border-radius: 12px;
+  background: #fff; box-shadow: 0 6px 22px rgba(28,22,20,.045);
+}
+.allergen-guide__lead { color: var(--text-muted); font-size: .93rem; }
+.allergen-guide__button {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem; padding: .7rem 1.1rem; border: 1px solid var(--primary);
+  border-radius: 8px; color: var(--primary); background: #fff;
+  font-weight: 500; font-size: .88rem; line-height: 1.4;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.allergen-guide__button:hover { background: var(--primary); color: #fff; }
+.allergen-guide__after-notes { margin-top: 1.35rem; }
+.allergen-guide__dialog {
+  position: fixed; inset: 0; margin: auto; width: min(750px, calc(100vw - 24px));
+  max-height: calc(100dvh - 28px); padding: clamp(1.25rem,3vw,2.1rem);
+  overflow-y: auto; border: 1px solid var(--border); border-radius: 16px;
+  color: var(--text-dark); background: var(--bg-light);
+  box-shadow: 0 35px 100px rgba(0,0,0,.45); z-index: 10050;
+}
+.allergen-guide__dialog::backdrop { background: rgba(28,17,12,.78); }
+.allergen-guide__head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.allergen-guide__head h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); color: var(--primary); }
+.allergen-guide__close {
+  flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px;
+  border: 1px solid var(--border); border-radius: 50%; background: #fff;
+  color: var(--primary); font: 500 29px/1 var(--font-body);
+}
+.allergen-guide__close:hover { background: var(--primary); color: #fff; }
+.allergen-guide__subtitle { margin-top: .6rem; margin-bottom: 1.3rem; color: var(--text-muted); }
+.allergen-guide__grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .7rem; }
+.allergen-guide__item {
+  display: flex; align-items: center; gap: .9rem; padding: .85rem;
+  border: 1px solid var(--border); border-radius: 10px; background: #fff;
+}
+.allergen-guide__symbol {
+  display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px;
+  border-radius: 9px; background: rgba(140,59,36,.08); font-size: 1.5rem;
+}
+.allergen-guide__name { font-size: .94rem; font-weight: 500; line-height: 1.4; overflow-wrap: anywhere; }
+.allergen-guide__note { margin-top: 1.4rem; font-size: .85rem; color: var(--text-muted); }
+@media (max-width: 620px) {
+  .allergen-guide__toolbar { align-items: stretch; flex-direction: column; }
+  .allergen-guide__button { width: 100%; }
+  .allergen-guide__grid { grid-template-columns: 1fr; }
+  .allergen-guide__dialog { padding: 1.15rem; }
+}
