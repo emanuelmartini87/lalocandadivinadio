@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <title>La Locanda di Vinadio | Ristorante, Bar e Pizzeria a Vinadio</title>
+  <meta name="description" content="La Locanda di Vinadio è un ristorante, bar e pizzeria a Vinadio. Consulta il menù online, scopri dove siamo e contattaci per informazioni e prenotazioni.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="author" content="La Locanda di Vinadio">
+  <meta name="geo.region" content="IT-CN">
+  <meta name="geo.placename" content="Vinadio">
+  <meta name="geo.position" content="44.293;7.175">
+  <meta name="ICBM" content="44.293, 7.175">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="La Locanda di Vinadio | Ristorante, Bar e Pizzeria a Vinadio">
+  <meta property="og:description" content="Consulta il menù online de La Locanda di Vinadio e scopri il locale.">
+  <meta property="og:url" content="https://www.lalocandadivinadio.it/">
+  <meta property="og:image" content="https://www.lalocandadivinadio.it/assets/img/hero.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="La Locanda di Vinadio | Ristorante, Bar e Pizzeria a Vinadio">
+  <meta name="twitter:description" content="Consulta il menù online de La Locanda di Vinadio e scopri il locale.">
+  <meta name="twitter:image" content="https://www.lalocandadivinadio.it/assets/img/hero.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "La Locanda di Vinadio",
+    "url": "https://www.lalocandadivinadio.it/",
+    "image": "https://www.lalocandadivinadio.it/assets/img/hero.jpg",
+    "servesCuisine": ["Italian", "Pizza"],
+    "telephone": "+39 0171 959506",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Via Roma, 16",
+      "addressLocality": "Vinadio",
+      "postalCode": "12010",
+      "addressRegion": "CN",
+      "addressCountry": "IT"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 44.293, "longitude": 7.175 }
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/site-config.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/locandine.js" defer></script>
+  <script src="js/galleria.js" defer></script>
+</head>
+<body data-page="home" data-default-lang="fr">
+
+  <header class="nav on-hero" data-testid="main-nav">
+    <div class="container nav__inner">
+      <a class="wordmark" href="index.html" data-testid="nav-logo" aria-label="La Locanda di Vinadio">
+        <span class="wordmark__main">La Locanda</span>
+        <span class="wordmark__sub">di Vinadio</span>
+      </a>
+      <nav class="nav__links" aria-label="Navigazione principale">
+        <a class="nav__link is-active" href="index.html" data-testid="nav-home" data-i18n="nav.home">Home</a>
+        <a class="nav__link" href="menu.html" data-testid="nav-menu" data-i18n="nav.menu">Menù</a>
+        <a class="nav__link" href="eventi.html" data-testid="nav-events" data-i18n="nav.events">Eventi</a>
+        <a class="nav__link" href="contatti.html" data-testid="nav-contact" data-i18n="nav.contact">Contatti</a>
+      </nav>
+      <div class="nav__right">
+        <div class="lang-switch" role="group" aria-label="Lingua / Language" data-testid="lang-switch">
+          <button type="button" data-lang="it" data-testid="lang-it" aria-pressed="true">IT</button>
+          <button type="button" data-lang="en" data-testid="lang-en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="fr" data-testid="lang-fr" aria-pressed="false">FR</button>
+          <button type="button" data-lang="de" data-testid="lang-de" aria-pressed="false">DE</button>
+        </div>
+        <a class="btn btn--primary nav__book" href="tel:+390171959506" data-testid="nav-book" data-i18n="nav.book">Prenota</a>
+        <button class="nav__burger" type="button" data-testid="nav-burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" data-testid="mobile-menu">
+    <a href="index.html" data-testid="mobile-nav-home" data-i18n="nav.home">Home</a>
+    <a href="menu.html" data-testid="mobile-nav-menu" data-i18n="nav.menu">Menù</a>
+    <a href="eventi.html" data-testid="mobile-nav-events" data-i18n="nav.events">Eventi</a>
+    <a href="contatti.html" data-testid="mobile-nav-contact" data-i18n="nav.contact">Contatti</a>
+    <div class="lang-switch" role="group" aria-label="Lingua / Language" data-testid="lang-switch-mobile">
+      <button type="button" data-lang="it" data-testid="lang-mobile-it">IT</button>
+      <button type="button" data-lang="en" data-testid="lang-mobile-en">EN</button>
+      <button type="button" data-lang="fr" data-testid="lang-mobile-fr">FR</button>
+      <button type="button" data-lang="de" data-testid="lang-mobile-de">DE</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" data-testid="hero">
+      <div class="hero__bg" data-parallax>
+        <img src="assets/img/hero.jpg" alt="Immagine rappresentativa del ristorante, da sostituire con una fotografia reale" fetchpriority="high">
+      </div>
+      <div class="container hero__content">
+        <p class="eyebrow hero__eyebrow" data-i18n="hero.eyebrow">Vinadio · Valle Stura · Alpi Cozie</p>
+        <h1 class="hero__title">
+          <span class="line-mask"><span>La Locanda</span></span>
+          <span class="line-mask"><span><em>di Vinadio</em></span></span>
+        </h1>
+        <p class="hero__sub" data-i18n="hero.sub">Ristorante, bar e pizzeria nel cuore delle Alpi.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="menu.html" data-testid="hero-cta-menu" data-i18n="hero.cta.menu">Scopri il menù</a>
+          <a class="btn btn--ghost" href="tel:+390171959506" data-testid="hero-cta-call" data-i18n="hero.cta.call">Prenota un tavolo</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true"><span data-i18n="hero.scroll">Scorri</span></div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span data-i18n="marquee.text">Ristorante · Pizzeria · Bar · Cucina di montagna ·</span>
+      </div>
+    </div>
+
+    <!-- IL LOCALE -->
+    <section class="section" data-testid="about-section">
+      <div class="container about__grid">
+        <div class="about__copy reveal">
+          <p class="eyebrow" data-i18n="about.eyebrow">Il locale</p>
+          <h2 class="section-title" data-i18n="about.title">Una tavola calda ai piedi del Forte Albertino</h2>
+          <p class="section-sub" data-i18n="about.p1"></p>
+          <p class="section-sub" data-i18n="about.p2"></p>
+          <blockquote class="about__quote">
+            <span data-i18n="about.quote">«Qui ogni piatto racconta la montagna.»</span>
+            <cite class="about__cite" data-i18n="about.cite">La famiglia de La Locanda</cite>
+          </blockquote>
+        </div>
+        <div class="collage reveal" data-delay="150">
+          <svg class="collage__badge" viewBox="0 0 120 120" aria-hidden="true">
+            <defs><path id="circlePath" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs>
+            <circle cx="60" cy="60" r="60" fill="#8C3B24"/>
+            <text fill="#FDFBF7" font-size="11.5" letter-spacing="3.5" font-family="Outfit, sans-serif">
+              <textPath href="#circlePath">RISTORANTE · PIZZERIA · BAR · VINADIO ·</textPath>
+            </text>
+            <text x="60" y="66" text-anchor="middle" fill="#D4AF37" font-size="15" font-family="Cormorant Garamond, serif" font-style="italic">dal cuore</text>
+          </svg>
+          <figure class="collage__img collage__img--a">
+            <img src="assets/img/sala.jpg" alt="La sala interna de La Locanda di Vinadio" loading="lazy">
+          </figure>
+          <figure class="collage__img collage__img--b">
+            <img src="assets/img/piatto.jpg" alt="Piatto della cucina de La Locanda di Vinadio" loading="lazy">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERIA BENTO -->
+    <section class="section" style="padding-top:0" data-testid="gallery-section">
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow" data-i18n="gallery.eyebrow">Galleria</p>
+          <h2 class="section-title" data-i18n="gallery.title">Scorci di casa</h2>
+          <p class="section-sub" data-i18n="gallery.sub"></p>
+        </div>
+        <div class="bento" style="margin-top:3rem">
+          <figure class="bento__item bento__item--tall reveal">
+            <img src="assets/img/sala.jpg" alt="Interni del locale" loading="lazy">
+            <figcaption class="bento__cap" data-i18n="gallery.c1">La sala</figcaption>
+          </figure>
+          <figure class="bento__item bento__item--wide reveal" data-delay="100">
+            <img src="assets/img/pizza.jpg" alt="Pizza appena sfornata" loading="lazy">
+            <figcaption class="bento__cap" data-i18n="gallery.c2">Le nostre pizze</figcaption>
+          </figure>
+          <figure class="bento__item reveal" data-delay="200">
+            <img src="assets/img/piatto.jpg" alt="Piatto della tradizione italiana" loading="lazy">
+            <figcaption class="bento__cap" data-i18n="gallery.c3">I piatti della cucina</figcaption>
+          </figure>
+          <figure class="bento__item bento__item--tall reveal" data-delay="300">
+            <img src="assets/img/territory.jpg" alt="Borgo alpino della Valle Stura" loading="lazy">
+            <figcaption class="bento__cap" data-i18n="gallery.c4">La Valle Stura</figcaption>
+          </figure>
+          <figure class="bento__item reveal" data-delay="150">
+            <img src="assets/img/hero.jpg" alt="Vista sulle montagne dalla Locanda" loading="lazy">
+            <figcaption class="bento__cap">Vinadio</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERIA FOTOGRAFICA (foto caricate dal ristorante in assets/img/galleria/) -->
+    <section class="section" style="padding-top:0" data-testid="galleria-section" hidden>
+      <div class="container">
+        <div class="reveal is-visible">
+          <p class="eyebrow" data-i18n="gallery2.eyebrow">Fotografie</p>
+          <h2 class="section-title" data-i18n="gallery2.title">La Locanda in immagini</h2>
+          <p class="section-sub" data-i18n="gallery2.sub"></p>
+        </div>
+        <div class="galleria-grid" style="margin-top:3rem" data-galleria="assets/img/galleria/" data-testid="galleria-grid"></div>
+      </div>
+    </section>
+
+    <!-- EVENTI (locandine dinamiche) -->
+    <section class="section" data-testid="events-preview-section" hidden>
+      <div class="container">
+        <div class="reveal">
+          <p class="eyebrow" data-i18n="events.eyebrow">Da non perdere</p>
+          <h2 class="section-title" data-i18n="events.title">Eventi e serate alla Locanda</h2>
+          <p class="section-sub" data-i18n="events.sub"></p>
+        </div>
+        <div class="posters" style="margin-top:3rem" data-locandine="home" data-testid="home-posters"></div>
+        <div class="reveal" style="margin-top:2.6rem">
+          <a class="btn btn--ghost" href="eventi.html" data-testid="events-cta" data-i18n="events.cta">Tutti gli eventi</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BAND MENU -->
+    <section class="section section--dark band on-dark" data-testid="menu-band">
+      <div class="container band__inner">
+        <p class="eyebrow reveal" data-i18n="nav.menu">Menù</p>
+        <h2 class="band__title reveal" data-i18n-html="band.title">Il menù, <em>sempre con te</em></h2>
+        <p class="section-sub reveal" data-delay="100" data-i18n="band.text"></p>
+        <div class="reveal" data-delay="200">
+          <a class="btn btn--gold" href="menu.html" data-testid="band-cta-menu" data-i18n="band.cta">Apri il menù</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DOVE SIAMO -->
+    <section class="section" data-testid="visit-section">
+      <div class="container visit__grid">
+        <div class="reveal">
+          <p class="eyebrow" data-i18n="visit.eyebrow">Dove siamo</p>
+          <h2 class="section-title" data-i18n="visit.title">Ti aspettiamo a Vinadio</h2>
+          <ul class="info-list">
+            <li>
+              <span class="k" data-i18n="visit.addr.label">Indirizzo</span>
+              <span class="v" data-testid="visit-address">Via Roma, 16 — 12010 Vinadio (CN)</span>
+            </li>
+            <li>
+              <span class="k" data-i18n="visit.phone.label">Telefono</span>
+              <a class="v" href="tel:+390171959506" data-testid="visit-phone">0171 959506</a>
+            </li>
+            <li data-email-row hidden>
+              <span class="k" data-i18n="visit.email.label">Email</span>
+              <a class="v" href="#" data-testid="visit-email"></a>
+            </li>
+          </ul>
+          <div class="visit__actions">
+            <a class="btn btn--primary" href="tel:+390171959506" data-testid="visit-call-btn" data-i18n="visit.call">Chiama ora</a>
+            <a class="btn btn--ghost" href="https://www.google.com/maps/search/?api=1&amp;query=La+Locanda+di+Vinadio+Via+Roma+16+Vinadio" target="_blank" rel="noopener noreferrer" data-testid="visit-maps-btn" data-i18n="visit.maps">Apri in Google Maps</a>
+          </div>
+        </div>
+        <div class="map-frame reveal" data-delay="150" data-testid="visit-map">
+          <iframe src="https://www.google.com/maps?q=La+Locanda+di+Vinadio,+Via+Roma+16,+12010+Vinadio+CN&amp;output=embed" loading="lazy" title="Mappa — La Locanda di Vinadio, Via Roma 16, Vinadio" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer on-dark" data-testid="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="wordmark" href="index.html" aria-label="La Locanda di Vinadio">
+            <span class="wordmark__main">La Locanda</span>
+            <span class="wordmark__sub">di Vinadio</span>
+          </a>
+          <p class="footer__tag" data-i18n="footer.tag"></p>
+        </div>
+        <nav aria-label="Footer">
+          <h4 data-i18n="footer.nav">Esplora</h4>
+          <div class="footer__links">
+            <a href="index.html" data-i18n="nav.home">Home</a>
+            <a href="menu.html" data-i18n="nav.menu">Menù</a>
+            <a href="eventi.html" data-i18n="nav.events">Eventi</a>
+            <a href="contatti.html" data-i18n="nav.contact">Contatti</a>
+            <a href="privacy-policy.html" data-i18n="footer.privacy">Privacy Policy</a>
+          </div>
+        </nav>
+        <div>
+          <h4 data-i18n="footer.contact">Contatti</h4>
+          <ul class="footer__contact">
+            <li>Via Roma, 16 — 12010 Vinadio (CN)</li>
+            <li><a href="tel:+390171959506" data-testid="footer-phone">0171 959506</a></li>
+            <li data-email-row hidden><a href="#" data-testid="footer-email"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__extra" aria-label="Collegamenti utili">
+        <a href="https://www.facebook.com/p/La-locanda-di-Vinadio-100036786831516/" data-link="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://www.instagram.com/la.locanda.di.vinadio/" data-link="instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E" data-link="review" target="_blank" rel="noopener noreferrer">Recensioni Google</a>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> La Locanda di Vinadio — <span data-i18n="footer.rights">Tutti i diritti riservati.</span></span>
+        <span>Vinadio · Valle Stura · Piemonte</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- solo per l'anteprima nell'ambiente di sviluppo: invisibile e inerte su GitHub Pages -->
+  <div id="root" hidden></div>
+</body>
+</html>

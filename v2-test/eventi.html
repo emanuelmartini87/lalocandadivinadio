@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="48x48" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <title>Eventi e Locandine | La Locanda di Vinadio</title>
+  <meta name="description" content="Eventi, serate e locandine de La Locanda di Vinadio: scopri le iniziative in programma e scarica i programmi in PDF.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Eventi e Locandine | La Locanda di Vinadio">
+  <meta property="og:description" content="Le iniziative de La Locanda di Vinadio.">
+  <meta property="og:url" content="https://www.lalocandadivinadio.it/eventi.html">
+  <meta property="og:image" content="https://www.lalocandadivinadio.it/assets/img/sala.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/site-config.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/locandine.js" defer></script>
+</head>
+<body data-page="events">
+
+  <header class="nav is-scrolled" data-testid="main-nav">
+    <div class="container nav__inner">
+      <a class="wordmark" href="index.html" data-testid="nav-logo" aria-label="La Locanda di Vinadio">
+        <span class="wordmark__main">La Locanda</span>
+        <span class="wordmark__sub">di Vinadio</span>
+      </a>
+      <nav class="nav__links" aria-label="Navigazione principale">
+        <a class="nav__link" href="index.html" data-testid="nav-home" data-i18n="nav.home">Home</a>
+        <a class="nav__link" href="menu.html" data-testid="nav-menu" data-i18n="nav.menu">Menù</a>
+        <a class="nav__link is-active" href="eventi.html" data-testid="nav-events" data-i18n="nav.events">Eventi</a>
+        <a class="nav__link" href="contatti.html" data-testid="nav-contact" data-i18n="nav.contact">Contatti</a>
+      </nav>
+      <div class="nav__right">
+        <div class="lang-switch" role="group" aria-label="Lingua / Language" data-testid="lang-switch">
+          <button type="button" data-lang="it" data-testid="lang-it" aria-pressed="true">IT</button>
+          <button type="button" data-lang="en" data-testid="lang-en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="fr" data-testid="lang-fr" aria-pressed="false">FR</button>
+          <button type="button" data-lang="de" data-testid="lang-de" aria-pressed="false">DE</button>
+        </div>
+        <a class="btn btn--primary nav__book" href="tel:+390171959506" data-testid="nav-book" data-i18n="nav.book">Prenota</a>
+        <button class="nav__burger" type="button" data-testid="nav-burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu" data-testid="mobile-menu">
+    <a href="index.html" data-testid="mobile-nav-home" data-i18n="nav.home">Home</a>
+    <a href="menu.html" data-testid="mobile-nav-menu" data-i18n="nav.menu">Menù</a>
+    <a href="eventi.html" data-testid="mobile-nav-events" data-i18n="nav.events">Eventi</a>
+    <a href="contatti.html" data-testid="mobile-nav-contact" data-i18n="nav.contact">Contatti</a>
+    <div class="lang-switch" role="group" aria-label="Lingua / Language" data-testid="lang-switch-mobile">
+      <button type="button" data-lang="it" data-testid="lang-mobile-it">IT</button>
+      <button type="button" data-lang="en" data-testid="lang-mobile-en">EN</button>
+      <button type="button" data-lang="fr" data-testid="lang-mobile-fr">FR</button>
+      <button type="button" data-lang="de" data-testid="lang-mobile-de">DE</button>
+    </div>
+  </div>
+
+  <main>
+    <section class="page-hero" data-testid="events-hero">
+      <div class="page-hero__bg"><img src="assets/img/sala.jpg" alt="" aria-hidden="true"></div>
+      <div class="container">
+        <p class="eyebrow hero__eyebrow" data-i18n="events.eyebrow">Da non perdere</p>
+        <h1 class="page-hero__title">
+          <span class="line-mask"><span data-i18n="eventspage.title">Eventi &amp; Locandine</span></span>
+        </h1>
+        <p class="section-sub" style="color:rgba(253,251,247,0.85)" data-i18n="eventspage.sub"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="posters" data-locandine="all" data-testid="events-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer on-dark" data-testid="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a class="wordmark" href="index.html" aria-label="La Locanda di Vinadio">
+            <span class="wordmark__main">La Locanda</span>
+            <span class="wordmark__sub">di Vinadio</span>
+          </a>
+          <p class="footer__tag" data-i18n="footer.tag"></p>
+        </div>
+        <nav aria-label="Footer">
+          <h4 data-i18n="footer.nav">Esplora</h4>
+          <div class="footer__links">
+            <a href="index.html" data-i18n="nav.home">Home</a>
+            <a href="menu.html" data-i18n="nav.menu">Menù</a>
+            <a href="eventi.html" data-i18n="nav.events">Eventi</a>
+            <a href="contatti.html" data-i18n="nav.contact">Contatti</a>
+            <a href="privacy-policy.html" data-i18n="footer.privacy">Privacy Policy</a>
+          </div>
+        </nav>
+        <div>
+          <h4 data-i18n="footer.contact">Contatti</h4>
+          <ul class="footer__contact">
+            <li>Via Roma, 16 — 12010 Vinadio (CN)</li>
+            <li><a href="tel:+390171959506" data-testid="footer-phone">0171 959506</a></li>
+            <li data-email-row hidden><a href="#" data-testid="footer-email"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__extra" aria-label="Collegamenti utili">
+        <a href="https://www.facebook.com/p/La-locanda-di-Vinadio-100036786831516/" data-link="facebook" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a href="https://www.instagram.com/la.locanda.di.vinadio/" data-link="instagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://search.google.com/local/writereview?placeid=ChIJp29qBV4DzRIRqR4vtSZ9P5E" data-link="review" target="_blank" rel="noopener noreferrer">Recensioni Google</a>
+      </div>
+      <div class="footer__bottom">
+        <span>© <span data-year>2026</span> La Locanda di Vinadio — <span data-i18n="footer.rights">Tutti i diritti riservati.</span></span>
+        <span>Vinadio · Valle Stura · Piemonte</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

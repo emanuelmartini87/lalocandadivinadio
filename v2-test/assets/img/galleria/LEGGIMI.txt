@@ -1,0 +1,25 @@
+COME AGGIUNGERE LE VOSTRE FOTO
+================================
+
+1. Rinominate la foto con un nome numerico: 01.jpg, 02.jpg, 03.jpg ... fino a 12.jpg
+2. Caricatela in questa cartella (assets/img/galleria/) tramite GitHub:
+   Add file -> Upload files -> trascinate la foto -> Commit changes
+3. Dopo 1-2 minuti la foto compare automaticamente nella galleria della homepage.
+   Le foto si vedono in ordine numerico e si ingrandiscono al clic.
+
+- Per SOSTITUIRE una foto: caricate un nuovo file con lo stesso nome (sovrascrive).
+- Per TOGLIERE una foto: eliminatela dalla cartella su GitHub.
+- Formato consigliato: .jpg, max ~1500px di larghezza, max ~500KB a foto
+  (foto piu' leggere = sito piu' veloce).
+- Se una numerazione salta (es. manca 03.jpg) non succede nulla: le altre compaiono lo stesso.
+
+PER CAMBIARE LE FOTO PRINCIPALI DEL SITO
+========================================
+Nella cartella superiore (assets/img/) trovate le foto fisse del sito.
+Per sostituirle caricate un file con LO STESSO NOME:
+
+  hero.jpg       -> la grande foto in apertura della homepage
+  sala.jpg       -> la sala del ristorante (homepage + pagina Eventi)
+  pizza.jpg      -> la pizza (homepage + pagina Menu)
+  piatto.jpg     -> un piatto della cucina (homepage)
+  territory.jpg  -> il paesaggio / la valle (homepage + pagina Contatti)
