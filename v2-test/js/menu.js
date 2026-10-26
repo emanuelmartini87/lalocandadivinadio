@@ -110,7 +110,9 @@
         var name = field(item, 'name');
         var desc = field(item, 'description');
         var img = photoUrl(item);
-        var allergens = (item.allergens || []).map(function (a) { return field(a, 'name'); }).filter(Boolean);
+        var allergens = (item.allergens || []).map(function (a) {
+          return { id: Number(a.id), name: field(a, 'name') };
+        }).filter(function (a) { return Boolean(a.name); });
         var ingredients = (item.ingredients || []).map(function (i) { return field(i, 'name'); }).filter(Boolean);
 
         html += '<article class="dish" data-testid="dish-' + item.id + '">';
@@ -131,7 +133,16 @@
         if (ingredients.length || allergens.length) {
           html += '<div class="dish__tags">';
           allergens.forEach(function (a) {
-            html += '<span class="tag tag--allergen">' + escapeHtml(a) + '</span>';
+            var symbol = ALLERGEN_SYMBOLS[a.id] || '⚠️';
+            html += '<button class="tag tag--allergen allergen-tooltip-trigger" type="button" ' +
+              'data-testid="dish-' + item.id + '-allergen-' + a.id + '" ' +
+              'aria-label="' + escapeAttr(a.name + ' — ' + symbol) + '">' +
+              escapeHtml(a.name) +
+              '<span class="allergen-symbol-tip" role="tooltip" aria-hidden="true">' +
+              '<span class="allergen-symbol-tip__icon">' + symbol + '</span>' +
+              '<span class="allergen-symbol-tip__name">' + escapeHtml(a.name) + '</span>' +
+              '</span>' +
+              '</button>';
           });
           html += '</div>';
         }
@@ -148,6 +159,18 @@
 
     root.innerHTML = html;
     renderAllergenGuideButtons();
+
+    // Mouse: anteprima automatica; tastiera: Tab; telefono: tocca per mostrare o nascondere.
+    root.querySelectorAll('.allergen-tooltip-trigger').forEach(function (button) {
+      button.addEventListener('click', function (event) {
+        event.stopPropagation();
+        var isOpen = button.classList.contains('is-open');
+        root.querySelectorAll('.allergen-tooltip-trigger.is-open').forEach(function (other) {
+          other.classList.remove('is-open');
+        });
+        if (!isOpen) button.classList.add('is-open');
+      });
+    });
 
     root.querySelectorAll('[data-lightbox-img]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -303,6 +326,22 @@
       })
       .catch(function () { showState('error'); });
   }
+
+  // Tocco fuori o ESC: chiude eventuali anteprime aperte.
+  document.addEventListener('click', function (event) {
+    if (event.target.closest('.allergen-tooltip-trigger')) return;
+    root.querySelectorAll('.allergen-tooltip-trigger.is-open').forEach(function (button) {
+      button.classList.remove('is-open');
+    });
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      root.querySelectorAll('.allergen-tooltip-trigger.is-open').forEach(function (button) {
+        button.classList.remove('is-open');
+        button.blur();
+      });
+    }
+  });
 
   window.addEventListener('ldv:lang', function () { if (data) render(); });
 
