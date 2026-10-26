@@ -796,3 +796,72 @@ h1, h2, h3, h4 {
   .allergen-guide__grid { grid-template-columns: 1fr; }
   .allergen-guide__dialog { padding: 1.15rem; }
 }
+
+
+/* V2 — Simbolo allergene su hover (PC), focus (tastiera) e tap (smartphone). */
+.dish__tags { overflow: visible; }
+.allergen-tooltip-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  line-height: 1.55;
+  cursor: help;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.allergen-tooltip-trigger:hover,
+.allergen-tooltip-trigger:focus-visible,
+.allergen-tooltip-trigger.is-open {
+  background: rgba(140, 59, 36, .13);
+  border-color: var(--primary);
+}
+.allergen-tooltip-trigger:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.allergen-symbol-tip {
+  position: absolute;
+  z-index: 50;
+  inset-inline-start: 50%;
+  bottom: calc(100% + 11px);
+  transform: translate(-50%, 5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .18rem;
+  min-width: 100px;
+  max-width: min(230px, 75vw);
+  padding: .65rem .85rem;
+  background: #2b1c16;
+  color: #fff;
+  box-shadow: 0 12px 25px rgba(0,0,0,.22);
+  border-radius: 10px;
+  white-space: normal;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s;
+}
+.allergen-symbol-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  inset-inline-start: calc(50% - 6px);
+  border: 6px solid transparent;
+  border-top-color: #2b1c16;
+}
+.allergen-symbol-tip__icon { font-size: 2rem; line-height: 1.15; }
+.allergen-symbol-tip__name { font-size: .78rem; line-height: 1.2; }
+.allergen-tooltip-trigger:hover .allergen-symbol-tip,
+.allergen-tooltip-trigger:focus-visible .allergen-symbol-tip,
+.allergen-tooltip-trigger.is-open .allergen-symbol-tip {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  visibility: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .allergen-symbol-tip { transition: none; }
+}
