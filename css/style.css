@@ -865,3 +865,94 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   .allergen-symbol-tip { transition: none; }
 }
+/* ===========================================================
+   LOCANDA - PIZZA WOW V2, FUMO PIU' VISIBILE
+   CSS in fondo a css/style.css
+   Nessuna modifica a grafica, menu, admin, Cloudflare.
+   =========================================================== */
+.hero__eyebrow { position: relative; }
+/* Evita che la vecchia pizza CSS sia visibile due volte. */
+.hero__eyebrow::after { content: none !important; }
+
+.ldv-pizza-wow {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 13px);
+  width: 68px;
+  height: 68px;
+  z-index: 3;
+  pointer-events: none;
+  display: block;
+  overflow: visible;
+  isolation: isolate;
+}
+.ldv-pizza-wow__img {
+  display: block;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 9px rgba(0,0,0,.45));
+  transform-origin: 50% 50%;
+  animation: ldvPizzaV2Gira 18s linear infinite;
+}
+@keyframes ldvPizzaV2Gira {
+  0%   { transform: translateY(0) rotate(0); }
+  50%  { transform: translateY(-3px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
+
+/* Il vapore e' SEPARATO dall'immagine: sale mentre la pizza ruota. */
+.ldv-pizza-wow__steam {
+  position: absolute;
+  z-index: 4;
+  bottom: 60%;
+  width: 17px;
+  height: 47px;
+  border-left: 3px solid rgba(255,255,255,.66);
+  border-radius: 65% 25% 65% 35%;
+  background: radial-gradient(ellipse at 45% 65%, rgba(255,255,255,.40), rgba(255,255,255,0) 67%);
+  filter: blur(3px);
+  opacity: 0;
+  transform-origin: 50% 100%;
+  animation: ldvPizzaV2Fumo 3.8s ease-out infinite;
+}
+.ldv-pizza-wow__steam:nth-child(1) { left: 27%; animation-delay: -.3s; }
+.ldv-pizza-wow__steam:nth-child(2) { left: 41%; animation-delay: -2.0s; height: 52px; }
+.ldv-pizza-wow__steam:nth-child(3) { left: 55%; animation-delay: -1.1s; height: 44px; }
+.ldv-pizza-wow__steam:nth-child(4) { left: 69%; animation-delay: -2.8s; height: 50px; }
+@keyframes ldvPizzaV2Fumo {
+  0%   { opacity: 0; transform: translate(0,12px) rotate(-10deg) scale(.68); }
+  20%  { opacity: .85; }
+  55%  { opacity: .63; transform: translate(8px,-18px) rotate(11deg) scale(1); }
+  100% { opacity: 0; transform: translate(-4px,-43px) rotate(-14deg) scale(1.35); }
+}
+
+/* CELLULARE: raddoppiata rispetto ai 54px originali. */
+@media (max-width: 680px) {
+  .ldv-pizza-wow {
+    width: 108px;
+    height: 108px;
+    right: 0;
+    bottom: calc(100% + 19px);
+  }
+  .ldv-pizza-wow__steam {
+    width: 25px;
+    height: 65px;
+    border-left-width: 4px;
+    filter: blur(4px);
+  }
+  .ldv-pizza-wow__steam:nth-child(2) { height: 72px; }
+  .ldv-pizza-wow__steam:nth-child(3) { height: 60px; }
+  .ldv-pizza-wow__steam:nth-child(4) { height: 68px; }
+}
+
+/* Accessibilita': chi preferisce meno movimento vede la pizza ferma. */
+@media (prefers-reduced-motion: reduce) {
+  .ldv-pizza-wow__img,
+  .ldv-pizza-wow__steam {
+    animation: none !important;
+  }
+  .ldv-pizza-wow__steam { opacity: 0 !important; }
+}
