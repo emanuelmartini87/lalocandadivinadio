@@ -12,154 +12,188 @@ window.LDV_SITE = Object.freeze({
   maps: 'https://www.google.com/maps/search/?api=1&query=La+Locanda+di+Vinadio+Via+Roma+16+Vinadio'
 });
 
-
 /* =============================================================
- * MINI PIZZA WOW — HOMEPAGE
- * Solo grafica pubblica: non modifica admin, D1, R2, menu o API.
- * Caricamento soltanto nelle homepage con .hero__eyebrow.
- * Per disattivare: eliminare la sezione MINI PIZZA WOW da questo file.
+ * MINI PIZZA WOW — PATCH MOBILE + ANIMAZIONE V2
+ * Non cambia menu, admin, locandine, HTML, CSS del sito o API.
+ * L'immagine rimane /assets/img/pizza-wow.webp.
  * ============================================================= */
 (function () {
   'use strict';
-  var CSS_ID = 'ldv-mini-pizza-styles';
-  var IMG_SRC = 'assets/img/pizza-wow.webp?v=1';
+  var STYLE_ID = 'ldv-mini-pizza-styles';
+  var SOURCE = 'assets/img/pizza-wow.webp?v=2';
+  var raf = 0;
 
-  function start() {
+  function init() {
     var eyebrow = document.querySelector('.hero__content .hero__eyebrow');
-    var heroContent = document.querySelector('.hero__content');
-    if (!eyebrow || !heroContent || document.querySelector('.ldv-mini-pizza')) return;
+    var parent = document.querySelector('.hero__content');
+    if (!eyebrow || !parent || document.querySelector('.ldv-mini-pizza')) return;
 
     var css = `
       .ldv-mini-pizza {
-        position: absolute; z-index: 5; width: 66px; height: 66px;
-        padding: 0; border: 0; margin: 0; background: transparent;
-        appearance: none; cursor: pointer; line-height: 1;
-        filter: drop-shadow(0 5px 5px rgba(0,0,0,.34));
+        position: absolute; z-index: 8; width: 68px; height: 68px;
+        box-sizing: border-box; padding: 0; border: 0; margin: 0;
+        background: transparent; appearance: none; line-height: 1;
+        cursor: pointer; visibility: hidden; touch-action: manipulation;
         -webkit-tap-highlight-color: transparent;
+        filter: drop-shadow(0 5px 6px rgba(0, 0, 0, .38));
       }
-      .ldv-mini-pizza:focus-visible { outline: 2px solid #ecc875; outline-offset: 5px; border-radius: 50%; }
-      .ldv-mini-pizza__float, .ldv-mini-pizza__slow,
-      .ldv-mini-pizza__tap { display: block; width: 100%; height: 100%; }
-      .ldv-mini-pizza__float { animation: ldvPizzaFloat 4s ease-in-out infinite; }
-      .ldv-mini-pizza__slow { animation: ldvPizzaSpin 18s linear infinite; }
-      .ldv-mini-pizza__tap.is-burst { animation: ldvPizzaBurst 940ms cubic-bezier(.22,.65,.25,1); }
-      .ldv-mini-pizza__photo { display: block; width: 100%; height: 100%; object-fit: contain; }
+      .ldv-mini-pizza.is-positioned { visibility: visible; }
+      .ldv-mini-pizza:focus-visible {
+        outline: 2px solid #f5d59b; outline-offset: 4px; border-radius: 50%;
+      }
+      .ldv-mini-pizza__float,
+      .ldv-mini-pizza__spin {
+        display: block; width: 100%; height: 100%;
+        transform-origin: 50% 50%;
+      }
+      .ldv-mini-pizza__float { animation: ldvPizzaFloat 3.4s ease-in-out infinite; }
+      .ldv-mini-pizza__spin { animation: ldvPizzaRotate 12s linear infinite; }
+      .ldv-mini-pizza__photo {
+        display: block; width: 100%; height: 100%; object-fit: contain;
+        transform-origin: center center; user-select: none;
+      }
+      .ldv-mini-pizza.is-tapped .ldv-mini-pizza__photo {
+        animation: ldvPizzaTap .85s cubic-bezier(.2,.75,.25,1) 1;
+      }
+      /* Vapore visibile: tre sottili tratti sopra la pizza, SVG integrato. */
       .ldv-mini-pizza__steam {
-        position:absolute; z-index:6; top:-3px;
-        width: 10px; height: 26px; border-radius: 50%;
-        pointer-events: none;
-        background: linear-gradient(to top, rgba(255,255,255,.04), rgba(255,255,255,.70), transparent);
-        filter: blur(3px); opacity:0;
-        animation: ldvPizzaSteam 3s ease-out infinite;
+        position: absolute; left: 5%; top: -35px; width: 90%; height: 43px;
+        overflow: visible; pointer-events: none;
+        filter: drop-shadow(0 0 2px rgba(255,255,255,.25));
       }
-      .ldv-mini-pizza__steam--1 { left: 38%; animation-delay:0s; }
-      .ldv-mini-pizza__steam--2 { left: 53%; animation-delay:1s; }
-      .ldv-mini-pizza__steam--3 { left: 65%; animation-delay:2s; }
+      .ldv-mini-pizza__steam path {
+        fill: none; stroke: rgba(255, 247, 226, .94);
+        stroke-width: 2.8; stroke-linecap: round;
+        animation: ldvPizzaSteam 3.15s ease-out infinite;
+        transform-origin: bottom center;
+      }
+      .ldv-mini-pizza__steam path:nth-child(2) { animation-delay: 1.05s; }
+      .ldv-mini-pizza__steam path:nth-child(3) { animation-delay: 2.1s; }
+      @keyframes ldvPizzaRotate { to { transform: rotate(360deg); } }
       @keyframes ldvPizzaFloat {
-        0%, 100% { transform: translateY(0px); }
+        0%,100% { transform: translateY(0); }
         50% { transform: translateY(-3px); }
       }
-      @keyframes ldvPizzaSpin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      @keyframes ldvPizzaBurst {
-        from { transform: rotate(0deg) scale(1); }
-        45% { transform: rotate(190deg) scale(1.12); }
-        to { transform: rotate(360deg) scale(1); }
+      @keyframes ldvPizzaTap {
+        0% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.13) rotate(200deg); }
+        100% { transform: scale(1) rotate(360deg); }
       }
       @keyframes ldvPizzaSteam {
-        0% { transform: translate(-50%, 13px) scale(.55); opacity:0; }
-        27% { opacity:.37; }
-        75% { opacity:.14; }
-        100% { transform: translate(-35%, -22px) scale(1.3); opacity:0; }
+        0% { opacity: 0; transform: translateY(6px) scale(.82); }
+        25% { opacity: .72; }
+        70% { opacity: .38; }
+        100% { opacity: 0; transform: translateY(-16px) scale(1.12); }
       }
       @media (max-width: 680px) {
         .ldv-mini-pizza { width: 56px; height: 56px; }
-        .ldv-mini-pizza__steam { height:20px; }
+        .ldv-mini-pizza__steam { top: -31px; height: 38px; }
       }
+      /* Rispetta l'impostazione di sistema per la riduzione del movimento. */
       @media (prefers-reduced-motion: reduce) {
-        .ldv-mini-pizza__float, .ldv-mini-pizza__slow, .ldv-mini-pizza__tap {
+        .ldv-mini-pizza__float, .ldv-mini-pizza__spin {
           animation: none !important;
         }
-        .ldv-mini-pizza__steam { display: none; }
+        .ldv-mini-pizza__steam { display: none !important; }
+        /* Un tocco esplicito consente un singolo giro, senza loop. */
+        .ldv-mini-pizza.is-tapped .ldv-mini-pizza__photo {
+          animation: ldvPizzaTap .85s ease 1 !important;
+        }
       }
     `;
-    if (!document.getElementById(CSS_ID)) {
-      var style = document.createElement('style');
-      style.id = CSS_ID;
-      style.textContent = css;
-      document.head.appendChild(style);
+    if (!document.getElementById(STYLE_ID)) {
+      var el = document.createElement('style');
+      el.id = STYLE_ID;
+      el.textContent = css;
+      document.head.appendChild(el);
     }
 
-    // Pizza separata dalla riga: i cambi lingua non la cancellano
-    // e il testo esistente non viene spostato o modificato.
     var pizza = document.createElement('button');
     pizza.type = 'button';
     pizza.className = 'ldv-mini-pizza';
-    pizza.title = 'Pizza appena sfornata: tocca per farla girare!';
+    pizza.title = 'Pizza appena sfornata — tocca per farla girare';
     pizza.setAttribute('aria-label', 'Fai girare la pizza');
     pizza.innerHTML =
       '<span class="ldv-mini-pizza__float">' +
-        '<span class="ldv-mini-pizza__slow">' +
-          '<span class="ldv-mini-pizza__tap">' +
-            '<img class="ldv-mini-pizza__photo" alt="" draggable="false" src="' + IMG_SRC + '">' +
-          '</span>' +
+        '<span class="ldv-mini-pizza__spin">' +
+          '<img class="ldv-mini-pizza__photo" alt="" draggable="false" src="' + SOURCE + '">' +
         '</span>' +
       '</span>' +
-      '<span class="ldv-mini-pizza__steam ldv-mini-pizza__steam--1" aria-hidden="true"></span>' +
-      '<span class="ldv-mini-pizza__steam ldv-mini-pizza__steam--2" aria-hidden="true"></span>' +
-      '<span class="ldv-mini-pizza__steam ldv-mini-pizza__steam--3" aria-hidden="true"></span>';
-    heroContent.appendChild(pizza);
+      '<svg class="ldv-mini-pizza__steam" viewBox="0 0 68 45" aria-hidden="true" focusable="false">' +
+        '<path d="M20 40 Q8 30 20 19 Q30 10 18 4"/>' +
+        '<path d="M34 40 Q46 29 33 20 Q24 11 35 3"/>' +
+        '<path d="M49 40 Q39 29 51 19 Q60 10 48 4"/>' +
+      '</svg>';
+    parent.appendChild(pizza);
 
-    var tap = pizza.querySelector('.ldv-mini-pizza__tap');
-    tap.addEventListener('animationend', function () { tap.classList.remove('is-burst'); });
+    var photo = pizza.querySelector('.ldv-mini-pizza__photo');
+    photo.addEventListener('error', function () {
+      pizza.classList.remove('is-positioned');
+      console.warn('Foto pizza non trovata:', SOURCE);
+    });
+    photo.addEventListener('load', schedulePosition);
+    photo.addEventListener('animationend', function () {
+      pizza.classList.remove('is-tapped');
+    });
     pizza.addEventListener('click', function () {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      tap.classList.remove('is-burst');
-      void tap.offsetWidth;  // Permette di ripetere l'animazione al tocco.
-      tap.classList.add('is-burst');
+      pizza.classList.remove('is-tapped');
+      void photo.offsetWidth;
+      pizza.classList.add('is-tapped');
     });
 
-    function placePizza() {
+    // Misura l'ultima località; sul telefono resta sempre dentro lo schermo.
+    // Non sposta né modifica la riga di testo, anche nelle quattro lingue.
+    function position() {
+      raf = 0;
       if (!pizza.isConnected) return;
-      // Rileviamo la posizione effettiva dell'ultima località (Cuneo / traduzioni)
-      // senza modificare il testo già gestito dal sistema multilingua.
-      var node = Array.prototype.find.call(eyebrow.childNodes, function (child) {
-        return child.nodeType === Node.TEXT_NODE && child.textContent.trim();
+      var nodes = Array.prototype.filter.call(eyebrow.childNodes, function (node) {
+        return node.nodeType === 3 && node.textContent.trim().length;
       });
-      if (!node) return;
-      var content = node.textContent || '';
-      var start = content.lastIndexOf('·') + 1;
-      while (start < content.length && /\s/.test(content[start])) start++;
-      var end = content.length;
-      while (end > start && /\s/.test(content[end - 1])) end--;
-      if (end <= start) return;
+      if (!nodes.length) return;
+      var node = nodes[nodes.length - 1];
+      var value = node.textContent;
+      var start = value.lastIndexOf('·') + 1;
+      while (start < value.length && /\s/.test(value[start])) start++;
+      var end = value.length;
+      while (end > start && /\s/.test(value[end - 1])) end--;
+      if (start === end) return;
       var range = document.createRange();
       range.setStart(node, start);
       range.setEnd(node, end);
-      var lastWord = range.getBoundingClientRect();
-      var container = heroContent.getBoundingClientRect();
-      var size = pizza.getBoundingClientRect().width;
-      // Mettiamo la pizza sopra il centro della parola "Cuneo", con 9 px di margine.
-      var x = lastWord.left + lastWord.width / 2 - container.left - size / 2;
-      var y = lastWord.top - container.top - size - 9;
-      pizza.style.left = Math.round(x) + 'px';
-      pizza.style.top = Math.round(y) + 'px';
+      var word = range.getBoundingClientRect();
+      var area = parent.getBoundingClientRect();
+      var pageWidth = document.documentElement.clientWidth || window.innerWidth;
+      var size = pizza.offsetWidth;
+      if (!word.width || !area.width || !size) return;
+      var wantedCenter = word.left + word.width / 2;
+      var center = Math.max(size / 2 + 12,
+        Math.min(pageWidth - size / 2 - 12, wantedCenter));
+      pizza.style.left = Math.round(center - size / 2 - area.left) + 'px';
+      pizza.style.top = Math.round(word.top - size - 13 - area.top) + 'px';
+      pizza.classList.add('is-positioned');
     }
-
-    // Ricalcolo con font caricati, resizing e cambi della traduzione.
-    placePizza();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placePizza);
-    window.addEventListener('resize', placePizza, { passive:true });
-    var observer = new MutationObserver(placePizza);
+    function schedulePosition() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(position);
+    }
+    schedulePosition();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(schedulePosition);
+    }
+    window.addEventListener('load', schedulePosition);
+    window.addEventListener('resize', schedulePosition, {passive:true});
+    window.addEventListener('orientationchange', schedulePosition);
+    window.addEventListener('pageshow', schedulePosition);
+    var observer = new MutationObserver(schedulePosition);
     observer.observe(eyebrow, {childList:true, characterData:true, subtree:true});
-    window.addEventListener('load', placePizza, { once:true });
+    // Riposizionamento dopo la breve animazione d'entrata del titolo.
+    setTimeout(schedulePosition, 1100);
+    setTimeout(schedulePosition, 1800);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start, {once:true});
+    document.addEventListener('DOMContentLoaded', init, {once:true});
   } else {
-    start();
+    init();
   }
 })();
