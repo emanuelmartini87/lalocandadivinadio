@@ -232,3 +232,35 @@
   document.querySelectorAll('[data-link="maps"]').forEach(function(a){if(site.maps) a.href=site.maps;});
   applyI18n();
 })();
+/* ==========================================================
+   LOCANDA PIZZA WOW V2 - Aggiungere IN FONDO a js/main.js
+   Crea pizza+fumo sopra Cuneo dopo il caricamento delle lingue.
+   ========================================================== */
+(function locandaPizzaWowV2() {
+  'use strict';
+  var label = document.querySelector('.hero__eyebrow');
+  if (!label || label.querySelector('.ldv-pizza-wow')) return;
+
+  var box = document.createElement('span');
+  box.className = 'ldv-pizza-wow';
+  box.setAttribute('aria-hidden', 'true');
+  for (var i = 0; i < 4; i++) {
+    var steam = document.createElement('span');
+    steam.className = 'ldv-pizza-wow__steam';
+    box.appendChild(steam);
+  }
+  var pizza = document.createElement('img');
+  pizza.className = 'ldv-pizza-wow__img';
+  pizza.alt = '';
+  pizza.decoding = 'async';
+  pizza.src = new URL('assets/img/pizza-wow.webp', document.baseURI).href;
+  box.appendChild(pizza);
+
+  // Quando si cambia lingua, main.js aggiorna il testo della localita'.
+  // La pizza viene ripristinata automaticamente senza duplicarla.
+  var observer = new MutationObserver(function () {
+    if (!label.contains(box)) label.appendChild(box);
+  });
+  observer.observe(label, {childList: true});
+  label.appendChild(box);
+})();
