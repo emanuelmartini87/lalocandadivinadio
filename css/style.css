@@ -865,3 +865,46 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   .allergen-symbol-tip { transition: none; }
 }
+/* ============================================================
+   Rifiniture di compatibilita' — CSS e main.js
+   ============================================================ */
+:root { --bg: var(--bg-light); }
+html { scroll-padding-top: 96px; }
+body { min-width: 320px; }
+/* Il tasto hamburger deve restare raggiungibile con il menu aperto. */
+.nav:has(.nav__burger[aria-expanded="true"]) { z-index: 1100; }
+.nav:has(.nav__burger[aria-expanded="true"]) .nav__burger { color: var(--text-light); }
+.nav:has(.nav__burger[aria-expanded="true"]) .nav__inner { pointer-events: none; }
+.nav:has(.nav__burger[aria-expanded="true"]) .nav__burger { pointer-events: auto; }
+.mobile-menu { overflow-y: auto; overscroll-behavior: contain; }
+.mobile-menu a:focus-visible { color: var(--gold); }
+/* Il menu categorie rimane leggibile e raggiungibile da tastiera. */
+.catbar__track { scroll-behavior: smooth; }
+.catbar__pill:focus-visible, .allergen-tooltip-trigger:focus-visible { outline-offset: 3px; }
+/* Evita che immagini e prezzi allarghino le colonne su schermi stretti. */
+.dishes > *, .dish__row, .menu-cat { min-width: 0; }
+.dish__name { overflow-wrap: anywhere; }
+.dish__dots { min-width: 12px; }
+/* Il poster e la galleria rimangono accessibili anche senza hover. */
+.bento__item:focus-within .bento__cap,
+.bento__item:focus-visible .bento__cap { opacity: 1; transform: none; }
+.bento__item:focus-within::after { opacity: 1; }
+@media (hover: none) {
+  .bento__cap { opacity: 1; transform: none; }
+  .bento__item::after { opacity: 1; }
+}
+@media (max-width: 680px) {
+  .nav__inner { height: 70px; gap: .55rem; }
+  .nav__right { gap: .55rem; }
+  .wordmark__main { font-size: clamp(1.05rem, 4.5vw, 1.45rem); }
+  .wordmark__sub { font-size: .55rem; letter-spacing: .28em; }
+  .catbar { top: 70px; }
+  .menu-cat { scroll-margin-top: 140px; }
+  .lightbox__close { top: .65rem; right: .65rem; }
+  .lightbox__figure img { max-height: 68dvh; }
+  .allergen-symbol-tip { max-width: min(200px, 65vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html, .catbar__track { scroll-behavior: auto; }
+  .hero__bg img, .marquee__track, .collage__badge { animation: none !important; }
+}
