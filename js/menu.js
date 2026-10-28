@@ -388,10 +388,17 @@
     }
   };
 
-  // Versione fissa: nessun aggiornamento non controllato di librerie CDN.
-  var PDFMAKE_JS = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.23/pdfmake.min.js';
-  var PDFMAKE_FONTS = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.23/vfs_fonts.min.js';
+  // Versione bloccata a pdfmake 0.2.23; mirror alternativo se un CDN non risponde.
+  var PDFMAKE_JS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.23/pdfmake.min.js',
+    'https://cdn.jsdelivr.net/npm/pdfmake@0.2.23/build/pdfmake.min.js'
+  ];
+  var PDFMAKE_FONTS = [
+    'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.23/vfs_fonts.min.js',
+    'https://cdn.jsdelivr.net/npm/pdfmake@0.2.23/build/vfs_fonts.js'
+  ];
   var pdfLibrariesPromise = null;
+  var pdfFontsReady = false;
 
   function pdfLabel(language) { return PDF_STRINGS[language] || PDF_STRINGS.it; }
 
@@ -473,7 +480,9 @@
         })
         .catch(function (error) {
           console.error('Download PDF Locanda:', error);
-          status.textContent = copy.error;
+          // In ambiente di test mostra la causa per facilitare la diagnosi.
+          var detail = error && error.message ? String(error.message) : '';
+          status.textContent = copy.error + (detail ? ' — ' + detail : '');
         })
         .finally(function () { button.disabled = false; });
     });
@@ -495,29 +504,44 @@
     });
   }
 
+  function loadPdfScriptWithFallback(urls) {
+    var index = 0;
+    function attempt(lastError) {
+      if (index >= urls.length) return Promise.reject(lastError);
+      return loadPdfScript(urls[index++]).catch(attempt);
+    }
+    return attempt(new Error('Nessun CDN PDF disponibile'));
+  }
+
   function loadPdfLibraries() {
-    if (window.pdfMake && typeof window.pdfMake.createPdf === 'function' && window.pdfMake.vfs) {
+    if (pdfLibrariesPromise) return pdfLibrariesPromise;
+    // Da pdfmake 0.2.15 i font VFS sono registrati internamente con
+    // addVirtualFileSystem: pdfMake.vfs puo' essere undefined anche se
+    // i font sono stati caricati correttamente.
+    if (window.pdfMake && typeof window.pdfMake.createPdf === 'function' &&
+        (pdfFontsReady || window.pdfMake.vfs)) {
       return Promise.resolve();
     }
-    if (!pdfLibrariesPromise) {
-      pdfLibrariesPromise = Promise.resolve()
-        .then(function () {
-          return (window.pdfMake && typeof window.pdfMake.createPdf === 'function')
-            ? null : loadPdfScript(PDFMAKE_JS);
-        })
-        .then(function () {
-          return window.pdfMake && window.pdfMake.vfs ? null : loadPdfScript(PDFMAKE_FONTS);
-        })
-        .then(function () {
-          if (!window.pdfMake || typeof window.pdfMake.createPdf !== 'function' || !window.pdfMake.vfs) {
-            throw new Error('Libreria PDF non inizializzata');
-          }
-        })
-        .catch(function (err) {
-          pdfLibrariesPromise = null;
-          throw err;
+    pdfLibrariesPromise = Promise.resolve()
+      .then(function () {
+        return (window.pdfMake && typeof window.pdfMake.createPdf === 'function')
+          ? null : loadPdfScriptWithFallback(PDFMAKE_JS);
+      })
+      .then(function () {
+        if (!window.pdfMake || typeof window.pdfMake.createPdf !== 'function') {
+          throw new Error('Motore PDF non inizializzato');
+        }
+        if (pdfFontsReady || window.pdfMake.vfs) return null;
+        return loadPdfScriptWithFallback(PDFMAKE_FONTS).then(function () {
+          // Il caricamento dello script registra direttamente i font nella
+          // libreria, senza necessariamente valorizzare pdfMake.vfs.
+          pdfFontsReady = true;
         });
-    }
+      })
+      .catch(function (err) {
+        pdfLibrariesPromise = null;
+        throw err;
+      });
     return pdfLibrariesPromise;
   }
 
