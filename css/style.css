@@ -908,3 +908,58 @@ body { min-width: 320px; }
   html, .catbar__track { scroll-behavior: auto; }
   .hero__bg img, .marquee__track, .collage__badge { animation: none !important; }
 }
+
+/* ============================================================
+   V3 — Hero mobile coerente in IT / EN / FR / DE
+   Le etichette lunghe non devono spostare i pulsanti su
+   righe differenti a seconda della lingua selezionata.
+   ============================================================ */
+@media (max-width: 680px) {
+  /* Evita che la versione francese occupi un'area diversa
+     rispetto alle altre nel riquadro sopra il titolo. */
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    min-height: 3.25rem;
+    max-width: 100%;
+    line-height: 1.65;
+    overflow-wrap: normal;
+  }
+  .hero__eyebrow::before { flex: 0 0 2.4rem; }
+
+  /* Area coerente per descrizioni di lunghezza diversa.
+     Una traduzione molto lunga puo' comunque espanderla. */
+  .hero__sub {
+    min-height: 8rem;
+    max-width: 100%;
+  }
+
+  /* Due colonne sempre presenti. I testi piu' lunghi
+     vanno su due linee DENTRO il pulsante, non sotto. */
+  .hero__ctas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .hero__ctas .btn {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 4.15rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 0.7rem 0.45rem;
+    font-size: clamp(0.76rem, 3.45vw, 0.92rem);
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero__ctas { gap: 0.55rem; }
+  .hero__ctas .btn { font-size: 0.76rem; padding-inline: 0.28rem; }
+}
