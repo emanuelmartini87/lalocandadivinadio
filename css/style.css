@@ -963,3 +963,62 @@ body { min-width: 320px; }
   .hero__ctas { gap: 0.55rem; }
   .hero__ctas .btn { font-size: 0.76rem; padding-inline: 0.28rem; }
 }
+
+
+/* ============================================================
+   LOCANDA-FIX-MOBILE-20261028 — HERO smartphone IT/EN/FR/DE
+   Solo mobile. Desktop, menu D1, amministrazione invariati.
+   ============================================================ */
+@media (max-width: 680px) {
+  /* Due pulsanti sempre fianco a fianco, anche con testi FR e DE lunghi. */
+  .hero__ctas {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+    width: 100%;
+  }
+  .hero__ctas > .btn {
+    display: flex;
+    min-width: 0;
+    width: 100%;
+    min-height: 4.05rem;
+    padding: 0.7rem clamp(0.3rem, 1.4vw, 0.65rem);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
+    line-height: 1.22;
+    letter-spacing: 0;
+  }
+  /* L'ultima localita (CUNEO) NON va a capo in francese:
+     lo script della pizza segue questa parola. */
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-height: 2rem;
+    max-width: 100%;
+    gap: 0.5rem;
+    font-size: clamp(0.6rem, 2.75vw, 0.72rem);
+    line-height: 1.4;
+    letter-spacing: 0.13em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+  .hero__eyebrow::before {
+    width: clamp(1rem, 7vw, 2rem);
+    flex: 0 0 clamp(1rem, 7vw, 2rem);
+  }
+}
+@media (max-width: 350px) {
+  .hero__eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    gap: 0.35rem;
+  }
+  .hero__eyebrow::before { width: 0.75rem; flex-basis: 0.75rem; }
+  .hero__ctas > .btn { font-size: 0.75rem; padding-inline: 0.3rem; }
+}
