@@ -5,7 +5,15 @@
   var site = window.LDV_SITE || {};
   var LANGS = ['it', 'en', 'fr', 'de'];
   var CONFIG = {
-    API_BASE: 'https://locanda-menu-public.emanuel-martini87.workers.dev/api/public',
+    // SOLO per la preview Pages TEST: tutte le altre origini mantengono l'API PROD.
+    API_BASE: (function () {
+      var host = window.location.hostname.toLowerCase();
+      var isTest = host === 'locanda-grafica-test.pages.dev' ||
+        host.endsWith('.locanda-grafica-test.pages.dev');
+      return isTest
+        ? 'https://locanda-menu-public-test.emanuel-martini87.workers.dev/api/public'
+        : 'https://locanda-menu-public.emanuel-martini87.workers.dev/api/public';
+    })(),
     PHONE_DISPLAY: site.phoneDisplay || '0171 959506',
     PHONE_TEL: site.phoneHref || '+390171959506',
     EMAIL: site.email || '',

@@ -68,8 +68,54 @@
     if (catbarTrack) catbarTrack.innerHTML = '';
   }
 
+  var NOTICE_FALLBACK = {
+    it: 'Menù temporaneamente non disponibile. Ti invitiamo a riprovare più tardi.',
+    en: 'Menu temporarily unavailable. Please try again later.',
+    fr: 'Carte temporairement indisponible. Veuillez réessayer plus tard.',
+    de: 'Speisekarte vorübergehend nicht verfügbar. Bitte versuchen Sie es später erneut.'
+  };
+
+  function setMenuSuspended(isSuspended) {
+    document.body.classList.toggle('ldv-menu-suspended', isSuspended);
+    var catbar = document.querySelector('.catbar');
+    if (catbar) catbar.hidden = isSuspended;
+    if (isSuspended && catbarTrack) catbarTrack.textContent = '';
+  }
+
+  function renderSuspended() {
+    setMenuSuspended(true);
+    root.replaceChildren();
+    var box = document.createElement('section');
+    box.className = 'menu-suspended';
+    box.setAttribute('role', 'status');
+    box.setAttribute('data-testid', 'menu-temporarily-unavailable');
+    var icon = document.createElement('div');
+    icon.className = 'menu-suspended__symbol';
+    icon.textContent = '✦';
+    icon.setAttribute('aria-hidden', 'true');
+    var title = document.createElement('h2');
+    title.textContent = {it:'Menù sospeso', en:'Menu unavailable', fr:'Carte indisponible', de:'Speisekarte nicht verfügbar'}[lang()] || 'Menù sospeso';
+    var desc = document.createElement('p');
+    desc.textContent = data['notice_' + lang()] || data.notice_it || NOTICE_FALLBACK[lang()] || NOTICE_FALLBACK.it;
+    box.append(icon,title,desc);
+    root.appendChild(box);
+    if (!document.getElementById('ldv-menu-suspended-style')) {
+      var style = document.createElement('style');
+      style.id = 'ldv-menu-suspended-style';
+      style.textContent =
+        '.menu-suspended{max-width:800px;margin:2.5rem auto 1rem;padding:3rem 1.5rem;text-align:center;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}'+
+        '.menu-suspended__symbol{font-size:2.2rem;color:var(--primary);margin-bottom:1rem}'+
+        '.menu-suspended h2{font-family:var(--font-head);font-size:clamp(2rem,5vw,3rem);margin:0 0 1rem}'+
+        '.menu-suspended p{font-size:1.1rem;line-height:1.7;max-width:630px;margin:0 auto}'+
+        'body.ldv-menu-suspended .menu-posters,body.ldv-menu-suspended .catbar{display:none!important}';
+      document.head.appendChild(style);
+    }
+  }
+
   function render() {
     if (!data) return;
+    if (data.menu_enabled === 0) { renderSuspended(); return; }
+    setMenuSuspended(false);
     var items = data.items || [];
     var cats = [];
     var byCat = {};
@@ -318,7 +364,7 @@
 
   function load() {
     showState('loading');
-    fetch(API, { headers: { 'Accept': 'application/json' } })
+    fetch(API, { cache: 'no-store', headers: { 'Accept': 'application/json' } })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (json) {
         if (!json || !json.ok || !json.items) throw new Error('bad payload');
@@ -403,7 +449,7 @@
   function pdfLabel(language) { return PDF_STRINGS[language] || PDF_STRINGS.it; }
 
   function renderPdfDownloadButton() {
-    if (!data || !Array.isArray(data.items)) return;
+    if (!data || !Array.isArray(data.items) || data.menu_enabled === 0 || data.pdf_enabled === 0) return;
     var language = lang();
     var label = pdfLabel(language);
     if (!document.getElementById('ldv-pdf-download-style')) {
@@ -466,6 +512,9 @@
         .then(function (fresh) {
           if (!fresh || fresh.ok !== true || !Array.isArray(fresh.items)) {
             throw new Error('Menu API: dati non validi');
+          }
+          if (fresh.menu_enabled === 0 || fresh.pdf_enabled === 0) {
+            throw new Error('Download PDF disabilitato dal ristorante');
           }
           return loadPdfLibraries().then(function () {
             return buildPdfDocument(fresh, downloadLanguage, copy);
@@ -666,6 +715,10 @@
   }
 
   window.addEventListener('ldv:lang', function () { if (data) render(); });
+  // Alla riapertura della scheda aggiorna lo stato senza attendere la ricarica manuale.
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) load();
+  });
 
   load();
 })();
