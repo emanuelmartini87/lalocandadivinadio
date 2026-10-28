@@ -2,75 +2,93 @@
 (function () {
   'use strict';
 
+  var site = window.LDV_SITE || {};
+  var LANGS = ['it', 'en', 'fr', 'de'];
   var CONFIG = {
     API_BASE: 'https://locanda-menu-public.emanuel-martini87.workers.dev/api/public',
-    PHONE_DISPLAY: (window.LDV_SITE||{}).phoneDisplay || '0171 959506',
-    PHONE_TEL: (window.LDV_SITE||{}).phoneHref || '+390171959506',
-    EMAIL: '', /* facoltativa: inserire qui l'email per mostrarla nel sito */
-    MAPS_URL: (window.LDV_SITE||{}).maps || 'https://www.google.com/maps/search/?api=1&query=La+Locanda+di+Vinadio+Via+Roma+16+Vinadio',
-    MAPS_EMBED: 'https://www.google.com/maps?q=La+Locanda+di+Vinadio,+Via+Roma+16,+12010+Vinadio+CN&output=embed'
+    PHONE_DISPLAY: site.phoneDisplay || '0171 959506',
+    PHONE_TEL: site.phoneHref || '+390171959506',
+    EMAIL: site.email || '',
+    MAPS_URL: site.maps || 'https://www.google.com/maps/search/?api=1&query=La+Locanda+di+Vinadio+Via+Roma+16+Vinadio',
+    MAPS_EMBED: site.mapsEmbed || 'https://www.google.com/maps?q=La+Locanda+di+Vinadio,+Via+Roma+16,+12010+Vinadio+CN&output=embed'
   };
   window.LDV_CONFIG = CONFIG;
 
-  /* ---------- Lingua ---------- */
-  var LANGS = ['it', 'en', 'fr', 'de'];
+  function normalizedLang(value) {
+    var lang = String(value || '').toLowerCase().trim();
+    return LANGS.indexOf(lang) !== -1 ? lang : null;
+  }
 
   function getLang() {
     var query = new URLSearchParams(window.location.search).get('lang');
-    if (query && LANGS.indexOf(query.toLowerCase()) !== -1) return query.toLowerCase();
+    if (normalizedLang(query)) return normalizedLang(query);
     var pageDefault = document.body && document.body.getAttribute('data-default-lang');
-    if (pageDefault && LANGS.indexOf(pageDefault) !== -1) return pageDefault;
+    if (normalizedLang(pageDefault)) return normalizedLang(pageDefault);
     var saved = null;
-    try { saved = localStorage.getItem('ldv-lang'); } catch (e) {}
-    if (saved && LANGS.indexOf(saved) !== -1) return saved;
-    var nav = (navigator.language || 'it').slice(0, 2).toLowerCase();
-    return LANGS.indexOf(nav) !== -1 ? nav : 'it';
+    try { saved = window.localStorage.getItem('ldv-lang'); } catch (e) { /* Storage bloccato */ }
+    if (normalizedLang(saved)) return normalizedLang(saved);
+    return normalizedLang((navigator.language || 'it').slice(0, 2)) || 'it';
   }
 
   function t(key) {
-    var lang = getLang();
-    var dict = window.LDV_I18N[lang] || window.LDV_I18N.it;
-    return dict[key] || window.LDV_I18N.it[key] || key;
+    var dictionaries = window.LDV_I18N || {};
+    var current = dictionaries[getLang()] || {};
+    var fallback = dictionaries.it || {};
+    return current[key] != null ? current[key] : (fallback[key] != null ? fallback[key] : key);
   }
   window.t = t;
   window.LDV_getLang = getLang;
 
   function applyI18n() {
     var lang = getLang();
-    document.documentElement.setAttribute('lang', lang);
+    var dictionaries = window.LDV_I18N || {};
+    document.documentElement.lang = lang;
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       el.textContent = t(el.getAttribute('data-i18n'));
     });
+    // Usare data-i18n-html solo con traduzioni HTML fidate, definite nel progetto.
     document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
       el.innerHTML = t(el.getAttribute('data-i18n-html'));
     });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
       el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
     });
-    var page = document.body.getAttribute('data-page');
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+    });
+    var page = document.body && document.body.getAttribute('data-page');
     var titleKey = 'meta.title.' + page;
-    if (window.LDV_I18N[lang] && window.LDV_I18N[lang][titleKey]) {
-      document.title = t(titleKey);
-    }
-    document.querySelectorAll('.lang-switch button').forEach(function (btn) {
+    if (page && dictionaries[lang] && dictionaries[lang][titleKey]) document.title = t(titleKey);
+    document.querySelectorAll('.lang-switch button[data-lang]').forEach(function (btn) {
       var active = btn.getAttribute('data-lang') === lang;
       btn.classList.toggle('is-active', active);
-      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+      btn.setAttribute('aria-pressed', String(active));
     });
+    if (lightbox && lightbox.classList.contains('is-open')) {
+      lightbox.querySelector('.lightbox__close').setAttribute('aria-label', t('ui.close'));
+      var pdfButton = lightbox.querySelector('.lightbox__pdf');
+      if (!pdfButton.hidden) pdfButton.textContent = t('eventspage.pdf');
+    }
   }
   window.LDV_applyI18n = applyI18n;
 
   function setLang(lang) {
-    if (LANGS.indexOf(lang) === -1) return;
-    try { localStorage.setItem('ldv-lang', lang); } catch (e) {}
-    var p = new URL(window.location.href);
-    if (p.searchParams.has('lang')) { p.searchParams.set('lang', lang); history.replaceState(null, '', p.pathname + p.search + p.hash); }
-    document.body.setAttribute('data-default-lang',lang);
+    lang = normalizedLang(lang);
+    if (!lang) return;
+    try { window.localStorage.setItem('ldv-lang', lang); } catch (e) { /* Storage bloccato */ }
+    // L'URL resta sincronizzato quando contiene gia' il parametro lang.
+    var url = new URL(window.location.href);
+    if (url.searchParams.has('lang')) {
+      url.searchParams.set('lang', lang);
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+    }
+    document.body.setAttribute('data-default-lang', lang);
     applyI18n();
     window.dispatchEvent(new CustomEvent('ldv:lang', { detail: { lang: lang } }));
   }
+  window.LDV_setLang = setLang;
 
-  document.querySelectorAll('.lang-switch button').forEach(function (btn) {
+  document.querySelectorAll('.lang-switch button[data-lang]').forEach(function (btn) {
     btn.addEventListener('click', function () { setLang(btn.getAttribute('data-lang')); });
   });
 
@@ -78,9 +96,7 @@
   var nav = document.querySelector('.nav');
   if (nav) {
     if (nav.classList.contains('on-hero')) {
-      var onScroll = function () {
-        nav.classList.toggle('is-scrolled', window.scrollY > 40);
-      };
+      var onScroll = function () { nav.classList.toggle('is-scrolled', window.scrollY > 40); };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
     } else {
@@ -90,85 +106,123 @@
 
   var burger = document.querySelector('.nav__burger');
   var mobileMenu = document.querySelector('.mobile-menu');
+  var menuOpen = false;
+  var overflowBeforeMenu = '';
+  function toggleMobileMenu(open) {
+    if (!burger || !mobileMenu) return;
+    if (open && !menuOpen) overflowBeforeMenu = document.body.style.overflow;
+    menuOpen = Boolean(open);
+    mobileMenu.classList.toggle('is-open', menuOpen);
+    burger.setAttribute('aria-expanded', String(menuOpen));
+    document.body.style.overflow = menuOpen ? 'hidden' : overflowBeforeMenu;
+  }
   if (burger && mobileMenu) {
-    burger.addEventListener('click', function () {
-      var open = mobileMenu.classList.toggle('is-open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      document.body.style.overflow = open ? 'hidden' : '';
-    });
+    burger.addEventListener('click', function () { toggleMobileMenu(!menuOpen); });
     mobileMenu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        mobileMenu.classList.remove('is-open');
-        burger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
+      a.addEventListener('click', function () { toggleMobileMenu(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menuOpen) { toggleMobileMenu(false); burger.focus(); }
+    });
+    window.addEventListener('resize', function () {
+      if (menuOpen && window.innerWidth > 1024) toggleMobileMenu(false);
     });
   }
 
-  /* ---------- Lenis smooth scroll ---------- */
+  /* ---------- Scorrimento ---------- */
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var lenis = null;
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced && typeof window.Lenis === 'function') {
+  if (!reducedMotion && typeof window.Lenis === 'function') {
     lenis = new window.Lenis({ lerp: 0.09, wheelMultiplier: 1 });
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
+    function raf(time) { lenis.raf(time); window.requestAnimationFrame(raf); }
+    window.requestAnimationFrame(raf);
     window.LDV_lenis = lenis;
   }
-
-  /* anchor interni con lenis */
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
-      if (id.length < 2) return;
-      var el = document.querySelector(id);
-      if (!el) return;
+      if (!id || id.length < 2) return;
+      var target = document.getElementById(id.slice(1));
+      if (!target) return;
       e.preventDefault();
-      if (lenis) { lenis.scrollTo(el, { offset: -90 }); }
-      else { el.scrollIntoView({ behavior: 'smooth' }); }
+      if (menuOpen) toggleMobileMenu(false);
+      if (lenis) lenis.scrollTo(target, { offset: -90 });
+      else target.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search + id);
+      }
     });
   });
 
-  /* ---------- Reveal on scroll ---------- */
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
+  /* ---------- Animazioni reveal ---------- */
+  var revealItems = document.querySelectorAll('.reveal');
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    revealItems.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    revealItems.forEach(function (el) {
+      var delay = Number(el.getAttribute('data-delay'));
+      if (Number.isFinite(delay) && delay > 0) el.style.transitionDelay = Math.min(delay, 2000) + 'ms';
+      io.observe(el);
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach(function (el) {
-    var d = el.getAttribute('data-delay');
-    if (d) el.style.transitionDelay = d + 'ms';
-    io.observe(el);
-  });
+  }
 
   /* ---------- Parallax hero ---------- */
   var heroBg = document.querySelector('[data-parallax]');
-  if (heroBg && !reduced) {
-    var tick = function () {
+  if (heroBg && !reducedMotion) {
+    var parallaxPending = false;
+    function updateParallax() {
+      parallaxPending = false;
       var y = window.scrollY;
-      if (y < window.innerHeight * 1.2) {
-        heroBg.style.transform = 'translateY(' + y * 0.28 + 'px)';
-      }
-    };
-    window.addEventListener('scroll', function () { requestAnimationFrame(tick); }, { passive: true });
+      if (y < window.innerHeight * 1.2) heroBg.style.transform = 'translate3d(0,' + (y * 0.28) + 'px,0)';
+    }
+    window.addEventListener('scroll', function () {
+      if (!parallaxPending) { parallaxPending = true; window.requestAnimationFrame(updateParallax); }
+    }, { passive: true });
   }
 
-  /* ---------- Marquee: duplica il contenuto per il loop ---------- */
+  /* ---------- Marquee ---------- */
   document.querySelectorAll('.marquee__track').forEach(function (track) {
-    track.innerHTML += track.innerHTML;
+    if (track.dataset.ldvDuplicated === 'true') return;
+    // Il clone e' decorativo e non deve duplicare link nel tab order.
+    var items = Array.from(track.children);
+    items.forEach(function (item) {
+      var clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach(function (interactive) {
+        interactive.setAttribute('tabindex', '-1');
+      });
+      if (clone.matches('a, button, input, select, textarea, [tabindex]')) clone.setAttribute('tabindex', '-1');
+      track.appendChild(clone);
+    });
+    track.dataset.ldvDuplicated = 'true';
   });
 
   /* ---------- Lightbox globale ---------- */
   var lightbox = null;
+  var previousFocus = null;
+  var overflowBeforeLightbox = '';
+  function closeLightbox() {
+    if (!lightbox || !lightbox.classList.contains('is-open')) return;
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = overflowBeforeLightbox;
+    if (previousFocus && typeof previousFocus.focus === 'function') previousFocus.focus();
+  }
   function buildLightbox() {
     lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.setAttribute('role', 'dialog');
     lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('aria-label', 'Galleria');
     lightbox.innerHTML =
-      '<button class="lightbox__close" type="button" data-testid="lightbox-close" aria-label="' + t('ui.close') + '">&times;</button>' +
+      '<button class="lightbox__close" type="button" data-testid="lightbox-close">&times;</button>' +
       '<figure class="lightbox__figure">' +
         '<img class="lightbox__img" alt="">' +
         '<figcaption class="lightbox__caption">' +
@@ -177,58 +231,58 @@
         '</figcaption>' +
       '</figure>';
     document.body.appendChild(lightbox);
-    var close = function () { closeLightbox(); };
-    lightbox.querySelector('.lightbox__close').addEventListener('click', close);
-    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
+    lightbox.querySelector('.lightbox__close').addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLightbox(); });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && lightbox.classList.contains('is-open')) close();
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+      if (e.key === 'Tab') {
+        var available = Array.from(lightbox.querySelectorAll('button:not([hidden]), a:not([hidden])'));
+        if (!available.length) return;
+        var first = available[0], last = available[available.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
   }
-  function closeLightbox() {
-    lightbox.classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
   window.LDV_openLightbox = function (opts) {
+    opts = opts || {};
+    if (!opts.img) return;
     if (!lightbox) buildLightbox();
+    previousFocus = document.activeElement;
+    overflowBeforeLightbox = document.body.style.overflow;
     var img = lightbox.querySelector('.lightbox__img');
     img.src = opts.img;
     img.alt = opts.title || '';
     lightbox.querySelector('.lightbox__title').textContent = opts.title || '';
     var pdfBtn = lightbox.querySelector('.lightbox__pdf');
-    if (opts.pdfUrl) {
-      pdfBtn.hidden = false;
-      pdfBtn.href = opts.pdfUrl;
-      pdfBtn.textContent = t('eventspage.pdf');
-    } else {
-      pdfBtn.hidden = true;
-    }
+    pdfBtn.hidden = !opts.pdfUrl;
+    if (opts.pdfUrl) { pdfBtn.href = opts.pdfUrl; pdfBtn.textContent = t('eventspage.pdf'); }
+    else pdfBtn.removeAttribute('href');
     lightbox.querySelector('.lightbox__close').setAttribute('aria-label', t('ui.close'));
     lightbox.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    lightbox.querySelector('.lightbox__close').focus();
   };
+  window.LDV_closeLightbox = closeLightbox;
 
-  /* ---------- Footer ---------- */
-  var yearEl = document.querySelector('[data-year]');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  /* ---------- Email facoltativa ---------- */
-  if (CONFIG.EMAIL) {
-    document.querySelectorAll('[data-email-row]').forEach(function (row) {
-      row.hidden = false;
-      var a = row.querySelector('a');
-      if (a) { a.href = 'mailto:' + CONFIG.EMAIL; a.textContent = CONFIG.EMAIL; }
-    });
-  }
-
-  /* Contatti e link gestibili in un unico file js/site-config.js */
-  var site = window.LDV_SITE || {};
-  document.querySelectorAll('a[href^="tel:"]').forEach(function(a) {
-    if(site.phoneHref) a.href = 'tel:' + site.phoneHref;
-    if(site.phoneDisplay && /0171\s*959506/.test(a.textContent)) a.textContent = site.phoneDisplay;
+  /* ---------- Footer e contatti ---------- */
+  document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  document.querySelectorAll('[data-email-row]').forEach(function (row) {
+    row.hidden = !CONFIG.EMAIL;
+    if (!CONFIG.EMAIL) return;
+    var link = row.querySelector('a');
+    if (link) { link.href = 'mailto:' + CONFIG.EMAIL; link.textContent = CONFIG.EMAIL; }
   });
-  document.querySelectorAll('[data-link="facebook"]').forEach(function(a){if(site.facebook) a.href=site.facebook;});
-  document.querySelectorAll('[data-link="instagram"]').forEach(function(a){if(site.instagram) a.href=site.instagram;});
-  document.querySelectorAll('[data-link="review"]').forEach(function(a){if(site.review) a.href=site.review;});
-  document.querySelectorAll('[data-link="maps"]').forEach(function(a){if(site.maps) a.href=site.maps;});
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
+    if (CONFIG.PHONE_TEL) a.href = 'tel:' + CONFIG.PHONE_TEL;
+    if (CONFIG.PHONE_DISPLAY && /0171\s*959506/.test(a.textContent)) a.textContent = CONFIG.PHONE_DISPLAY;
+  });
+  var links = { facebook: site.facebook, instagram: site.instagram, review: site.review, maps: CONFIG.MAPS_URL };
+  document.querySelectorAll('[data-link]').forEach(function (a) {
+    var key = a.getAttribute('data-link');
+    if (links[key]) a.href = links[key];
+  });
+
   applyI18n();
 })();

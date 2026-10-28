@@ -865,3 +865,160 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   .allergen-symbol-tip { transition: none; }
 }
+/* ============================================================
+   Rifiniture di compatibilita' — CSS e main.js
+   ============================================================ */
+:root { --bg: var(--bg-light); }
+html { scroll-padding-top: 96px; }
+body { min-width: 320px; }
+/* Il tasto hamburger deve restare raggiungibile con il menu aperto. */
+.nav:has(.nav__burger[aria-expanded="true"]) { z-index: 1100; }
+.nav:has(.nav__burger[aria-expanded="true"]) .nav__burger { color: var(--text-light); }
+.nav:has(.nav__burger[aria-expanded="true"]) .nav__inner { pointer-events: none; }
+.nav:has(.nav__burger[aria-expanded="true"]) .nav__burger { pointer-events: auto; }
+.mobile-menu { overflow-y: auto; overscroll-behavior: contain; }
+.mobile-menu a:focus-visible { color: var(--gold); }
+/* Il menu categorie rimane leggibile e raggiungibile da tastiera. */
+.catbar__track { scroll-behavior: smooth; }
+.catbar__pill:focus-visible, .allergen-tooltip-trigger:focus-visible { outline-offset: 3px; }
+/* Evita che immagini e prezzi allarghino le colonne su schermi stretti. */
+.dishes > *, .dish__row, .menu-cat { min-width: 0; }
+.dish__name { overflow-wrap: anywhere; }
+.dish__dots { min-width: 12px; }
+/* Il poster e la galleria rimangono accessibili anche senza hover. */
+.bento__item:focus-within .bento__cap,
+.bento__item:focus-visible .bento__cap { opacity: 1; transform: none; }
+.bento__item:focus-within::after { opacity: 1; }
+@media (hover: none) {
+  .bento__cap { opacity: 1; transform: none; }
+  .bento__item::after { opacity: 1; }
+}
+@media (max-width: 680px) {
+  .nav__inner { height: 70px; gap: .55rem; }
+  .nav__right { gap: .55rem; }
+  .wordmark__main { font-size: clamp(1.05rem, 4.5vw, 1.45rem); }
+  .wordmark__sub { font-size: .55rem; letter-spacing: .28em; }
+  .catbar { top: 70px; }
+  .menu-cat { scroll-margin-top: 140px; }
+  .lightbox__close { top: .65rem; right: .65rem; }
+  .lightbox__figure img { max-height: 68dvh; }
+  .allergen-symbol-tip { max-width: min(200px, 65vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html, .catbar__track { scroll-behavior: auto; }
+  .hero__bg img, .marquee__track, .collage__badge { animation: none !important; }
+}
+
+/* ============================================================
+   V3 — Hero mobile coerente in IT / EN / FR / DE
+   Le etichette lunghe non devono spostare i pulsanti su
+   righe differenti a seconda della lingua selezionata.
+   ============================================================ */
+@media (max-width: 680px) {
+  /* Evita che la versione francese occupi un'area diversa
+     rispetto alle altre nel riquadro sopra il titolo. */
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    min-height: 3.25rem;
+    max-width: 100%;
+    line-height: 1.65;
+    overflow-wrap: normal;
+  }
+  .hero__eyebrow::before { flex: 0 0 2.4rem; }
+
+  /* Area coerente per descrizioni di lunghezza diversa.
+     Una traduzione molto lunga puo' comunque espanderla. */
+  .hero__sub {
+    min-height: 8rem;
+    max-width: 100%;
+  }
+
+  /* Due colonne sempre presenti. I testi piu' lunghi
+     vanno su due linee DENTRO il pulsante, non sotto. */
+  .hero__ctas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    width: 100%;
+  }
+  .hero__ctas .btn {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 4.15rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+    padding: 0.7rem 0.45rem;
+    font-size: clamp(0.76rem, 3.45vw, 0.92rem);
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero__ctas { gap: 0.55rem; }
+  .hero__ctas .btn { font-size: 0.76rem; padding-inline: 0.28rem; }
+}
+
+
+/* ============================================================
+   LOCANDA-FIX-MOBILE-20261028 — HERO smartphone IT/EN/FR/DE
+   Solo mobile. Desktop, menu D1, amministrazione invariati.
+   ============================================================ */
+@media (max-width: 680px) {
+  /* Due pulsanti sempre fianco a fianco, anche con testi FR e DE lunghi. */
+  .hero__ctas {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: stretch;
+    gap: clamp(0.5rem, 2vw, 0.75rem);
+    width: 100%;
+  }
+  .hero__ctas > .btn {
+    display: flex;
+    min-width: 0;
+    width: 100%;
+    min-height: 4.05rem;
+    padding: 0.7rem clamp(0.3rem, 1.4vw, 0.65rem);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: clamp(0.75rem, 3vw, 0.9rem);
+    line-height: 1.22;
+    letter-spacing: 0;
+  }
+  /* L'ultima localita (CUNEO) NON va a capo in francese:
+     lo script della pizza segue questa parola. */
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-height: 2rem;
+    max-width: 100%;
+    gap: 0.5rem;
+    font-size: clamp(0.6rem, 2.75vw, 0.72rem);
+    line-height: 1.4;
+    letter-spacing: 0.13em;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+  .hero__eyebrow::before {
+    width: clamp(1rem, 7vw, 2rem);
+    flex: 0 0 clamp(1rem, 7vw, 2rem);
+  }
+}
+@media (max-width: 350px) {
+  .hero__eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    gap: 0.35rem;
+  }
+  .hero__eyebrow::before { width: 0.75rem; flex-basis: 0.75rem; }
+  .hero__ctas > .btn { font-size: 0.75rem; padding-inline: 0.3rem; }
+}
