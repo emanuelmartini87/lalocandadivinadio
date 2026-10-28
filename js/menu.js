@@ -159,6 +159,7 @@
 
     root.innerHTML = html;
     renderAllergenGuideButtons();
+    renderPdfDownloadButton();
 
     // Mouse: anteprima automatica; tastiera: Tab; telefono: tocca per mostrare o nascondere.
     root.querySelectorAll('.allergen-tooltip-trigger').forEach(function (button) {
@@ -342,6 +343,303 @@
       });
     }
   });
+
+  /* ------------------------------------------------------------
+   * Scarica PDF — genera il menu' PUBBLICO corrente al momento
+   * del clic. Nessun PDF statico e nessuna modifica al backend.
+   * Libreria caricata solo su richiesta (pdfmake + Roboto).
+   * ------------------------------------------------------------ */
+  var PDF_STRINGS = {
+    it: {
+      button: 'Scarica il menù in PDF', heading: 'Porta il menù con te',
+      hint: 'PDF aggiornato con i piatti e i prezzi attualmente pubblicati.',
+      loading: 'Preparazione del PDF in corso…',
+      error: 'Non è possibile generare il PDF ora. Riprova tra poco.',
+      title: 'Il menù', updated: 'Generato il', allergens: 'Allergeni',
+      allergenGuide: 'Guida agli allergeni', website: 'Menù aggiornato online',
+      page: 'Pagina', ingredients: 'Ingredienti'
+    },
+    en: {
+      button: 'Download PDF menu', heading: 'Take our menu with you',
+      hint: 'Current dishes and prices, downloaded as a PDF.',
+      loading: 'Preparing your PDF…',
+      error: 'Unable to generate the PDF right now. Please try again.',
+      title: 'Menu', updated: 'Generated on', allergens: 'Allergens',
+      allergenGuide: 'Allergen guide', website: 'Updated menu online',
+      page: 'Page', ingredients: 'Ingredients'
+    },
+    fr: {
+      button: 'Télécharger le menu PDF', heading: 'Emportez notre carte',
+      hint: 'La carte PDF avec les plats et les prix actuellement publiés.',
+      loading: 'Préparation du PDF…',
+      error: 'Impossible de générer le PDF. Veuillez réessayer.',
+      title: 'La carte', updated: 'Généré le', allergens: 'Allergènes',
+      allergenGuide: 'Guide des allergènes', website: 'Carte à jour en ligne',
+      page: 'Page', ingredients: 'Ingrédients'
+    },
+    de: {
+      button: 'Speisekarte als PDF herunterladen', heading: 'Unsere Karte zum Mitnehmen',
+      hint: 'Aktuelle Gerichte und Preise als PDF.',
+      loading: 'PDF wird erstellt…',
+      error: 'Die PDF-Datei konnte nicht erstellt werden. Bitte erneut versuchen.',
+      title: 'Speisekarte', updated: 'Erstellt am', allergens: 'Allergene',
+      allergenGuide: 'Allergenübersicht', website: 'Aktuelle Speisekarte online',
+      page: 'Seite', ingredients: 'Zutaten'
+    }
+  };
+
+  // Versione fissa: nessun aggiornamento non controllato di librerie CDN.
+  var PDFMAKE_JS = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.23/pdfmake.min.js';
+  var PDFMAKE_FONTS = 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.23/vfs_fonts.min.js';
+  var pdfLibrariesPromise = null;
+
+  function pdfLabel(language) { return PDF_STRINGS[language] || PDF_STRINGS.it; }
+
+  function renderPdfDownloadButton() {
+    if (!data || !Array.isArray(data.items)) return;
+    var language = lang();
+    var label = pdfLabel(language);
+    if (!document.getElementById('ldv-pdf-download-style')) {
+      var css = document.createElement('style');
+      css.id = 'ldv-pdf-download-style';
+      css.textContent =
+        '.menu-pdf-download{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.35rem;margin-top:2.5rem;padding:1.6rem 1.8rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:0 8px 32px rgba(28,22,20,.07)}' +
+        '.menu-pdf-download__text{flex:1 1 230px;min-width:0}' +
+        '.menu-pdf-download__title{font-family:var(--font-head);font-size:clamp(1.5rem,3vw,1.95rem);font-weight:600;color:var(--text-dark);margin:0 0 .25rem}' +
+        '.menu-pdf-download__hint{color:var(--text-muted);font-size:.92rem;line-height:1.5}' +
+        '.menu-pdf-download__actions{display:flex;flex-direction:column;align-items:center;gap:.4rem}' +
+        '.menu-pdf-download__button{justify-content:center;text-align:center;white-space:normal;line-height:1.35}' +
+        '.menu-pdf-download__button:disabled{opacity:.6;cursor:wait;transform:none}' +
+        '.menu-pdf-download__status{font-size:.78rem;color:var(--text-muted);max-width:20rem;text-align:center}' +
+        '@media(max-width:680px){.menu-pdf-download{padding:1.25rem;gap:1rem}.menu-pdf-download__actions,.menu-pdf-download__button{width:100%}}';
+      document.head.appendChild(css);
+    }
+    var box = document.createElement('section');
+    box.className = 'menu-pdf-download';
+    box.setAttribute('aria-label', label.heading);
+    box.setAttribute('data-testid', 'menu-pdf-download');
+    var info = document.createElement('div');
+    info.className = 'menu-pdf-download__text';
+    var heading = document.createElement('h2');
+    heading.className = 'menu-pdf-download__title';
+    heading.textContent = label.heading;
+    var hint = document.createElement('p');
+    hint.className = 'menu-pdf-download__hint';
+    hint.textContent = label.hint;
+    info.append(heading, hint);
+    var actions = document.createElement('div');
+    actions.className = 'menu-pdf-download__actions';
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn--primary menu-pdf-download__button';
+    button.textContent = '↓  ' + label.button;
+    button.setAttribute('data-testid', 'menu-download-pdf-btn');
+    var status = document.createElement('span');
+    status.className = 'menu-pdf-download__status';
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    actions.append(button, status);
+    box.append(info, actions);
+    root.appendChild(box);
+
+    button.addEventListener('click', function () {
+      if (button.disabled) return;
+      var downloadLanguage = lang();
+      var copy = pdfLabel(downloadLanguage);
+      button.disabled = true;
+      status.textContent = copy.loading;
+
+      // Una nuova richiesta impedisce di esportare un menu' rimasto
+      // aperto nel browser prima di una modifica nel gestionale.
+      fetch(API, { headers: { 'Accept': 'application/json' }, cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('Menu API HTTP ' + response.status);
+          return response.json();
+        })
+        .then(function (fresh) {
+          if (!fresh || fresh.ok !== true || !Array.isArray(fresh.items)) {
+            throw new Error('Menu API: dati non validi');
+          }
+          return loadPdfLibraries().then(function () {
+            return buildPdfDocument(fresh, downloadLanguage, copy);
+          });
+        })
+        .then(function (pdfDoc) {
+          var now = new Date();
+          var day = now.getFullYear() + '-' + padDate(now.getMonth() + 1) + '-' + padDate(now.getDate());
+          var name = 'La_Locanda_di_Vinadio_Menu_' + downloadLanguage.toUpperCase() + '_' + day + '.pdf';
+          window.pdfMake.createPdf(pdfDoc).download(name);
+          status.textContent = '';
+        })
+        .catch(function (error) {
+          console.error('Download PDF Locanda:', error);
+          status.textContent = copy.error;
+        })
+        .finally(function () { button.disabled = false; });
+    });
+  }
+
+  function padDate(n) { return String(n).padStart(2, '0'); }
+
+  function loadPdfScript(url) {
+    return new Promise(function (resolve, reject) {
+      var script = document.createElement('script');
+      script.src = url;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = function () {
+        script.remove();
+        reject(new Error('Libreria PDF non caricabile: ' + url));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  function loadPdfLibraries() {
+    if (window.pdfMake && typeof window.pdfMake.createPdf === 'function' && window.pdfMake.vfs) {
+      return Promise.resolve();
+    }
+    if (!pdfLibrariesPromise) {
+      pdfLibrariesPromise = Promise.resolve()
+        .then(function () {
+          return (window.pdfMake && typeof window.pdfMake.createPdf === 'function')
+            ? null : loadPdfScript(PDFMAKE_JS);
+        })
+        .then(function () {
+          return window.pdfMake && window.pdfMake.vfs ? null : loadPdfScript(PDFMAKE_FONTS);
+        })
+        .then(function () {
+          if (!window.pdfMake || typeof window.pdfMake.createPdf !== 'function' || !window.pdfMake.vfs) {
+            throw new Error('Libreria PDF non inizializzata');
+          }
+        })
+        .catch(function (err) {
+          pdfLibrariesPromise = null;
+          throw err;
+        });
+    }
+    return pdfLibrariesPromise;
+  }
+
+  function printable(obj, key, language) {
+    if (!obj) return '';
+    return String(obj[key + '_' + language] || obj[key + '_it'] || '').trim();
+  }
+
+  function translatedNote(key, language) {
+    var langs = window.LDV_I18N || {};
+    return (langs[language] && langs[language][key]) ||
+      (langs.it && langs.it[key]) || '';
+  }
+
+  function buildPdfDocument(fresh, language, label) {
+    var locale = language === 'en' ? 'en-IE' :
+      language === 'fr' ? 'fr-FR' : language === 'de' ? 'de-DE' : 'it-IT';
+    var now = new Date();
+    var stamp = new Intl.DateTimeFormat(locale, {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit'
+    }).format(now);
+    var menuUrl = 'https://www.lalocandadivinadio.it/menu.html';
+    var currentCategory = null;
+    var content = [
+      { text: 'LA LOCANDA', style: 'brand', alignment: 'center' },
+      { text: 'D I  V I N A D I O', style: 'brandSub', alignment: 'center' },
+      { text: label.title, style: 'title', alignment: 'center' },
+      { text: (window.LDV_SITE && window.LDV_SITE.address) ||
+        'Via Roma, 16 — 12010 Vinadio (CN)', style: 'address', alignment: 'center' },
+      { text: ((window.LDV_SITE && window.LDV_SITE.phoneDisplay) || '0171 959506'),
+        style: 'address', alignment: 'center' },
+      { text: label.updated + ' ' + stamp, style: 'stamp', alignment: 'center' },
+      { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 510, y2: 0,
+        lineWidth: 1.2, lineColor: '#A04B2F' }], margin: [0, 10, 0, 12] }
+    ];
+    var items = fresh.items || [];
+    items.forEach(function (item) {
+      var categoryId = String(item.category_id);
+      if (categoryId !== currentCategory) {
+        currentCategory = categoryId;
+        content.push({ text: printable(item, 'category', language),
+          style: 'category', keepWithNext: true, margin: [0, 13, 0, 8] });
+      }
+      var name = printable(item, 'name', language);
+      var desc = printable(item, 'description', language);
+      var ingredients = (item.ingredients || [])
+        .map(function (ingredient) { return printable(ingredient, 'name', language); })
+        .filter(Boolean);
+      var allergens = (item.allergens || [])
+        .map(function (allergen) { return printable(allergen, 'name', language); })
+        .filter(Boolean);
+      // Stessa regola della pagina web per mostrare la descrizione.
+      var descriptionToShow = (desc && desc.toLowerCase() !== name.toLowerCase())
+        ? desc : (!desc ? ingredients.join(', ') : '');
+      var cents = Number(item.price_cents);
+      var amount = (item.price_cents === undefined || item.price_cents === null ||
+        !Number.isFinite(cents)) ? '' : new Intl.NumberFormat(locale, {
+        style: 'currency', currency: 'EUR'
+      }).format(cents / 100);
+      var stack = [{ columns: [
+        { text: name || '—', style: 'dishName', width: '*' },
+        { text: amount, style: 'dishPrice', alignment: 'right', width: 'auto' }
+      ], columnGap: 8 }];
+      if (descriptionToShow) {
+        stack.push({ text: descriptionToShow, style: 'dishDesc', margin: [0, 3, 0, 0] });
+      }
+      if (allergens.length) {
+        stack.push({ text: label.allergens + ': ' + allergens.join(', '),
+          style: 'dishAllergens', margin: [0, 3, 0, 0] });
+      }
+      content.push({ stack: stack, unbreakable: true, margin: [0, 0, 0, 11] });
+    });
+
+    var frozen = translatedNote('menu.note.frozen', language);
+    var allergenNote = translatedNote('menu.note.allergens', language);
+    if (frozen || allergenNote) {
+      content.push({ text: [frozen, allergenNote].filter(Boolean).join('\n'),
+        style: 'notes', margin: [0, 16, 0, 6] });
+    }
+    if (Array.isArray(fresh.allergens) && fresh.allergens.length) {
+      content.push({ text: label.allergenGuide, style: 'category', margin: [0, 20, 0, 6],
+        keepWithNext: true });
+      fresh.allergens.slice().sort(function (a, b) { return Number(a.id) - Number(b.id); })
+        .forEach(function (item) {
+          content.push({ text: String(item.id) + '. ' + printable(item, 'name', language),
+            style: 'allergenLine', margin: [0, 0, 0, 3] });
+        });
+    }
+    content.push({ text: label.website + ': ' + menuUrl, link: menuUrl,
+      color: '#8C3B24', decoration: 'underline', style: 'link', margin: [0, 18, 0, 0] });
+    return {
+      info: { title: 'La Locanda di Vinadio - ' + label.title,
+        author: 'La Locanda di Vinadio', subject: label.title },
+      pageSize: 'A4',
+      pageMargins: [42, 48, 42, 52],
+      content: content,
+      footer: function (pageNumber, pageCount) {
+        return { columns: [
+          { text: 'La Locanda di Vinadio', alignment: 'left' },
+          { text: label.page + ' ' + pageNumber + ' / ' + pageCount, alignment: 'right' }
+        ], margin: [42, 12, 42, 0], fontSize: 8, color: '#87786C' };
+      },
+      defaultStyle: { font: 'Roboto', color: '#2C1A12', fontSize: 10 },
+      styles: {
+        brand: { fontSize: 19, bold: true, characterSpacing: 1.2, color: '#442C22' },
+        brandSub: { fontSize: 9, bold: true, characterSpacing: 1.2, color: '#A04B2F',
+          margin: [0, 1, 0, 10] },
+        title: { fontSize: 23, bold: true, color: '#8C3B24', margin: [0, 2, 0, 8] },
+        address: { fontSize: 8.8, color: '#6B5D52', margin: [0, 1, 0, 1] },
+        stamp: { fontSize: 8, italics: true, color: '#827267', margin: [0, 9, 0, 0] },
+        category: { fontSize: 15, bold: true, color: '#8C3B24' },
+        dishName: { bold: true, fontSize: 10.5 },
+        dishPrice: { bold: true, fontSize: 10.5, color: '#8C3B24' },
+        dishDesc: { color: '#6B5D52', fontSize: 9, lineHeight: 1.2 },
+        dishAllergens: { color: '#8C3B24', fontSize: 8.3 },
+        notes: { fontSize: 8.7, color: '#6B5D52', lineHeight: 1.25 },
+        allergenLine: { fontSize: 9 },
+        link: { fontSize: 9, alignment: 'center' }
+      }
+    };
+  }
 
   window.addEventListener('ldv:lang', function () { if (data) render(); });
 
