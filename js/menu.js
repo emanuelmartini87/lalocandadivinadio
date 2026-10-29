@@ -228,19 +228,49 @@
       });
     });
 
-    /* evidenzia la categoria visibile */
+    /* Evidenzia e segue la categoria attiva anche nella barra orizzontale.
+       Funziona su smartphone e desktop, senza muovere la pagina in verticale. */
     var sections = root.querySelectorAll('.menu-cat');
+    var reducedCatbarMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function followActiveCategory(id) {
+      if (!catbarTrack) return;
+      var pills = catbarTrack.querySelectorAll('.catbar__pill');
+      var activePill = null;
+      var wasActive = false;
+      pills.forEach(function (pill) {
+        var active = pill.getAttribute('data-cat') === id;
+        if (active) {
+          activePill = pill;
+          wasActive = pill.classList.contains('is-active');
+        }
+        pill.classList.toggle('is-active', active);
+      });
+      // Non ri-centrare continuamente la barra se l'utente la trascina a mano.
+      if (!activePill || wasActive) return;
+      var trackRect = catbarTrack.getBoundingClientRect();
+      var pillRect = activePill.getBoundingClientRect();
+      var idealLeft = catbarTrack.scrollLeft + (pillRect.left - trackRect.left) -
+        (catbarTrack.clientWidth - pillRect.width) / 2;
+      var maxLeft = Math.max(0, catbarTrack.scrollWidth - catbarTrack.clientWidth);
+      var newLeft = Math.max(0, Math.min(maxLeft, idealLeft));
+      if (Math.abs(newLeft - catbarTrack.scrollLeft) < 3) return;
+      if (typeof catbarTrack.scrollTo === 'function') {
+        catbarTrack.scrollTo({ left: newLeft, behavior: reducedCatbarMotion ? 'auto' : 'smooth' });
+      } else {
+        catbarTrack.scrollLeft = newLeft;
+      }
+    }
+
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting && catbarTrack) {
-          var id = entry.target.id.replace('cat-', '');
-          catbarTrack.querySelectorAll('.catbar__pill').forEach(function (p) {
-            p.classList.toggle('is-active', p.getAttribute('data-cat') === id);
-          });
+        if (entry.isIntersecting) {
+          followActiveCategory(entry.target.id.replace('cat-', ''));
         }
       });
     }, { rootMargin: '-30% 0px -60% 0px' });
-    sections.forEach(function (s) { spy.observe(s); });
+    sections.forEach(function (section) { spy.observe(section); });
   }
 
   function escapeHtml(s) {
