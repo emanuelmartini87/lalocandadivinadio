@@ -516,9 +516,10 @@
           if (fresh.menu_enabled === 0 || fresh.pdf_enabled === 0) {
             throw new Error('Download PDF disabilitato dal ristorante');
           }
-          return loadPdfLibraries().then(function () {
-            return buildPdfDocument(fresh, downloadLanguage, copy);
-          });
+          return Promise.all([loadPdfLibraries(), loadPdfBrandLogo()])
+            .then(function (loaded) {
+              return buildPdfDocument(fresh, downloadLanguage, copy, loaded[1]);
+            });
         })
         .then(function (pdfDoc) {
           var now = new Date();
@@ -605,7 +606,35 @@
       (langs.it && langs.it[key]) || '';
   }
 
-  function buildPdfDocument(fresh, language, label) {
+  // PDF V3.1: immagine ufficiale del sito, caricata una sola volta.
+  // In caso di rete assente mantiene l'intestazione testuale: il download continua.
+  var pdfBrandLogoPromise = null;
+  function loadPdfBrandLogo() {
+    if (pdfBrandLogoPromise) return pdfBrandLogoPromise;
+    pdfBrandLogoPromise = fetch('/favicon.png', { cache: 'force-cache' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Logo PDF non disponibile');
+        return res.blob();
+      })
+      .then(function (blob) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.onload = function () { resolve(reader.result); };
+          reader.onerror = function () { reject(new Error('Logo PDF non leggibile')); };
+          reader.readAsDataURL(blob);
+        });
+      })
+      .catch(function (err) {
+        console.warn('PDF Locanda: utilizzo intestazione testuale', err);
+        return null;
+      });
+    return pdfBrandLogoPromise;
+  }
+
+  // Disegno originale SVG, indipendente dall'ordine di visualizzazione.
+  var PIZZA_PDF_VETTORIALE = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"124\" height=\"124\" viewBox=\"0 0 124 124\">  <path d=\"M62 8 C87 8 110 27 115 52 C122 82 101 110 70 116 C36 121 9 102 8 69 C5 37 29 10 62 8Z\" fill=\"#B7753D\" stroke=\"#75422B\" stroke-width=\"2.4\"/>  <path d=\"M62 15 C85 15 106 31 109 55 C113 79 96 102 70 108 C44 114 19 96 16 70 C12 45 33 17 62 15Z\" fill=\"#DEAE68\" stroke=\"#F1CF8A\" stroke-width=\"2.1\"/>  <path d=\"M61 23 C85 20 98 38 101 59 C104 81 89 96 65 100 C42 104 26 88 24 69 C20 45 39 26 61 23Z\" fill=\"#A74C34\"/>  <path d=\"M44 34 C53 29 63 30 67 37 C71 43 66 51 58 52 C48 53 39 45 44 34Z M73 47 C85 43 93 51 92 62 C91 70 83 74 74 71 C68 68 65 51 73 47Z M34 62 C42 55 50 59 53 67 C55 75 47 82 39 81 C30 79 27 69 34 62Z M61 76 C71 67 81 73 82 84 C82 93 73 98 64 96 C56 93 55 82 61 76Z\" fill=\"#F7E7BB\" stroke=\"#E8D4A2\" stroke-width=\"1.3\"/>  <path d=\"M48 34 C53 36 56 39 61 38 M79 51 C83 55 85 59 84 64 M34 68 C37 70 42 72 44 71\" fill=\"none\" stroke=\"#FFFFFF\" stroke-opacity=\".7\" stroke-width=\"2\" stroke-linecap=\"round\"/>  <path d=\"M61 54 Q49 44 46 49 Q42 57 61 54Z M60 54 Q56 36 64 35 Q72 42 60 54Z\" fill=\"#416C45\" stroke=\"#254F34\" stroke-width=\".8\"/>  <path d=\"M75 80 Q69 67 76 65 Q83 69 75 80Z M75 80 Q88 72 91 79 Q88 87 75 80Z\" fill=\"#5E8750\" stroke=\"#315D3E\" stroke-width=\".8\"/>  <path d=\"M39 52 Q36 42 29 44 Q25 51 39 52Z M39 52 Q44 41 48 45 Q48 53 39 52Z\" fill=\"#547C49\" stroke=\"#315D3E\" stroke-width=\".8\"/>  <path d=\"M42 88 Q40 78 47 77 Q55 80 42 88Z M42 88 Q52 89 51 95 Q45 99 42 88Z\" fill=\"#4C754A\" stroke=\"#315D3E\" stroke-width=\".8\"/>  <path d=\"M25 46 Q30 29 46 24 M86 28 Q103 39 106 56 M89 99 Q101 91 108 78\" fill=\"none\" stroke=\"#F7DDAA\" stroke-width=\"3.1\" stroke-linecap=\"round\"/>  <path d=\"M45 19 Q39 21 36 24 M82 20 Q90 25 94 30 M13 61 Q13 69 17 75 M68 111 Q79 109 84 107\" fill=\"none\" stroke=\"#87502F\" stroke-width=\"2.1\" stroke-linecap=\"round\"/>  <circle cx=\"84\" cy=\"35\" r=\"2.5\" fill=\"#8E332B\"/><circle cx=\"31\" cy=\"54\" r=\"2.4\" fill=\"#863426\"/><circle cx=\"88\" cy=\"88\" r=\"2.1\" fill=\"#863426\"/><circle cx=\"57\" cy=\"90\" r=\"2\" fill=\"#863426\"/></svg>";
+
+  function buildPdfDocument(fresh, language, label, brandLogoData) {
     var locale = language === 'en' ? 'en-IE' :
       language === 'fr' ? 'fr-FR' : language === 'de' ? 'de-DE' : 'it-IT';
     var now = new Date();
@@ -615,19 +644,6 @@
     }).format(now);
     var menuUrl = 'https://www.lalocandadivinadio.it/menu.html';
     var currentCategory = null;
-    // Segni grafici vettoriali originali: niente font emoji o immagini esterne.
-    // E' un simbolo stilizzato di montagna, non il logo ufficiale del ristorante.
-    var mountainMark = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="45" viewBox="0 0 100 45">' +
-      '<path d="M3 40 L25 17 L39 32 L60 5 L97 40" fill="none" stroke="#865138" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path d="M48 24 L60 5 L70 22 M18 25 L25 17 L33 26" fill="none" stroke="#BB986B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path d="M8 44 H92" stroke="#C8AE8A" stroke-width="1"/></svg>';
-    var pizzaMark = '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">' +
-      '<circle cx="28" cy="28" r="25" fill="#D9AB64" stroke="#905735" stroke-width="2"/>' +
-      '<circle cx="28" cy="28" r="20" fill="#F3D996" stroke="#B66A3B" stroke-width="1.5"/>' +
-      '<path d="M13 24 Q28 7 43 25 Q40 43 24 45 Z" fill="#BC5641" opacity="0.85"/>' +
-      '<circle cx="21" cy="23" r="4" fill="#9E4435"/><circle cx="35" cy="33" r="4" fill="#9E4435"/>' +
-      '<circle cx="25" cy="38" r="3" fill="#9E4435"/><circle cx="35" cy="20" r="3" fill="#9E4435"/>' +
-      '<path d="M26 19 Q23 13 18 17 Q21 22 26 19 M28 30 Q37 26 37 23 Q30 24 28 30 M18 35 Q12 30 14 27 Q20 29 18 35" fill="#5F7E4B"/></svg>';
     var motto = {
       it: 'RISTORANTE  ·  PIZZERIA  ·  VALLE STURA',
       en: 'RESTAURANT  ·  PIZZERIA  ·  STURA VALLEY',
@@ -641,22 +657,28 @@
       de: 'Vielen Dank, dass Sie La Locanda di Vinadio gewählt haben'
     };
     var content = [
-      { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 485, y2: 0,
-        lineWidth: 0.8, lineColor: '#B89665' }], margin: [0, 0, 0, 15] },
-      { svg: mountainMark, width: 64, alignment: 'center', margin: [0, 0, 0, 7] },
-      { text: 'LA LOCANDA', style: 'brand', alignment: 'center' },
-      { text: 'D I  V I N A D I O', style: 'brandSub', alignment: 'center' },
-      { text: motto[language] || motto.it, style: 'motto', alignment: 'center',
-        margin: [0, 0, 0, 5] },
-      { text: label.title, style: 'title', alignment: 'center', margin: [0, 6, 0, 10] },
-      { text: (window.LDV_SITE && window.LDV_SITE.address) ||
-        'Via Roma, 16 — 12010 Vinadio (CN)', style: 'address', alignment: 'center' },
-      { text: ((window.LDV_SITE && window.LDV_SITE.phoneDisplay) || '0171 959506'),
-        style: 'address', alignment: 'center' },
-      { text: label.updated + ' ' + stamp, style: 'stamp', alignment: 'center' },
-      { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 510, y2: 0,
-        lineWidth: 1.2, lineColor: '#A04B2F' }], margin: [0, 10, 0, 12] }
+      { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 498, y2: 0,
+        lineWidth: 0.7, lineColor: '#C7AA81' }], margin: [0, 0, 0, 10] }
     ];
+    if (brandLogoData) {
+      content.push({ image: brandLogoData, width: 83, alignment: 'center',
+        margin: [0, 0, 0, 8] });
+    } else {
+      content.push({ text: 'LA LOCANDA', style: 'brand', alignment: 'center' });
+      content.push({ text: 'D I  V I N A D I O', style: 'brandSub', alignment: 'center' });
+    }
+    content.push({ text: motto[language] || motto.it,
+      style: 'motto', alignment: 'center', margin: [0, 0, 0, 5] });
+    content.push({ text: label.title, style: 'title', alignment: 'center',
+      margin: [0, 6, 0, 10] });
+    content.push({ text: (window.LDV_SITE && window.LDV_SITE.address) ||
+      'Via Roma, 16 — 12010 Vinadio (CN)', style: 'address', alignment: 'center' });
+    content.push({ text: (window.LDV_SITE && window.LDV_SITE.phoneDisplay) ||
+      '0171 959506', style: 'address', alignment: 'center' });
+    content.push({ text: label.updated + ' ' + stamp,
+      style: 'stamp', alignment: 'center' });
+    content.push({ canvas: [{ type: 'line', x1: 0, y1: 0, x2: 498, y2: 0,
+      lineWidth: 0.9, lineColor: '#AD6E48' }], margin: [0, 13, 0, 10] });
     var items = fresh.items || [];
     items.forEach(function (item) {
       var categoryId = String(item.category_id);
@@ -664,9 +686,11 @@
         currentCategory = categoryId;
         content.push({
           stack: [
-            // L'icona si vede solo nelle categorie con pizze.
-            ...( /pizz/i.test(String(item.category_it || printable(item, 'category', language)))
-              ? [{ svg: pizzaMark, width: 30, alignment: 'center', margin: [0, 0, 0, 9] }]
+            // Segue la categoria pizze anche quando cambia posizione nel gestionale.
+            ...(Number(item.category_id) === 3 ||
+                 /pizz/i.test(String(item.category_it || ''))
+              ? [{ svg: PIZZA_PDF_VETTORIALE, width: 54, alignment: 'center',
+                   margin: [0, 0, 0, 9] }]
               : [] ),
             { canvas: [{ type: 'line', x1: 145, y1: 0, x2: 340, y2: 0,
               lineWidth: 0.75, lineColor: '#C2A47B' }], margin: [0, 0, 0, 11] },
@@ -739,6 +763,11 @@
       info: { title: 'La Locanda di Vinadio - ' + label.title,
         author: 'La Locanda di Vinadio', subject: label.title },
       pageSize: 'A4',
+      // Avorio molto tenue; colore di sfondo valido per ogni pagina A4.
+      background: function (pageNumber, pageSize) {
+        return { canvas: [{ type: 'rect', x: 0, y: 0,
+          w: pageSize.width, h: pageSize.height, color: '#FBF8F2' }] };
+      },
       pageMargins: [48, 46, 48, 65],
       content: content,
       footer: function (pageNumber, pageCount) {
