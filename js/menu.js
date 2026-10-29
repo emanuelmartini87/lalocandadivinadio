@@ -615,11 +615,39 @@
     }).format(now);
     var menuUrl = 'https://www.lalocandadivinadio.it/menu.html';
     var currentCategory = null;
+    // Segni grafici vettoriali originali: niente font emoji o immagini esterne.
+    // E' un simbolo stilizzato di montagna, non il logo ufficiale del ristorante.
+    var mountainMark = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="45" viewBox="0 0 100 45">' +
+      '<path d="M3 40 L25 17 L39 32 L60 5 L97 40" fill="none" stroke="#865138" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M48 24 L60 5 L70 22 M18 25 L25 17 L33 26" fill="none" stroke="#BB986B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M8 44 H92" stroke="#C8AE8A" stroke-width="1"/></svg>';
+    var pizzaMark = '<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">' +
+      '<circle cx="28" cy="28" r="25" fill="#D9AB64" stroke="#905735" stroke-width="2"/>' +
+      '<circle cx="28" cy="28" r="20" fill="#F3D996" stroke="#B66A3B" stroke-width="1.5"/>' +
+      '<path d="M13 24 Q28 7 43 25 Q40 43 24 45 Z" fill="#BC5641" opacity="0.85"/>' +
+      '<circle cx="21" cy="23" r="4" fill="#9E4435"/><circle cx="35" cy="33" r="4" fill="#9E4435"/>' +
+      '<circle cx="25" cy="38" r="3" fill="#9E4435"/><circle cx="35" cy="20" r="3" fill="#9E4435"/>' +
+      '<path d="M26 19 Q23 13 18 17 Q21 22 26 19 M28 30 Q37 26 37 23 Q30 24 28 30 M18 35 Q12 30 14 27 Q20 29 18 35" fill="#5F7E4B"/></svg>';
+    var motto = {
+      it: 'RISTORANTE  ·  PIZZERIA  ·  VALLE STURA',
+      en: 'RESTAURANT  ·  PIZZERIA  ·  STURA VALLEY',
+      fr: 'RESTAURANT  ·  PIZZERIA  ·  VALLÉE STURA',
+      de: 'RESTAURANT  ·  PIZZERIA  ·  STURA-TAL'
+    };
+    var goodbye = {
+      it: 'Grazie per aver scelto La Locanda di Vinadio',
+      en: 'Thank you for choosing La Locanda di Vinadio',
+      fr: 'Merci d’avoir choisi La Locanda di Vinadio',
+      de: 'Vielen Dank, dass Sie La Locanda di Vinadio gewählt haben'
+    };
     var content = [
       { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 485, y2: 0,
         lineWidth: 0.8, lineColor: '#B89665' }], margin: [0, 0, 0, 15] },
+      { svg: mountainMark, width: 64, alignment: 'center', margin: [0, 0, 0, 7] },
       { text: 'LA LOCANDA', style: 'brand', alignment: 'center' },
       { text: 'D I  V I N A D I O', style: 'brandSub', alignment: 'center' },
+      { text: motto[language] || motto.it, style: 'motto', alignment: 'center',
+        margin: [0, 0, 0, 5] },
       { text: label.title, style: 'title', alignment: 'center', margin: [0, 6, 0, 10] },
       { text: (window.LDV_SITE && window.LDV_SITE.address) ||
         'Via Roma, 16 — 12010 Vinadio (CN)', style: 'address', alignment: 'center' },
@@ -636,6 +664,10 @@
         currentCategory = categoryId;
         content.push({
           stack: [
+            // L'icona si vede solo nelle categorie con pizze.
+            ...( /pizz/i.test(String(item.category_it || printable(item, 'category', language)))
+              ? [{ svg: pizzaMark, width: 30, alignment: 'center', margin: [0, 0, 0, 9] }]
+              : [] ),
             { canvas: [{ type: 'line', x1: 145, y1: 0, x2: 340, y2: 0,
               lineWidth: 0.75, lineColor: '#C2A47B' }], margin: [0, 0, 0, 11] },
             { text: printable(item, 'category', language).toUpperCase(),
@@ -699,25 +731,37 @@
             style: 'allergenLine', margin: [0, 0, 0, 3] });
         });
     }
+    content.push({ text: goodbye[language] || goodbye.it,
+      style: 'signature', alignment: 'center', margin: [0, 21, 0, 3] });
     content.push({ text: label.website + ': ' + menuUrl, link: menuUrl,
-      color: '#8C3B24', decoration: 'underline', style: 'link', margin: [0, 18, 0, 0] });
+      color: '#8C3B24', decoration: 'underline', style: 'link', margin: [0, 8, 0, 0] });
     return {
       info: { title: 'La Locanda di Vinadio - ' + label.title,
         author: 'La Locanda di Vinadio', subject: label.title },
       pageSize: 'A4',
-      pageMargins: [48, 46, 48, 54],
+      pageMargins: [48, 46, 48, 65],
       content: content,
       footer: function (pageNumber, pageCount) {
-        return { columns: [
-          { text: 'La Locanda di Vinadio', alignment: 'left' },
-          { text: label.page + ' ' + pageNumber + ' / ' + pageCount, alignment: 'right' }
-        ], margin: [42, 12, 42, 0], fontSize: 8, color: '#87786C' };
+        return {
+          margin: [48, 0, 48, 0],
+          stack: [
+            { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 498, y2: 0,
+              lineWidth: 0.65, lineColor: '#C2A47B' }], margin: [0, 0, 0, 8] },
+            { columns: [
+                { text: 'LA LOCANDA DI VINADIO', bold: true, width: 'auto' },
+                { text: 'Via Roma 16 · 0171 959506', alignment: 'center', width: '*' },
+                { text: label.page + ' ' + pageNumber + ' / ' + pageCount,
+                  alignment: 'right', width: 'auto' }
+              ], fontSize: 7.8, color: '#7B6656' }
+          ]
+        };
       },
       defaultStyle: { font: 'Roboto', color: '#2C1A12', fontSize: 10 },
       styles: {
         brand: { fontSize: 22, bold: true, characterSpacing: 1.5, color: '#3F2A22' },
         brandSub: { fontSize: 9, bold: true, characterSpacing: 1.2, color: '#A04B2F',
-          margin: [0, 1, 0, 10] },
+          margin: [0, 1, 0, 3] },
+        motto: { fontSize: 7.2, characterSpacing: 1.0, color: '#8B7662' },
         title: { fontSize: 27, bold: false, color: '#8C3B24', margin: [0, 2, 0, 8] },
         address: { fontSize: 8.8, color: '#6B5D52', margin: [0, 1, 0, 1] },
         stamp: { fontSize: 8, italics: true, color: '#827267', margin: [0, 9, 0, 0] },
@@ -728,6 +772,7 @@
         dishAllergens: { color: '#8C3B24', fontSize: 8.3 },
         notes: { fontSize: 8.7, color: '#6B5D52', lineHeight: 1.25 },
         allergenLine: { fontSize: 9 },
+        signature: { fontSize: 10, italics: true, color: '#8C5A40' },
         link: { fontSize: 9, alignment: 'center' }
       }
     };
