@@ -616,9 +616,11 @@
     var menuUrl = 'https://www.lalocandadivinadio.it/menu.html';
     var currentCategory = null;
     var content = [
+      { canvas: [{ type: 'line', x1: 0, y1: 0, x2: 485, y2: 0,
+        lineWidth: 0.8, lineColor: '#B89665' }], margin: [0, 0, 0, 15] },
       { text: 'LA LOCANDA', style: 'brand', alignment: 'center' },
       { text: 'D I  V I N A D I O', style: 'brandSub', alignment: 'center' },
-      { text: label.title, style: 'title', alignment: 'center' },
+      { text: label.title, style: 'title', alignment: 'center', margin: [0, 6, 0, 10] },
       { text: (window.LDV_SITE && window.LDV_SITE.address) ||
         'Via Roma, 16 — 12010 Vinadio (CN)', style: 'address', alignment: 'center' },
       { text: ((window.LDV_SITE && window.LDV_SITE.phoneDisplay) || '0171 959506'),
@@ -632,8 +634,18 @@
       var categoryId = String(item.category_id);
       if (categoryId !== currentCategory) {
         currentCategory = categoryId;
-        content.push({ text: printable(item, 'category', language),
-          style: 'category', keepWithNext: true, margin: [0, 13, 0, 8] });
+        content.push({
+          stack: [
+            { canvas: [{ type: 'line', x1: 145, y1: 0, x2: 340, y2: 0,
+              lineWidth: 0.75, lineColor: '#C2A47B' }], margin: [0, 0, 0, 11] },
+            { text: printable(item, 'category', language).toUpperCase(),
+              style: 'category', alignment: 'center' },
+            { canvas: [{ type: 'line', x1: 145, y1: 0, x2: 340, y2: 0,
+              lineWidth: 0.75, lineColor: '#C2A47B' }], margin: [0, 11, 0, 0] }
+          ],
+          keepWithNext: true,
+          margin: [0, 19, 0, 15]
+        });
       }
       var name = printable(item, 'name', language);
       var desc = printable(item, 'description', language);
@@ -662,7 +674,7 @@
         stack.push({ text: label.allergens + ': ' + allergens.join(', '),
           style: 'dishAllergens', margin: [0, 3, 0, 0] });
       }
-      content.push({ stack: stack, unbreakable: true, margin: [0, 0, 0, 11] });
+      content.push({ stack: stack, unbreakable: true, margin: [6, 0, 6, 14] });
     });
 
     var frozen = translatedNote('menu.note.frozen', language);
@@ -672,8 +684,15 @@
         style: 'notes', margin: [0, 16, 0, 6] });
     }
     if (Array.isArray(fresh.allergens) && fresh.allergens.length) {
-      content.push({ text: label.allergenGuide, style: 'category', margin: [0, 20, 0, 6],
-        keepWithNext: true });
+      content.push({
+        stack: [
+          { canvas: [{ type: 'line', x1: 145, y1: 0, x2: 340, y2: 0,
+            lineWidth: 0.75, lineColor: '#C2A47B' }], margin: [0, 0, 0, 11] },
+          { text: label.allergenGuide, style: 'category', alignment: 'center' },
+          { canvas: [{ type: 'line', x1: 145, y1: 0, x2: 340, y2: 0,
+            lineWidth: 0.75, lineColor: '#C2A47B' }], margin: [0, 11, 0, 0] }
+        ], margin: [0, 22, 0, 12], keepWithNext: true
+      });
       fresh.allergens.slice().sort(function (a, b) { return Number(a.id) - Number(b.id); })
         .forEach(function (item) {
           content.push({ text: String(item.id) + '. ' + printable(item, 'name', language),
@@ -686,7 +705,7 @@
       info: { title: 'La Locanda di Vinadio - ' + label.title,
         author: 'La Locanda di Vinadio', subject: label.title },
       pageSize: 'A4',
-      pageMargins: [42, 48, 42, 52],
+      pageMargins: [48, 46, 48, 54],
       content: content,
       footer: function (pageNumber, pageCount) {
         return { columns: [
@@ -696,15 +715,15 @@
       },
       defaultStyle: { font: 'Roboto', color: '#2C1A12', fontSize: 10 },
       styles: {
-        brand: { fontSize: 19, bold: true, characterSpacing: 1.2, color: '#442C22' },
+        brand: { fontSize: 22, bold: true, characterSpacing: 1.5, color: '#3F2A22' },
         brandSub: { fontSize: 9, bold: true, characterSpacing: 1.2, color: '#A04B2F',
           margin: [0, 1, 0, 10] },
-        title: { fontSize: 23, bold: true, color: '#8C3B24', margin: [0, 2, 0, 8] },
+        title: { fontSize: 27, bold: false, color: '#8C3B24', margin: [0, 2, 0, 8] },
         address: { fontSize: 8.8, color: '#6B5D52', margin: [0, 1, 0, 1] },
         stamp: { fontSize: 8, italics: true, color: '#827267', margin: [0, 9, 0, 0] },
-        category: { fontSize: 15, bold: true, color: '#8C3B24' },
-        dishName: { bold: true, fontSize: 10.5 },
-        dishPrice: { bold: true, fontSize: 10.5, color: '#8C3B24' },
+        category: { fontSize: 16, bold: true, color: '#8C3B24', alignment: 'center', characterSpacing: 0.8 },
+        dishName: { bold: true, fontSize: 11.2 },
+        dishPrice: { bold: true, fontSize: 10.8, color: '#8C3B24' },
         dishDesc: { color: '#6B5D52', fontSize: 9, lineHeight: 1.2 },
         dishAllergens: { color: '#8C3B24', fontSize: 8.3 },
         notes: { fontSize: 8.7, color: '#6B5D52', lineHeight: 1.25 },
