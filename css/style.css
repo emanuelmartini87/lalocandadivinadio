@@ -683,6 +683,18 @@ h1, h2, h3, h4 {
   color: rgba(253, 251, 247, 0.5);
 }
 
+/* ---------- Dati legali nel footer (P.IVA / REA) ---------- */
+.footer__legal {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: rgba(253, 251, 247, 0.7);
+}
+.footer__legal p + p { margin-top: 0.15rem; }
+.footer__legal strong { color: rgba(253, 251, 247, 0.91); font-weight: 500; }
 /* ---------- 404 ---------- */
 .notfound { min-height: 100svh; display: grid; place-items: center; text-align: center; background: var(--bg-dark); color: var(--text-light); }
 .notfound h1 { font-size: clamp(4rem, 14vw, 9rem); color: var(--gold); }
